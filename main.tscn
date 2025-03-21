@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=3 uid="uid://d2vyk36dpmn5c"]
+
+[ext_resource type="PackedScene" uid="uid://dgle0ok7s1iu3" path="res://dungeon_generation.tscn" id="1_tgmqg"]
+[ext_resource type="PackedScene" uid="uid://b4tpatyxqr6ri" path="res://main_cam.tscn" id="2_1bvp3"]
+[ext_resource type="Texture2D" uid="uid://bf21apldqojlm" path="res://icon.svg" id="2_cmyp4"]
+[ext_resource type="Script" uid="uid://dlm8cojwy0401" path="res://character_body_2d.gd" id="2_uup1s"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hmaa4"]
+radius = 8.544
+
+[node name="main" type="Node2D"]
+
+[node name="dungeon_generation" parent="." node_paths=PackedStringArray("main_cam") instance=ExtResource("1_tgmqg")]
+room_amount = 5
+main_cam = NodePath("../main_cam")
+
+[node name="main_cam" parent="." node_paths=PackedStringArray("player") instance=ExtResource("2_1bvp3")]
+zoom = Vector2(0.25, 0.25)
+player = NodePath("../Player")
+
+[node name="Player" type="CharacterBody2D" parent="."]
+position = Vector2(111, 111)
+collision_layer = 2
+script = ExtResource("2_uup1s")
+speed = 100
+friction = 0.25
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+shape = SubResource("CircleShape2D_hmaa4")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_cmyp4")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = -1
+offset_left = -30648.0
+offset_top = -11949.0
+offset_right = 23765.0
+offset_bottom = 12388.0
+color = Color(0.145098, 0.0745098, 0.101961, 1)
