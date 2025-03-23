@@ -1,7 +1,6 @@
 extends Node2D
 
 @export var room_amount : int 
-var room_positions : Array[Vector2]
 var room_indexs : Array[Dictionary]
 @export var main_cam : Camera2D
 
@@ -12,11 +11,14 @@ func _process(delta: float) -> void:
 func _ready() -> void:
 	randomize()
 	create_room_map()
+	
+	await get_tree().create_timer(2).timeout
+	for room in room_indexs:
+		pass
 
 func create_room_map():
 	var previous_room : TileMapLayer = null
 	var previous_room_pos : Vector2
-	room_positions.append(previous_room_pos)
 
 	for i in range(room_amount):
 		var direction : Vector2
@@ -31,7 +33,15 @@ func create_room_map():
 					continue
 				
 				new_room_pos = previous_room_pos + (direction * 50)
-				if not room_positions.has(new_room_pos):
+				var overlap : bool = false
+				for room in room_indexs:
+					var tile_rect = room["scene"].get_used_rect()
+					if room["scene"].position.x <= new_room_pos.x and new_room_pos.x >= room["scene"].position.x + (tile_rect.size.x * 32):
+						if room["scene"].position.y >= new_room_pos.y and new_room_pos.y >= room["scene"].position.y + (tile_rect.size.y * 32):
+							overlap = true
+							print("overlapping")
+							break
+				if overlap == false:
 					break
 				
 				attempts += 1
@@ -55,10 +65,9 @@ func create_room_map():
 			door_directions = [Vector2i(direction.x,-direction.y)]
 			previous_room.create_doors(door_directions)
 			
-			previous_room.connected_rooms.append({"dir" : Vector2i(direction.x,-direction.y), "scene" : room_tilemap})
+			previous_room.connected_rooms.append({"dir" : Vector2i(direction.x,-direction.y), "scene" : room_tilemap, "position" : room_tilemap.global_position})
 			if i != 0:
-				room_tilemap.connected_rooms.append({"dir" : Vector2i(-direction.x,direction.y), "scene" : previous_room})
+				room_tilemap.connected_rooms.append({"dir" : Vector2i(-direction.x,direction.y), "scene" : previous_room, "position" : previous_room.global_position})
 		
-		room_positions.append(new_room_pos)
 		previous_room_pos = new_room_pos
 		previous_room = room_tilemap

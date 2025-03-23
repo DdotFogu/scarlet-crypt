@@ -4,7 +4,6 @@ extends Camera2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 func change_room(room, direction : Vector2i):
-	print(room.room_index)
 	
 	player.velocity = Vector2.ZERO
 	player.speed = 0
@@ -13,7 +12,8 @@ func change_room(room, direction : Vector2i):
 	
 	for point in room.creation_points:
 		if point["dir"] == -direction:
-			var new_player_pos = point["scene"].global_position
+			print(point["scene"].position)
+			var new_player_pos = point["scene"].position + room.global_position
 			
 			if direction.x != 0:
 				new_player_pos.x += 25 * direction.x

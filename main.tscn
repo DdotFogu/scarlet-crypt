@@ -11,11 +11,11 @@ radius = 8.544
 [node name="main" type="Node2D"]
 
 [node name="dungeon_generation" parent="." node_paths=PackedStringArray("main_cam") instance=ExtResource("1_tgmqg")]
-room_amount = 5
+room_amount = 15
 main_cam = NodePath("../main_cam")
 
 [node name="main_cam" parent="." node_paths=PackedStringArray("player") instance=ExtResource("2_1bvp3")]
-zoom = Vector2(0.25, 0.25)
+zoom = Vector2(0.2, 0.2)
 player = NodePath("../Player")
 
 [node name="Player" type="CharacterBody2D" parent="."]

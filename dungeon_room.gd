@@ -10,7 +10,7 @@ func _ready() -> void:
 	dungeon_generation = get_node("/root/main/dungeon_generation")
 
 func create_doors(directions : Array):
-	await get_tree().create_timer(0.25).timeout
+	await get_tree().create_timer(1).timeout
 	for point in creation_points:
 		for direction in directions:
 			if point["dir"] == direction:
@@ -28,5 +28,6 @@ func create_doors(directions : Array):
 					if room["dir"] == direction:
 						connecting_room = room["scene"]
 				
-				door_area2D.body_entered.connect(func(_body): dungeon_generation.main_cam.change_room(connecting_room, direction), 0)
+				door_area2D.get_node("Label").text = str(connecting_room.room_index)
+				door_area2D.body_entered.connect(func(_body): dungeon_generation.main_cam.change_room(connecting_room, direction))
 				break
