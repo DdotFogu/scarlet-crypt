@@ -1,0 +1,179 @@
+[gd_scene load_steps=16 format=3 uid="uid://oy8jux68hmbe"]
+
+[ext_resource type="Script" uid="uid://dlm8cojwy0401" path="res://Scripts/player_movement.gd" id="1_i3pqv"]
+[ext_resource type="Texture2D" uid="uid://bf21apldqojlm" path="res://Assets/Sprites/PlaceHolder/icon.svg" id="2_hqtel"]
+[ext_resource type="Script" uid="uid://cuyuepwwk7yau" path="res://Scripts/weapon_component.gd" id="3_hqtel"]
+[ext_resource type="Texture2D" uid="uid://c67emhual1rhe" path="res://Assets/Sprites/PlaceHolder/sycthe_ph.png" id="3_sweqy"]
+[ext_resource type="Script" uid="uid://7cwtyeutrts4" path="res://Scripts/Hitbox.gd" id="5_sweqy"]
+[ext_resource type="Script" uid="uid://nxlbgvyixghw" path="res://Scripts/state_machine.gd" id="6_2hs0m"]
+[ext_resource type="Script" uid="uid://bpqe0gx4e6mps" path="res://Scripts/idle.gd" id="7_1jxqw"]
+[ext_resource type="Script" uid="uid://b3gdube56na0l" path="res://move.gd" id="8_dw050"]
+[ext_resource type="Script" uid="uid://ds1rxoj2dns4c" path="res://attack_one.gd" id="9_b26j0"]
+[ext_resource type="Script" uid="uid://drwdxykreh4fg" path="res://attack_two.gd" id="10_n7ghd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2hs0m"]
+size = Vector2(150, 150)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2hs0m"]
+radius = 22.8033
+height = 112.51
+
+[sub_resource type="Animation" id="Animation_2hs0m"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("weapon_component/weapon_pivot/Scythe:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("weapon_component/weapon_pivot/Scythe:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("weapon_component/weapon_pivot/Scythe/Hitbox/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_sweqy"]
+resource_name = "scythe combo 1"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("weapon_component/weapon_pivot/Scythe:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("weapon_component/weapon_pivot/Scythe:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(0.3, 1),
+"update": 0,
+"values": [-0.959931, 0.959931]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("weapon_component/weapon_pivot/Scythe/Hitbox/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.001, 0.0989658),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1jxqw"]
+_data = {
+&"RESET": SubResource("Animation_2hs0m"),
+&"scythe combo 1": SubResource("Animation_sweqy")
+}
+
+[node name="Player" type="CharacterBody2D"]
+collision_mask = 5
+script = ExtResource("1_i3pqv")
+speed = 1000
+friction = 0.1
+
+[node name="sprite_body" type="Sprite2D" parent="."]
+texture = ExtResource("2_hqtel")
+
+[node name="collision_body" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_2hs0m")
+
+[node name="weapon_component" type="Node2D" parent="."]
+script = ExtResource("3_hqtel")
+
+[node name="weapon_pivot" type="Node2D" parent="weapon_component"]
+
+[node name="Scythe" type="Node2D" parent="weapon_component/weapon_pivot"]
+
+[node name="weapon_sprite" type="Sprite2D" parent="weapon_component/weapon_pivot/Scythe"]
+texture_filter = 1
+position = Vector2(144, 0)
+texture = ExtResource("3_sweqy")
+
+[node name="Hitbox" type="Area2D" parent="weapon_component/weapon_pivot/Scythe" node_paths=PackedStringArray("killer")]
+script = ExtResource("5_sweqy")
+killer = NodePath("../../../..")
+damage = 10
+knockback_force = 20
+metadata/_custom_type_script = "uid://7cwtyeutrts4"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="weapon_component/weapon_pivot/Scythe/Hitbox"]
+position = Vector2(163, -35)
+rotation = 1.8413
+shape = SubResource("CapsuleShape2D_2hs0m")
+disabled = true
+debug_color = Color(0.992157, 0, 0, 0.419608)
+
+[node name="Cooldown" type="Timer" parent="weapon_component/weapon_pivot/Scythe"]
+wait_time = 0.2
+one_shot = true
+
+[node name="ComboCooldown" type="Timer" parent="weapon_component/weapon_pivot/Scythe"]
+wait_time = 0.4
+one_shot = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="weapon_component"]
+root_node = NodePath("../..")
+libraries = {
+&"": SubResource("AnimationLibrary_1jxqw")
+}
+
+[node name="state_machine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("6_2hs0m")
+initial_state = NodePath("idle")
+
+[node name="idle" type="Node" parent="state_machine"]
+script = ExtResource("7_1jxqw")
+metadata/_custom_type_script = "uid://uhkfqp2cc5p4"
+
+[node name="move" type="Node" parent="state_machine"]
+script = ExtResource("8_dw050")
+metadata/_custom_type_script = "uid://uhkfqp2cc5p4"
+
+[node name="attack_one" type="Node" parent="state_machine"]
+script = ExtResource("9_b26j0")
+metadata/_custom_type_script = "uid://uhkfqp2cc5p4"
+
+[node name="attack_two" type="Node" parent="state_machine"]
+script = ExtResource("10_n7ghd")
+metadata/_custom_type_script = "uid://uhkfqp2cc5p4"
+
+[connection signal="timeout" from="weapon_component/weapon_pivot/Scythe/Cooldown" to="weapon_component" method="_on_cooldown_timeout"]
+[connection signal="timeout" from="weapon_component/weapon_pivot/Scythe/ComboCooldown" to="weapon_component" method="_on_combo_cooldown_timeout"]

@@ -1,0 +1,61 @@
+[gd_scene load_steps=8 format=3 uid="uid://b5ryds7m53nls"]
+
+[ext_resource type="Script" uid="uid://crrwruajwr6kc" path="res://Scripts/soul_projectile.gd" id="1_5avn7"]
+[ext_resource type="Texture2D" uid="uid://daxvdbvdq7x1v" path="res://Assets/Sprites/soul_projectile.png" id="2_3ksfc"]
+[ext_resource type="Script" uid="uid://7cwtyeutrts4" path="res://Scripts/Hitbox.gd" id="2_5avn7"]
+[ext_resource type="PackedScene" uid="uid://djysosac0u2co" path="res://soul_hit_particles.tscn" id="2_j6d2c"]
+[ext_resource type="Texture2D" uid="uid://c44rdyc70dkku" path="res://Assets/Sprites/light.png" id="4_3ksfc"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_prhco"]
+radius = 20.2237
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3ksfc"]
+radius = 27.1662
+
+[node name="soul_projectile" type="CharacterBody2D" node_paths=PackedStringArray("hurtbox")]
+collision_layer = 0
+script = ExtResource("1_5avn7")
+hurtbox = NodePath("Hitbox")
+speed = 350.0
+hit_particles = ExtResource("2_j6d2c")
+
+[node name="sprite" type="Sprite2D" parent="."]
+z_index = 1
+texture_filter = 1
+texture = ExtResource("2_3ksfc")
+
+[node name="body_collision" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_prhco")
+
+[node name="Hitbox" type="Area2D" parent="." node_paths=PackedStringArray("killer")]
+position = Vector2(1, 0)
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("2_5avn7")
+killer = NodePath("..")
+damage = 35
+knockback_force = 5
+stun_time = 1.0
+metadata/_custom_type_script = "uid://7cwtyeutrts4"
+
+[node name="hit_collision" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(-1, 0)
+shape = SubResource("CircleShape2D_3ksfc")
+debug_color = Color(1, 0, 0, 0.419608)
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(0, 10)
+scale = Vector2(1.25, 1.25)
+color = Color(0.411765, 0.686275, 1, 1)
+energy = 2.0
+shadow_enabled = true
+shadow_filter = 1
+shadow_filter_smooth = 50.0
+texture = ExtResource("4_3ksfc")
+
+[node name="hit_particles" type="CPUParticles2D" parent="."]
+emitting = false
+one_shot = true
+explosiveness = 0.8

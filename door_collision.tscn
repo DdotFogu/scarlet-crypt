@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cn4av3i5j4sac"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hegvs"]
-size = Vector2(10, 10)
+size = Vector2(20, 300)
 
 [sub_resource type="LabelSettings" id="LabelSettings_hegvs"]
 
@@ -10,6 +10,7 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="Area2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 80)
 shape = SubResource("RectangleShape2D_hegvs")
 
 [node name="Label" type="Label" parent="."]

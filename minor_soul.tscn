@@ -1,0 +1,66 @@
+[gd_scene load_steps=9 format=3 uid="uid://dk36rf5l1ytv1"]
+
+[ext_resource type="Script" uid="uid://llu0d21bsf3m" path="res://Scripts/minor_soul.gd" id="1_7ci1q"]
+[ext_resource type="Script" uid="uid://bamvpb33w527j" path="res://Scripts/soul_gather.gd" id="1_fb4ge"]
+[ext_resource type="Script" uid="uid://b1sg8jrs0psv1" path="res://Scripts/Class/attract.gd" id="2_fb4ge"]
+[ext_resource type="Texture2D" uid="uid://daxvdbvdq7x1v" path="res://Assets/Sprites/soul_projectile.png" id="4_7ci1q"]
+[ext_resource type="Texture2D" uid="uid://c44rdyc70dkku" path="res://Assets/Sprites/light.png" id="4_285tu"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_285tu"]
+radius = 33.0606
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qdyp5"]
+radius = 33.2415
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0228y"]
+radius = 282.512
+
+[node name="minor_soul" type="CharacterBody2D"]
+collision_layer = 16
+script = ExtResource("1_7ci1q")
+friction = 0.08
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_285tu")
+
+[node name="Pickup" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_fb4ge")
+metadata/_custom_type_script = "uid://tvljxr3rur1v"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pickup"]
+shape = SubResource("CircleShape2D_qdyp5")
+
+[node name="Atrraction" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("2_fb4ge")
+metadata/_custom_type_script = "uid://b1sg8jrs0psv1"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Atrraction"]
+shape = SubResource("CircleShape2D_0228y")
+disabled = true
+debug_color = Color(1, 1, 1, 0.42)
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+enable_node_path = NodePath("../Atrraction")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(0, 10)
+scale = Vector2(1.25, 1.25)
+color = Color(0.411765, 0.686275, 1, 1)
+energy = 4.0
+shadow_enabled = true
+shadow_filter = 1
+shadow_filter_smooth = 50.0
+texture = ExtResource("4_285tu")
+
+[node name="soul_sprite" type="Sprite2D" parent="."]
+z_index = 1
+texture_filter = 1
+texture = ExtResource("4_7ci1q")
+
+[connection signal="body_entered" from="Atrraction" to="Atrraction" method="_on_body_entered"]
+[connection signal="body_entered" from="Atrraction" to="Atrraction" method="give_soul"]
+[connection signal="body_exited" from="Atrraction" to="Atrraction" method="_on_body_exited"]

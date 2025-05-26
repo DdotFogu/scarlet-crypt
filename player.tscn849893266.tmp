@@ -1,0 +1,309 @@
+[gd_scene load_steps=21 format=3 uid="uid://oy8jux68hmbe"]
+
+[ext_resource type="Script" uid="uid://dlm8cojwy0401" path="res://Scripts/player_movement.gd" id="1_i3pqv"]
+[ext_resource type="Texture2D" uid="uid://bf21apldqojlm" path="res://Assets/Sprites/PlaceHolder/icon.svg" id="2_hqtel"]
+[ext_resource type="Script" uid="uid://cuyuepwwk7yau" path="res://Scripts/weapon_component.gd" id="3_hqtel"]
+[ext_resource type="Texture2D" uid="uid://c67emhual1rhe" path="res://Assets/Sprites/PlaceHolder/sycthe_ph.png" id="3_sweqy"]
+[ext_resource type="Script" uid="uid://7cwtyeutrts4" path="res://Scripts/Hitbox.gd" id="5_sweqy"]
+[ext_resource type="Script" uid="uid://nxlbgvyixghw" path="res://Scripts/state_machine.gd" id="6_2hs0m"]
+[ext_resource type="Texture2D" uid="uid://b51hl55f7nxcr" path="res://Assets/Sprites/PlaceHolder/lamp_ph.png" id="6_ivps1"]
+[ext_resource type="Script" uid="uid://bpqe0gx4e6mps" path="res://Scripts/States/Player/idle.gd" id="7_1jxqw"]
+[ext_resource type="Script" uid="uid://b3gdube56na0l" path="res://Scripts/States/Player/move.gd" id="8_dw050"]
+[ext_resource type="Script" uid="uid://ds1rxoj2dns4c" path="res://Scripts/States/Player/attack_one.gd" id="9_b26j0"]
+[ext_resource type="Script" uid="uid://drwdxykreh4fg" path="res://Scripts/States/Player/attack_two.gd" id="10_n7ghd"]
+[ext_resource type="Script" uid="uid://cs0h5h4e0m7gx" path="res://Scripts/States/Player/attack_three.gd" id="11_nvl01"]
+[ext_resource type="Script" uid="uid://jhfxggl26i8r" path="res://Scripts/States/Player/lamp_fire.gd" id="14_bwjto"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2hs0m"]
+size = Vector2(150, 150)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2hs0m"]
+radius = 22.8033
+height = 112.51
+
+[sub_resource type="Animation" id="Animation_2hs0m"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("weapon_component/Scythe/weapon_pivot:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("weapon_component/Scythe/weapon_pivot:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("weapon_component/Scythe/weapon_pivot/Hitbox/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_sweqy"]
+resource_name = "scythe combo 1"
+length = 0.25
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("weapon_component/Scythe/weapon_pivot:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("weapon_component/Scythe/weapon_pivot:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(0.3, 1),
+"update": 0,
+"values": [-0.959931, 0.959931]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("weapon_component/Scythe/weapon_pivot/Hitbox/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_n7ghd"]
+resource_name = "scythe combo 2"
+length = 0.25
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("weapon_component/Scythe/weapon_pivot:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(0.3, 1),
+"update": 0,
+"values": [0.959931, -0.959931]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("weapon_component/Scythe/weapon_pivot/Hitbox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("weapon_component/Scythe/weapon_pivot:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(0.3, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(119, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_nvl01"]
+resource_name = "scythe combo 3"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("weapon_component/Scythe/weapon_pivot:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(0.2, 1),
+"update": 0,
+"values": [-3.90081, 0.857317]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("weapon_component/Scythe/weapon_pivot/Hitbox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("weapon_component/Scythe/weapon_pivot:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(0.2, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(105, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1jxqw"]
+_data = {
+&"RESET": SubResource("Animation_2hs0m"),
+&"scythe combo 1": SubResource("Animation_sweqy"),
+&"scythe combo 2": SubResource("Animation_n7ghd"),
+&"scythe combo 3": SubResource("Animation_nvl01")
+}
+
+[node name="Player" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("1_i3pqv")
+friction = 0.1
+
+[node name="sprite_body" type="Sprite2D" parent="."]
+texture = ExtResource("2_hqtel")
+
+[node name="collision_body" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_2hs0m")
+
+[node name="inventory_component" type="Node" parent="."]
+
+[node name="state_machine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("6_2hs0m")
+initial_state = NodePath("idle")
+bbcode = "[outline_size=60][center][color=White][font=\"E:/OneDrive/Documents/Godot Games/scarlet-crypt/Assets/Fonts/Vaticanus-G3yVG.ttf\"][font_size=75]"
+
+[node name="idle" type="Node" parent="state_machine"]
+script = ExtResource("7_1jxqw")
+metadata/_custom_type_script = "uid://uhkfqp2cc5p4"
+
+[node name="move" type="Node" parent="state_machine"]
+script = ExtResource("8_dw050")
+metadata/_custom_type_script = "uid://uhkfqp2cc5p4"
+
+[node name="attack_one" type="Node" parent="state_machine"]
+script = ExtResource("9_b26j0")
+metadata/_custom_type_script = "uid://uhkfqp2cc5p4"
+
+[node name="attack_two" type="Node" parent="state_machine"]
+script = ExtResource("10_n7ghd")
+metadata/_custom_type_script = "uid://uhkfqp2cc5p4"
+
+[node name="attack_three" type="Node" parent="state_machine"]
+script = ExtResource("11_nvl01")
+metadata/_custom_type_script = "uid://uhkfqp2cc5p4"
+
+[node name="lamp_fire" type="Node" parent="state_machine"]
+script = ExtResource("14_bwjto")
+metadata/_custom_type_script = "uid://uhkfqp2cc5p4"
+
+[node name="state" type="RichTextLabel" parent="."]
+offset_left = -230.0
+offset_top = 80.0
+offset_right = 246.0
+offset_bottom = 225.0
+bbcode_enabled = true
+text = "[outline_size=60][center][color=White][font=\"E:/OneDrive/Documents/Godot Games/scarlet-crypt/Assets/Fonts/Vaticanus-G3yVG.ttf\"][font_size=75]Idle"
+scroll_active = false
+
+[node name="weapon_component" type="Node2D" parent="."]
+script = ExtResource("3_hqtel")
+
+[node name="Scythe" type="Node2D" parent="weapon_component"]
+
+[node name="weapon_pivot" type="Node2D" parent="weapon_component/Scythe"]
+
+[node name="weapon_sprite" type="Sprite2D" parent="weapon_component/Scythe/weapon_pivot"]
+texture_filter = 1
+position = Vector2(144, 0)
+texture = ExtResource("3_sweqy")
+
+[node name="Hitbox" type="Area2D" parent="weapon_component/Scythe/weapon_pivot" node_paths=PackedStringArray("killer")]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("5_sweqy")
+killer = NodePath("../../../..")
+damage = 20
+knockback_force = 25
+metadata/_custom_type_script = "uid://7cwtyeutrts4"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="weapon_component/Scythe/weapon_pivot/Hitbox"]
+position = Vector2(163, -35)
+rotation = 1.8413
+shape = SubResource("CapsuleShape2D_2hs0m")
+disabled = true
+debug_color = Color(0.992157, 0, 0, 0.419608)
+
+[node name="Cooldown" type="Timer" parent="weapon_component/Scythe/weapon_pivot"]
+wait_time = 0.3
+one_shot = true
+
+[node name="ComboCooldown" type="Timer" parent="weapon_component/Scythe/weapon_pivot"]
+wait_time = 0.5
+one_shot = true
+
+[node name="Lamp" type="Node2D" parent="weapon_component"]
+position = Vector2(-100, -180)
+
+[node name="weapon_sprite" type="Sprite2D" parent="weapon_component/Lamp"]
+texture_filter = 1
+position = Vector2(2.48334, 56.3013)
+texture = ExtResource("6_ivps1")
+
+[node name="firing_position" type="Marker2D" parent="weapon_component/Lamp"]
+position = Vector2(2, 56)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="weapon_component"]
+root_node = NodePath("../..")
+libraries = {
+&"": SubResource("AnimationLibrary_1jxqw")
+}
+autoplay = "RESET"
+
+[node name="souls" type="RichTextLabel" parent="weapon_component"]
+offset_left = -331.0
+offset_top = -264.0
+offset_right = 145.0
+offset_bottom = -119.0
+bbcode_enabled = true
+text = "[outline_size=60][center][color=White][font=\"E:/OneDrive/Documents/Godot Games/scarlet-crypt/Assets/Fonts/Vaticanus-G3yVG.ttf\"][font_size=75]"
+scroll_active = false
+
+[connection signal="timeout" from="weapon_component/Scythe/weapon_pivot/Cooldown" to="weapon_component" method="_on_cooldown_timeout"]
+[connection signal="timeout" from="weapon_component/Scythe/weapon_pivot/ComboCooldown" to="weapon_component" method="_on_combo_cooldown_timeout"]

@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=3 uid="uid://cyeukpf51uv1h"]
+
+[ext_resource type="Texture2D" uid="uid://cd6jry2mblpu4" path="res://Assets/Sprites/PlaceHolder/minor_sould_ph.png" id="1_0228y"]
+[ext_resource type="Script" uid="uid://bamvpb33w527j" path="res://soul_gather.gd" id="1_fb4ge"]
+[ext_resource type="Script" uid="uid://b1sg8jrs0psv1" path="res://Scripts/attract.gd" id="2_fb4ge"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0228y"]
+radius = 282.512
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qdyp5"]
+radius = 26.0768
+
+[node name="minor_soul" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("2_fb4ge")
+metadata/_custom_type_script = "uid://b1sg8jrs0psv1"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_0228y")
+disabled = true
+debug_color = Color(1, 1, 1, 0.42)
+
+[node name="soul_sprite" type="Sprite2D" parent="."]
+scale = Vector2(0.06, 0.06)
+texture = ExtResource("1_0228y")
+
+[node name="Pickup" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_fb4ge")
+metadata/_custom_type_script = "uid://tvljxr3rur1v"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pickup"]
+shape = SubResource("CircleShape2D_qdyp5")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_entered" from="." to="." method="give_soul"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

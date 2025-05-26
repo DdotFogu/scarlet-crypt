@@ -1,0 +1,69 @@
+[gd_scene load_steps=9 format=3 uid="uid://uhaoynqki1bo"]
+
+[ext_resource type="Script" uid="uid://raeaulh2xhl1" path="res://Scripts/dummy.gd" id="1_0umox"]
+[ext_resource type="Texture2D" uid="uid://bf21apldqojlm" path="res://Assets/Sprites/PlaceHolder/icon.svg" id="1_gtj52"]
+[ext_resource type="Script" uid="uid://b671ntilkvvgb" path="res://Scripts/HurtBox.gd" id="2_xmspm"]
+[ext_resource type="Script" uid="uid://dskheke6u5w3" path="res://Scripts/States/Components/health_component.gd" id="3_1324b"]
+[ext_resource type="Script" uid="uid://nxlbgvyixghw" path="res://Scripts/state_machine.gd" id="5_btqty"]
+[ext_resource type="Script" uid="uid://dbv321qqa63ia" path="res://Scripts/States/Enemy/enemy_idle.gd" id="6_0lhgj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xmspm"]
+size = Vector2(150, 150)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0umox"]
+radius = 100.0
+height = 204.0
+
+[node name="Dummy" type="CharacterBody2D"]
+slide_on_ceiling = false
+script = ExtResource("1_0umox")
+
+[node name="sprite_body" type="Sprite2D" parent="."]
+texture = ExtResource("1_gtj52")
+
+[node name="collision_body" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_xmspm")
+
+[node name="health_component" type="Node2D" parent="." node_paths=PackedStringArray("character_body")]
+script = ExtResource("3_1324b")
+bbcode = "[outline_size=60][center][color=Green][font=\"E:/OneDrive/Documents/Godot Games/scarlet-crypt/Assets/Fonts/Vaticanus-G3yVG.ttf\"][font_size=55]"
+character_body = NodePath("..")
+metadata/_custom_type_script = "uid://dskheke6u5w3"
+
+[node name="hp" type="RichTextLabel" parent="health_component"]
+offset_left = -230.0
+offset_top = -148.0
+offset_right = 246.0
+offset_bottom = -3.0
+bbcode_enabled = true
+text = "[outline_size=60][center][color=Green][font=\"E:/OneDrive/Documents/Godot Games/scarlet-crypt/Assets/Fonts/Vaticanus-G3yVG.ttf\"][font_size=55]"
+scroll_active = false
+
+[node name="HurtBox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("2_xmspm")
+metadata/_custom_type_script = "uid://b671ntilkvvgb"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+shape = SubResource("CapsuleShape2D_0umox")
+
+[node name="state" type="RichTextLabel" parent="."]
+offset_left = -230.0
+offset_top = 80.0
+offset_right = 246.0
+offset_bottom = 225.0
+bbcode_enabled = true
+text = "[outline_size=60][center][color=White][font=\"E:/OneDrive/Documents/Godot Games/scarlet-crypt/Assets/Fonts/Vaticanus-G3yVG.ttf\"][font_size=75]Idle"
+scroll_active = false
+
+[node name="state_machine" type="Node" parent="." node_paths=PackedStringArray("initial_state", "state_text")]
+script = ExtResource("5_btqty")
+initial_state = NodePath("idle")
+bbcode = "[outline_size=60][center][color=White][font=\"E:/OneDrive/Documents/Godot Games/scarlet-crypt/Assets/Fonts/Vaticanus-G3yVG.ttf\"][font_size=75]"
+state_text = NodePath("../state")
+
+[node name="idle" type="Node" parent="state_machine" node_paths=PackedStringArray("enemy")]
+script = ExtResource("6_0lhgj")
+enemy = NodePath("../..")
+metadata/_custom_type_script = "uid://uhkfqp2cc5p4"

@@ -1,0 +1,49 @@
+[gd_scene load_steps=3 format=3 uid="uid://cjb4c14ycb7jb"]
+
+[ext_resource type="Script" uid="uid://b0ncqfntqkwmt" path="res://Scripts/dev_console.gd" id="1_1gn0h"]
+[ext_resource type="Theme" uid="uid://ic2dblbhbuv7" path="res://Resource/Themes/dev_theme.tres" id="2_nq2lu"]
+
+[node name="DevConsole" type="CanvasLayer"]
+process_mode = 3
+layer = 0
+script = ExtResource("1_1gn0h")
+
+[node name="Box" type="ColorRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = 237.0
+offset_right = 400.0
+offset_bottom = 277.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="Input" type="LineEdit" parent="."]
+process_mode = 3
+texture_filter = 1
+offset_left = 181.0
+offset_top = 565.0
+offset_right = 972.0
+offset_bottom = 597.0
+mouse_filter = 1
+theme = ExtResource("2_nq2lu")
+placeholder_text = "Input Command Line"
+context_menu_enabled = false
+emoji_menu_enabled = false
+virtual_keyboard_enabled = false
+flat = true
+caret_blink = true
+
+[node name="Output" type="VBoxContainer" parent="."]
+process_mode = 3
+z_index = -1
+offset_left = 176.0
+offset_right = 976.0
+offset_bottom = 558.0
+alignment = 2
+
+[connection signal="text_submitted" from="Input" to="." method="_on_text_edit_text_submitted"]

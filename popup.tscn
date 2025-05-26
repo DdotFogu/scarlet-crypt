@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://b7wjtlt125lm3"]
+
+[node name="Text" type="Control"]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 379.0
+offset_bottom = 166.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.41, 0.41)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = -221.951
+offset_top = -92.6829
+offset_right = 254.049
+offset_bottom = 92.3171
+bbcode_enabled = true
+text = "[outline_size=100][center][color=red][font=\"E:/OneDrive/Documents/Godot Games/scarlet-crypt/Assets/Fonts/Vaticanus-G3yVG.ttf\"][font_size=200]"
+scroll_active = false

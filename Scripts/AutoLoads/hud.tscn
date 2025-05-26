@@ -1,0 +1,99 @@
+[gd_scene load_steps=7 format=3 uid="uid://dha3tbk7pbeun"]
+
+[ext_resource type="Script" uid="uid://bxsile7hcddht" path="res://Scripts/hud.gd" id="1_vmore"]
+[ext_resource type="Shader" uid="uid://bqfk7sd37bsgt" path="res://Resource/Shaders/Grain.gdshader" id="2_l3108"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_523hc"]
+shader = ExtResource("2_l3108")
+shader_parameter/lineCount = 70
+shader_parameter/darknessMult = 0.25
+shader_parameter/timeSpeed = 6.5
+
+[sub_resource type="Animation" id="Animation_523hc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Transition:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_l3108"]
+resource_name = "Transition_One"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Transition:color")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 0.25), Color(0, 0, 0, 0.5), Color(0, 0, 0, 0.75), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_523hc"]
+_data = {
+&"RESET": SubResource("Animation_523hc"),
+&"Transition_One": SubResource("Animation_l3108")
+}
+
+[node name="Hud" type="CanvasLayer" node_paths=PackedStringArray("transition_animation")]
+process_mode = 3
+script = ExtResource("1_vmore")
+bbcode = "[outline_size=100][left][color=green][font=\"E:/OneDrive/Documents/Godot Games/scarlet-crypt/Assets/Fonts/Vaticanus-G3yVG.ttf\"][font_size=200]"
+transition_animation = NodePath("Transitions/AnimationPlayer")
+
+[node name="FPS" type="RichTextLabel" parent="."]
+unique_name_in_owner = true
+offset_right = 1592.0
+offset_bottom = 692.0
+scale = Vector2(0.25, 0.25)
+mouse_filter = 1
+bbcode_enabled = true
+text = "[outline_size=100][center][color=red][font=\"E:/OneDrive/Documents/Godot Games/scarlet-crypt/Assets/Fonts/Vaticanus-G3yVG.ttf\"][font_size=200]"
+scroll_active = false
+
+[node name="Grain" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_523hc")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="Transitions" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Transitions"]
+libraries = {
+&"": SubResource("AnimationLibrary_523hc")
+}
+autoplay = "RESET"
+
+[node name="Transition" type="ColorRect" parent="Transitions"]
+top_level = true
+z_index = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+color = Color(0, 0, 0, 0)
