@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://bukca88vabsyb"]
+
+[ext_resource type="Script" uid="uid://c0gs3wktvhn2f" path="res://Scripts/States/Enemy/lunge.gd" id="1_my8tb"]
+
+[node name="lunge" type="Node" node_paths=PackedStringArray("detector")]
+script = ExtResource("1_my8tb")
+launch_force = 2000.0
+detector = NodePath("")
+metadata/_custom_type_script = "uid://uhkfqp2cc5p4"

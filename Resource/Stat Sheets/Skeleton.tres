@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_3twdq")
 health = 100
-speed = 50
+speed = 60
 speed_cap = 1250
 friction = 0.1
 acceleration = 0.3

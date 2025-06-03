@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://rlbq5eucf50c"]
+
+[ext_resource type="Script" uid="uid://brf842wsuyd0d" path="res://Scripts/States/Enemy/pursue_4dir.gd" id="1_eea7g"]
+
+[node name="follow" type="Node"]
+script = ExtResource("1_eea7g")
+metadata/_custom_type_script = "uid://uhkfqp2cc5p4"

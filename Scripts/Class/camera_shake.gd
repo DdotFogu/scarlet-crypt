@@ -1,3 +1,4 @@
+@icon("res://Assets/IconGodotNode/node/icon_gear.png")
 extends Node
 class_name CameraShake
 

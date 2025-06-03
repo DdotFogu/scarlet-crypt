@@ -1,6 +1,6 @@
 class_name PopupManager
 
-static var popupscene := load("res://popup.tscn")
+static var popupscene := preload("res://Scene/Cosmetics/popup.tscn")
 
 static func spawn_dmg_popup(attack: Attack, parent: Node):
 	var popup = popupscene.instantiate()
@@ -59,6 +59,8 @@ static func spawn_dmg_popup(attack: Attack, parent: Node):
 	pos_tween.tween_callback(popup.queue_free)
 
 static func get_side_relation(object_1: Node2D, object_2: Node2D) -> int:
+	if !object_2: return Global.rng.randi_range(0, 1)
+	
 	if object_1.global_position.x > object_2.global_position.x:
 		return 1  # Object 1 is on the right
 	elif object_1.global_position.x < object_2.global_position.x:

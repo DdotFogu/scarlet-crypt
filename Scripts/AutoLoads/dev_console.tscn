@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cjb4c14ycb7jb"]
 
-[ext_resource type="Script" uid="uid://b0ncqfntqkwmt" path="res://Scripts/dev_console.gd" id="1_1gn0h"]
+[ext_resource type="Script" uid="uid://b0ncqfntqkwmt" path="res://Scripts/AutoLoads/dev_console.gd" id="1_1gn0h"]
 [ext_resource type="Theme" uid="uid://ic2dblbhbuv7" path="res://Resource/Themes/dev_theme.tres" id="2_nq2lu"]
 
 [node name="DevConsole" type="CanvasLayer"]

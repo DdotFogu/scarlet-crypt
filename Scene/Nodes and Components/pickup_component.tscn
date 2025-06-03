@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://bpnfr7sm8gy46"]
+
+[ext_resource type="Script" uid="uid://b3cgu8c24d7pw" path="res://Scripts/Components/pickup_component.gd" id="1_ctsvq"]
+
+[node name="PickupComponent" type="Area2D"]
+modulate = Color(1, 1, 1, 0.099)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_ctsvq")
+minor_souls_count = 1
+metadata/_custom_type_script = "uid://dtkrsjrq5vs2k"

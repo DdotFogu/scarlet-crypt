@@ -4,9 +4,9 @@
 
 [resource]
 script = ExtResource("1_l1pjh")
-health = 9999
+health = 88888
 speed = 200
 speed_cap = 1250
-friction = 0.3
+friction = 0.1
 acceleration = 0.5
 metadata/_custom_type_script = "uid://m04mln4cb40k"

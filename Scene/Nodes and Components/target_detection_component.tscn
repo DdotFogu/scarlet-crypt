@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://donp10h72n3be"]
+
+[ext_resource type="Script" uid="uid://dtkrsjrq5vs2k" path="res://Scripts/Class/pursue_range.gd" id="1_f8iwj"]
+
+[node name="TargetDetectionComponent" type="Area2D"]
+modulate = Color(1, 1, 1, 0.099)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_f8iwj")
+metadata/_custom_type_script = "uid://dtkrsjrq5vs2k"

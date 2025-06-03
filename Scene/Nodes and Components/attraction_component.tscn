@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://7hp0hqjomj1u"]
+
+[ext_resource type="Script" uid="uid://dm8vaacvkbfj6" path="res://Scripts/Components/attraction_component.gd" id="1_pqic6"]
+
+[node name="AttractionComponent" type="Node"]
+script = ExtResource("1_pqic6")

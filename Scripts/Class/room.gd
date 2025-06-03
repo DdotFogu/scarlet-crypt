@@ -4,13 +4,16 @@ class_name base_room
 @export_category("Room Generation")
 @export var creation_points : Array[Dictionary]
 @export var wall_tilemap : TileMapLayer
+@export var index : Label
+var data : room_data
 
-var room_index : int 
-var connected_rooms : Array[Dictionary]
+var connected_rooms : Array[base_room]
 var dungeon_generation
 
 func _ready() -> void:
-	dungeon_generation = get_node("/root/main/dungeon_generation")
+	dungeon_generation = Global.dungeon_generation
+	if index:
+		index.text = str(data.room_index)
 
 func get_random_avaible_tile(tilemap : TileMapLayer) -> Vector2i:
 	var tile_cells = tilemap.get_used_cells()
@@ -18,15 +21,13 @@ func get_random_avaible_tile(tilemap : TileMapLayer) -> Vector2i:
 	return tile_cells.pick_random()
 
 func create_doors(directions : Array):
-	await get_tree().create_timer(1).timeout
 	for point in creation_points:
 		for direction in directions:
-			if point["dir"] == direction:
-				#print(str(point["dir"]) + " = " + str(direction) + " : " + str(room_index))
+			if point["dir"] == Vector2i(direction):
 				wall_tilemap.set_cell(point["pos"], -1, Vector2i(1, 0), 0)
 				wall_tilemap.set_cell(Vector2(point["pos"].x + abs(direction.y), point["pos"].y + abs(direction.x)))
 				
-				var door_area2D = preload("res://door_collision.tscn").instantiate()
+				var door_area2D = preload("res://Scene/Dungeon Rooms/door_collision.tscn").instantiate()
 				door_area2D.position = wall_tilemap.map_to_local(point["pos"])
 				
 				add_child(door_area2D)
@@ -39,15 +40,11 @@ func create_doors(directions : Array):
 				
 				var connecting_room = null
 				for room in connected_rooms:
-					if room["dir"] == direction:
-						connecting_room = room["scene"]
+					for room_point in room.creation_points:
+						if room_point["dir"] == direction:
+							connecting_room = room
 				
-				door_area2D.get_node("Label").text = str(connecting_room.room_index)
-				#print(str(room_index) + " -> " + str(connecting_room.room_index))
-				door_area2D.body_entered.connect(func(_body): dungeon_generation.change_room(connecting_room, direction, _body.global_position))
+				if connecting_room: door_area2D.body_entered.connect(func(_body): dungeon_generation.change_room(connecting_room, direction, _body.global_position))
 				break
 			else:
 				pass
-				#print(str(point["dir"]) + " != " + str(direction) + " : " + str(room_index))
-	
-	#print(str(room_index) + "'s connected rooms : " + str(connected_rooms))

@@ -1,23 +1,28 @@
 extends State
 class_name stun
 
-@export var body: CharacterBody2D
-@export var health_component: health_component
+@onready var body : CharacterBody2D = owner
+var timer : Timer
+@onready var health_component = $"../../HealthComponent"
 
-func enter():
-	var timer = Timer.new()
-	timer.wait_time = health_component.last_attack.stun_time
+func _ready() -> void:
+	timer = Timer.new()
 	timer.one_shot = true
 	timer.timeout.connect(timeout)
 	add_child(timer)
+
+func enter():
+	if health_component.last_attack.stun_time <= 0: Transitioned.emit(self, "idle", true)
 	
+	timer.wait_time = health_component.last_attack.stun_time
+	print(health_component.last_attack.stun_time)
 	timer.start()
 
+func exit():
+	body.reset_detection()
+
 func timeout():
-	if body.get_node("pursure_range") != null:
-		body.get_node("pursure_range").get_node("CollisionShape2D").disabled = false
-	
-	Transitioned.emit(self, "idle")
+	Transitioned.emit(self, "idle", true)
 
 func physics_update(_delta):
 	body.velocity = body.velocity.lerp(Vector2.ZERO, body.stat_sheet.friction)

@@ -1,21 +1,13 @@
 extends State
 class_name move
 
-@onready var player: CharacterBody2D = $"../.."
-@onready var sprite_body: AnimatedSprite2D = $"../../sprite_body"
-
-func enter():	
-	sprite_body.play("Walk")
+@onready var body : CharacterBody2D = owner
+@onready var input_component : input_component = owner.get_node("InputComponent")
 
 func physics_update(delta):
-	player.velocity = player.velocity.lerp(player.input_direction.normalized() * player.stat_sheet.speed * 5, player.stat_sheet.acceleration)
-	player.move_and_slide()
+	body.velocity = body.velocity.lerp(input_component.get_input().normalized() * body.stat_sheet.speed * 5, body.stat_sheet.acceleration)
+	body.move_and_slide()
 
 func update(delta):
-	if player.velocity.x > 0:
-		sprite_body.flip_h = false
-	elif player.velocity.x < 0:
-		sprite_body.flip_h = true
-	
-	if player.input_direction.length() == 0:
+	if input_component.get_input().length() == 0:
 		Transitioned.emit(self, "idle")

@@ -1,4 +1,5 @@
 extends health_component
+class_name enemy_health
 
 func die():
 	super()

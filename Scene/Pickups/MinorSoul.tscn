@@ -1,0 +1,89 @@
+[gd_scene load_steps=18 format=3 uid="uid://duapk1kj0thbx"]
+
+[ext_resource type="Script" uid="uid://dfnsav1ca8lbp" path="res://Scripts/Class/pickup_base.gd" id="1_j7g3h"]
+[ext_resource type="PackedScene" uid="uid://kyumaiednicy" path="res://Scene/Nodes and Components/visual_component.tscn" id="2_aii1a"]
+[ext_resource type="Shader" uid="uid://bsy820uhpcc40" path="res://Resource/Shaders/hit_flash.tres" id="3_ay53p"]
+[ext_resource type="Texture2D" uid="uid://daxvdbvdq7x1v" path="res://Assets/Sprites/Particles/soul_projectile.png" id="4_1fgil"]
+[ext_resource type="PackedScene" uid="uid://bwamvplbiq5hc" path="res://Scene/Nodes and Components/pathfinding_component.tscn" id="5_5vwy3"]
+[ext_resource type="Script" uid="uid://b20bpp0ee1r71" path="res://Scripts/Components/pathfinding_component.gd" id="6_366ly"]
+[ext_resource type="PackedScene" uid="uid://donp10h72n3be" path="res://Scene/Nodes and Components/target_detection_component.tscn" id="7_pytxs"]
+[ext_resource type="PackedScene" uid="uid://bpnfr7sm8gy46" path="res://Scene/Nodes and Components/pickup_component.tscn" id="8_u3mph"]
+[ext_resource type="Script" uid="uid://cyefj6blkkxlp" path="res://Scripts/Strategy/base_bullet_strategy.gd" id="9_ay53p"]
+[ext_resource type="PackedScene" uid="uid://7hp0hqjomj1u" path="res://Scene/Nodes and Components/attraction_component.tscn" id="9_j6oqx"]
+[ext_resource type="Resource" uid="uid://60c241b2xepb" path="res://Resource/Strategies/Test_Upgrade.tres" id="10_1fgil"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0aqan"]
+radius = 38.2099
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_leo8u"]
+resource_local_to_scene = true
+shader = ExtResource("3_ay53p")
+shader_parameter/enabled = false
+shader_parameter/tint = Color(1, 1, 1, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sopns"]
+atlas = ExtResource("4_1fgil")
+region = Rect2(0, 0, 70, 70)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_83nnu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sopns")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_leo8u"]
+radius = 350.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0pbjf"]
+radius = 39.1152
+
+[node name="PickupBase" type="CharacterBody2D"]
+collision_layer = 16
+motion_mode = 1
+script = ExtResource("1_j7g3h")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+enable_node_path = NodePath("../Atrraction")
+
+[node name="CollisionComponent" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_0aqan")
+
+[node name="VisualComponent" parent="." instance=ExtResource("2_aii1a")]
+
+[node name="BodySprite" type="AnimatedSprite2D" parent="VisualComponent"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_leo8u")
+sprite_frames = SubResource("SpriteFrames_83nnu")
+animation = &"Idle"
+autoplay = "Idle"
+speed_scale = 0.2
+
+[node name="PathfindingComponent" parent="." instance=ExtResource("5_5vwy3")]
+script = ExtResource("6_366ly")
+
+[node name="TargetDetectionComponent" parent="." node_paths=PackedStringArray("pathfinding") instance=ExtResource("7_pytxs")]
+pathfinding = NodePath("../PathfindingComponent")
+
+[node name="CollisionComponent" type="CollisionShape2D" parent="TargetDetectionComponent"]
+shape = SubResource("CircleShape2D_leo8u")
+
+[node name="PickupComponent" parent="." node_paths=PackedStringArray("pathfinding") instance=ExtResource("8_u3mph")]
+upgrades = Array[ExtResource("9_ay53p")]([ExtResource("10_1fgil")])
+pathfinding = NodePath("../PathfindingComponent")
+
+[node name="CollisionComponent" type="CollisionShape2D" parent="PickupComponent"]
+shape = SubResource("CircleShape2D_0pbjf")
+
+[node name="AttractionComponent" parent="." node_paths=PackedStringArray("target_detection") instance=ExtResource("9_j6oqx")]
+target_detection = NodePath("../TargetDetectionComponent")
+
+[connection signal="target_detected" from="TargetDetectionComponent" to="AttractionComponent" method="change_attraction"]
+[connection signal="target_left" from="TargetDetectionComponent" to="AttractionComponent" method="change_attraction" binds= [false]]
+[connection signal="target_detected" from="PickupComponent" to="PickupComponent" method="pickup_item"]
+
+[editable path="PickupComponent"]

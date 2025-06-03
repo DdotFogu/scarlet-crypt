@@ -1,7 +1,8 @@
+@icon("res://Assets/IconGodotNode/node/icon_grid.png")
 extends TileMapLayer
 class_name tile_data
 
-@onready var target_body : BaseCharacter = get_parent()
+@onready var target_body : CharacterBody2D = owner
 var _target_tile_pos := Vector2i.ZERO
 
 var target_tile_pos:
@@ -13,8 +14,8 @@ var target_tile_pos:
 
 var los_raycast : ShapeCast2D
 var spot_array : Array[Dictionary]
-var texture := preload("res://Assets/Particles/smoke.png")
-
+var texture := preload("res://Assets/Sprites/Particles/smoke.png")
+	
 const RADIUS := 5
 const TOTAL_SPOTS := (RADIUS * 2 + 1) * (RADIUS * 2 + 1)
 

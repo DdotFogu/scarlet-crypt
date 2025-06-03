@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://3bm0koocg0yx"]
+
+[ext_resource type="Script" uid="uid://dl04sydy5uj2y" path="res://Scripts/Components/inv_component.gd" id="1_bvcca"]
+
+[node name="InventoryComponent" type="Node"]
+script = ExtResource("1_bvcca")
+minor_souls_count = 3
+metadata/_custom_type_script = "uid://dl04sydy5uj2y"

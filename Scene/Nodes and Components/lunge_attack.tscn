@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://5y5lvnbeknri"]
+
+[ext_resource type="Script" uid="uid://7cwtyeutrts4" path="res://Scripts/Class/Hitbox.gd" id="1_k22nv"]
+
+[node name="lunge_attack" type="Area2D"]
+collision_layer = 8
+collision_mask = 2
+script = ExtResource("1_k22nv")
+damage = 20
+knockback_force = 1000
+stun_time = 1.0
+target_group = "Player"
+metadata/_custom_type_script = "uid://7cwtyeutrts4"

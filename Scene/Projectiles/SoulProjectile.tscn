@@ -1,0 +1,64 @@
+[gd_scene load_steps=13 format=3 uid="uid://c3k0hf1ad587a"]
+
+[ext_resource type="Script" uid="uid://fjj34lf232r1" path="res://Scripts/Class/projectile_base.gd" id="1_s6wll"]
+[ext_resource type="Resource" uid="uid://dhvkq7jeywliv" path="res://Resource/Stat Sheets/Projectile/lamp_soul.tres" id="2_ohjhy"]
+[ext_resource type="PackedScene" uid="uid://kyumaiednicy" path="res://Scene/Nodes and Components/visual_component.tscn" id="3_2bkvf"]
+[ext_resource type="Shader" uid="uid://bsy820uhpcc40" path="res://Resource/Shaders/hit_flash.tres" id="4_d6q01"]
+[ext_resource type="Texture2D" uid="uid://daxvdbvdq7x1v" path="res://Assets/Sprites/Particles/soul_projectile.png" id="5_ll74y"]
+[ext_resource type="PackedScene" uid="uid://bycjpgwtybols" path="res://Scene/Nodes and Components/velocity_component.tscn" id="6_5hne3"]
+[ext_resource type="PackedScene" uid="uid://bbkfypa7bbfx8" path="res://Scene/Nodes and Components/health_component.tscn" id="7_r0yje"]
+[ext_resource type="Script" uid="uid://dskheke6u5w3" path="res://Scripts/Components/health_component.gd" id="8_dvpd2"]
+[ext_resource type="PackedScene" uid="uid://cdnjwb3vxdj3d" path="res://Scene/States/Projectile/projectile_hitbox.tscn" id="9_s27h4"]
+[ext_resource type="PackedScene" uid="uid://daof8i3oqkmqk" path="res://Scene/Nodes and Components/state_machine.tscn" id="10_1pq2k"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xiu7l"]
+size = Vector2(30, 30)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kupca"]
+resource_local_to_scene = true
+shader = ExtResource("4_d6q01")
+shader_parameter/enabled = false
+shader_parameter/tint = Color(1, 1, 1, 1)
+
+[node name="ProjectileBase" type="CharacterBody2D" node_paths=PackedStringArray("velocity_component") groups=["Projectile"]]
+collision_layer = 32
+motion_mode = 1
+script = ExtResource("1_s6wll")
+stat_sheet = ExtResource("2_ohjhy")
+velocity_component = NodePath("VelocityComponent")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+
+[node name="CollisionComponent" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_xiu7l")
+
+[node name="VisualComponent" parent="." node_paths=PackedStringArray("sprite", "sprite_animator") instance=ExtResource("3_2bkvf")]
+sprite = NodePath("BodySprite")
+sprite_animator = NodePath("AnimationPlayer")
+death_particle = Array[String](["soul debris"])
+
+[node name="BodySprite" type="Sprite2D" parent="VisualComponent"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_kupca")
+texture = ExtResource("5_ll74y")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="VisualComponent"]
+
+[node name="VelocityComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("6_5hne3")]
+health_component = NodePath("../HealthComponent")
+
+[node name="HealthComponent" parent="." node_paths=PackedStringArray("visual_component") instance=ExtResource("7_r0yje")]
+script = ExtResource("8_dvpd2")
+visual_component = NodePath("../VisualComponent")
+
+[node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_component", "killer") instance=ExtResource("9_s27h4")]
+health_component = NodePath("../HealthComponent")
+killer = NodePath("..")
+knockback_force = 1300
+stun_time = 1.0
+
+[node name="StateMachine" parent="." instance=ExtResource("10_1pq2k")]
+
+[connection signal="death" from="HealthComponent" to="VisualComponent" method="spawn_death_particle"]
+
+[editable path="HitboxComponent"]

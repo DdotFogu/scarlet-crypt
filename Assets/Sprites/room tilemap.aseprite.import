@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://b4j78icd0p67f"
+path="res://.godot/imported/room tilemap.aseprite-2616a618980514b88f1f980ebcf5d74f.res"
+
+[deps]
+
+source_file="res://Assets/Sprites/room tilemap.aseprite"
+dest_files=["res://.godot/imported/room tilemap.aseprite-2616a618980514b88f1f980ebcf5d74f.res"]
+
+[params]
+

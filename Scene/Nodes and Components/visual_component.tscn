@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://kyumaiednicy"]
+
+[ext_resource type="Script" uid="uid://bccooiokay1lr" path="res://Scripts/Components/visual_component.gd" id="1_ymc11"]
+
+[node name="VisualComponent" type="Node2D"]
+script = ExtResource("1_ymc11")

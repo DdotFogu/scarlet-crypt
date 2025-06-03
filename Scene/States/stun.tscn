@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://cx6rkpeh835au"]
+
+[ext_resource type="Script" uid="uid://sgpccnrpg5s1" path="res://Scripts/States/Enemy/stun.gd" id="1_vaqlh"]
+
+[node name="stun" type="Node"]
+script = ExtResource("1_vaqlh")
+metadata/_custom_type_script = "uid://uhkfqp2cc5p4"

@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bbkfypa7bbfx8"]
+
+[ext_resource type="Script" uid="uid://b6k38v4ruirdr" path="res://Scripts/enemy_health_component.gd" id="1_rjk1t"]
+
+[node name="HealthComponent" type="Node"]
+process_mode = 1
+script = ExtResource("1_rjk1t")
+metadata/_custom_type_script = "uid://dskheke6u5w3"

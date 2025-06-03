@@ -1,0 +1,53 @@
+[gd_scene load_steps=13 format=3 uid="uid://c3d8obwmxx22i"]
+
+[ext_resource type="Script" uid="uid://fjj34lf232r1" path="res://Scripts/Class/projectile_base.gd" id="1_xiu7l"]
+[ext_resource type="PackedScene" uid="uid://kyumaiednicy" path="res://Scene/Nodes and Components/visual_component.tscn" id="2_0nipe"]
+[ext_resource type="Resource" uid="uid://dhvkq7jeywliv" path="res://Resource/Stat Sheets/Projectile/lamp_soul.tres" id="2_h0l04"]
+[ext_resource type="Shader" uid="uid://bsy820uhpcc40" path="res://Resource/Shaders/hit_flash.tres" id="3_qt3m1"]
+[ext_resource type="Texture2D" uid="uid://daxvdbvdq7x1v" path="res://Assets/Sprites/Particles/soul_projectile.png" id="4_ewx8u"]
+[ext_resource type="PackedScene" uid="uid://bycjpgwtybols" path="res://Scene/Nodes and Components/velocity_component.tscn" id="6_go2b3"]
+[ext_resource type="PackedScene" uid="uid://bbkfypa7bbfx8" path="res://Scene/Nodes and Components/health_component.tscn" id="6_kupca"]
+[ext_resource type="PackedScene" uid="uid://daof8i3oqkmqk" path="res://Scene/Nodes and Components/state_machine.tscn" id="7_44xw1"]
+[ext_resource type="Script" uid="uid://dskheke6u5w3" path="res://Scripts/Components/health_component.gd" id="7_go2b3"]
+[ext_resource type="PackedScene" uid="uid://cdnjwb3vxdj3d" path="res://Scene/Nodes and Components/projectile_hitbox.tscn" id="9_go2b3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xiu7l"]
+size = Vector2(30, 30)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kupca"]
+resource_local_to_scene = true
+shader = ExtResource("3_qt3m1")
+shader_parameter/enabled = false
+shader_parameter/tint = Color(1, 1, 1, 1)
+
+[node name="ProjectileBase" type="CharacterBody2D" groups=["Projectile"]]
+collision_layer = 32
+motion_mode = 1
+script = ExtResource("1_xiu7l")
+stat_sheet = ExtResource("2_h0l04")
+
+[node name="BodyCollision" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_xiu7l")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+
+[node name="VisualComponent" parent="." node_paths=PackedStringArray("sprite", "sprite_animator") instance=ExtResource("2_0nipe")]
+sprite = NodePath("BodySprite")
+sprite_animator = NodePath("AnimationPlayer")
+
+[node name="BodySprite" type="Sprite2D" parent="VisualComponent"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_kupca")
+texture = ExtResource("4_ewx8u")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="VisualComponent"]
+
+[node name="VelocityComponent" parent="." instance=ExtResource("6_go2b3")]
+
+[node name="HealthComponent" parent="." node_paths=PackedStringArray("visual_component") instance=ExtResource("6_kupca")]
+script = ExtResource("7_go2b3")
+visual_component = NodePath("../VisualComponent")
+
+[node name="Hitbox" parent="." instance=ExtResource("9_go2b3")]
+
+[node name="StateMachine" parent="." instance=ExtResource("7_44xw1")]

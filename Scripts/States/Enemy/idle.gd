@@ -1,12 +1,14 @@
 extends State
-class_name Idle
+class_name enemy_idle
 
-@export var body: CharacterBody2D
-@export var sprite_animation : AnimationPlayer
+var body: CharacterBody2D
+
+func _ready() -> void:
+	body = get_parent().get_parent()
+
+func enter():
+	Entered.emit()
 
 func physics_update(_delta):
 	body.velocity = body.velocity.lerp(Vector2.ZERO, body.stat_sheet.friction)
 	body.move_and_slide()
-
-func enter():
-	sprite_animation.play("Idle")

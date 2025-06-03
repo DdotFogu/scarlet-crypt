@@ -1,111 +1,143 @@
+@icon("res://Assets/IconGodotNode/node/icon_door.png")
 extends Node2D
+class_name dungeon_generation
 
-@export var room_amount : int 
-var room_indexs : Array[Dictionary]
-@export var room_scenes : Array[PackedScene]
+@export_category("Generation Vars")
+@export var main_path_count : int 
+@export var branching_paths_count : int
+@export var branch_chance : float
+
+@export_category("Other")
+@export var generation_time : float = 0.1
+@export var generation_spacing : float = 4800
+
+@export_category("Room Scenes")
+@export var enemy_room_scenes : Array[PackedScene]
+@export var treasure_rooms : Array[PackedScene]
 @export var starting_room_scenes : Array[PackedScene]
 
 @onready var player: Player = $"../Player"
 
-func _ready() -> void:
-	randomize()
-	create_room_map()
+var room_data_array : Array[room_data]
 
-func create_room_map():
-	var previous_room : Node = null
-	var previous_room_pos : Vector2
+signal generation_completed
+
+func _ready() -> void:
+	Global.dungeon_generation = self
 	
-	for i in range(room_amount):
+	randomize()
+	
+	var room_path = create_new_path(main_path_count)
+	for room in room_path:
+		if room.scene is enemy_room:
+			for i in range(2, 4):
+				room.scene.queued_enemies.append(preload("res://Scene/Characters/NPC/Enemies/Skeleton.tscn"))
+	create_rooms(room_path)
+	
+	await get_tree().create_timer(generation_time * main_path_count).timeout
+	await create_branching_paths()
+	generation_completed.emit()
+
+func create_rooms(path: Array[room_data]):
+	for room in path:
+		await get_tree().create_timer(generation_time).timeout
+		room.scene.global_position = room.scene_position
+		add_child(room.scene)
+		
+		var direction = -room.dir
+		if room.previous_room:
+			room.previous_room.connected_rooms.append(room.scene)
+			room.scene.connected_rooms.append(room.previous_room)
+		
+		direction = Vector2i(direction.x, -direction.y)
+		
+		room.scene.create_doors([direction])
+		if room.previous_room:
+			room.previous_room.create_doors([-direction])
+
+func create_new_path(room_count: int = 0, previous_room: base_room = null) -> Array[room_data]:
+	randomize()
+	var room_path: Array[room_data]
+	var previous_room_pos = previous_room.position if previous_room else Vector2.ZERO
+
+	for i in range(room_count):
 		var direction : Vector2
 		var new_room_pos : Vector2
 		var attempts = 0
-		
-		# Find a valid direction without overlap
-		if i != 0:
+
+		if i != 0 or previous_room != null:
 			while true:
 				direction = Vector2(randi_range(-1, 1), randi_range(-1, 1))
 				if direction.x != 0 and direction.y != 0:
 					continue
-				
-				var has_direction : bool = false
+
+				var has_direction := false
 				for door in previous_room.creation_points:
 					if door["dir"] == Vector2i(-direction):
 						has_direction = true
-				
-				if has_direction == false:
+				if not has_direction:
 					continue
-				
-				new_room_pos = previous_room_pos + (direction * (160 * 5))
-				var new_room_rect = Rect2(new_room_pos * 10, Vector2(320, 320)) # Adjusted for room size
-				var overlap : bool = false
-				
-				for room in room_indexs:
-					var tile_rect = room["scene"].wall_tilemap.get_used_rect().size * 10
-					var room_rect = Rect2(room["scene"].position, tile_rect)
+
+				new_room_pos = previous_room_pos + direction * generation_spacing
+				var new_room_rect = Rect2(new_room_pos, Vector2(320, 320))
+				var overlap = false
+				for existing in room_data_array:
+					var tile_rect = existing.scene.wall_tilemap.get_used_rect().size
+					var room_rect = Rect2(existing.scene.position, tile_rect)
 					if new_room_rect.intersects(room_rect):
 						overlap = true
 						break
-
 				if not overlap:
 					break
-				
 				attempts += 1
 				if attempts > 50:
-					print("Failed to find a non-overlapping position.")
-					return
-		
-		var room_tilemap = room_scenes.pick_random().instantiate()
-		if i == 0:
-			room_tilemap = starting_room_scenes.pick_random().instantiate()
-		else:
-			pass
-		room_tilemap.position = new_room_pos * 10
-		room_tilemap.room_index = i
-		room_indexs.append({"scene" : room_tilemap, "index" : i})
-		
-		var size : Vector2 = room_tilemap.wall_tilemap.get_used_rect().size
-		
-		if i == 0:
-			if player != null:
-				player.global_position += to_global(room_tilemap.wall_tilemap.get_used_rect().size) * 80
-		
-		var door_directions : Array = [Vector2i(-direction.x, direction.y)]
-		add_child(room_tilemap)
-		
-		#create doors
-		if room_tilemap.room_index != 0:
-			room_tilemap.create_doors(door_directions)
-		if previous_room != null:
-			door_directions = [Vector2i(direction.x, -direction.y)]
-			
-			previous_room.create_doors(door_directions)
-			previous_room.connected_rooms.append({"dir" : Vector2i(direction.x, -direction.y), "scene" : room_tilemap, "position" : room_tilemap.global_position})
-			
-			if i != 0:
-				room_tilemap.connected_rooms.append({"dir" : Vector2i(-direction.x, direction.y), "scene" : previous_room, "position" : previous_room.global_position})
-		
-		#create enemies 
-		if room_tilemap.room_index != 0:
-			for I in randi_range(2, 4):
-				room_tilemap.room_enemies.append(preload("res://Skeleton.tscn"))
-		
-		previous_room_pos = new_room_pos
-		previous_room = room_tilemap
+					break
 
-func change_room(connecting_room, direction, player_pos):
-	SignalBus.Enetered_Room.emit(connecting_room.room_index)
+		var room_instance = enemy_room_scenes.pick_random().instantiate()
+		if i == 0 and room_data_array.is_empty():
+			room_instance = starting_room_scenes.pick_random().instantiate()
+
+		room_instance.position = new_room_pos
+
+		var new_data := room_data.new()
+		new_data.scene = room_instance
+		new_data.room_index = room_data_array.size()
+		new_data.scene_position = new_room_pos
+		new_data.dir = Vector2i(direction)
+		new_data.previous_room = previous_room
+
+		room_instance.data = new_data
+
+		room_path.append(new_data)
+		room_data_array.append(new_data)
+
+		previous_room_pos = new_room_pos
+		previous_room = room_instance
+
+	return room_path
+
+func create_branching_paths():
+	var rooms_remaining = branching_paths_count
+	var available_rooms = room_data_array.duplicate()
+
+	while rooms_remaining > 0:
+		for room in available_rooms:
+			if rooms_remaining <= 0:
+				break
+			var chance = Global.rng.randf_range(1, 100)
+			if chance <= branch_chance:
+				var branch_count = randi_range(1, rooms_remaining)
+				rooms_remaining -= branch_count
+				if branch_count <= 0:
+					break
+				var room_path = create_new_path(branch_count, room.scene)
+				create_rooms(room_path)
+				available_rooms.erase(room)
+
+func change_room(connecting_room: base_room, direction, player_pos):
+	SignalBus.Enetered_Room.emit(connecting_room.data.room_index)
 	
-	get_tree().paused = true
-	
-	print(" -> " + str(connecting_room.room_index))
-	
-	Hud.get_node("Transitions/AnimationPlayer").play("Transition_One")
-	await Hud.get_node("Transitions/AnimationPlayer").animation_finished
-	Hud.get_node("Transitions/AnimationPlayer").play_backwards("Transition_One")
-	
-	get_tree().paused = false
-	
-	var pos : Vector2
+	var pos: Vector2
 	for door in connecting_room.creation_points:
 		if door["dir"] == -direction:
 			pos = connecting_room.wall_tilemap.map_to_local(door["pos"]) + connecting_room.wall_tilemap.global_position

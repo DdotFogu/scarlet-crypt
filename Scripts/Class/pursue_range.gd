@@ -1,11 +1,16 @@
+@icon("res://Assets/IconGodotNode/node/icon_event.png")
 extends Area2D
-class_name pursure_range
+class_name target_dectection
 
-@export var state_machine : Node
-@export var state_to_iniate : State
+@export var pathfinding : pathfinding_component
+
+signal target_detected
+signal target_left
 
 var target : CharacterBody2D
 var check_timer : Timer
+
+var overwrite_target_left : bool = false
 
 func _ready() -> void:
 	body_entered.connect(target_body_entered)
@@ -18,27 +23,28 @@ func _ready() -> void:
 	add_child(check_timer)
 
 func do_check():
-	if target == null or get_parent().in_stun() == true:
+	if target == null:
 		return
 	
-	if get_parent().los_check(target.global_position):
-		if state_to_iniate is State and "target" in state_to_iniate:
-			state_to_iniate.target = target
-		else:
-			print("STATE DOES NOT HAVE TARGET VAR OF " + str(get_parent()))
-		state_machine.current_state.Transitioned.emit(state_machine.current_state, state_to_iniate.name)
-		get_node("CollisionShape2D").disabled = true
+	if pathfinding.los_check(target.global_position):
+		overwrite_target_left = true
+		
+		target_detected.emit()
 		check_timer.stop()
+		
+		get_child(0).disabled = true
 	else:
 		pass
-		#print("NO LINE OF SIGHT")
 
 func target_body_entered(target_body):
-	if state_machine.current_state == state_to_iniate:
-		return
-	
 	target = target_body
 	check_timer.start()
 
 func target_body_exited(target_body):
+	if overwrite_target_left: 
+		overwrite_target_left = false
+		return
+	
+	get_child(0).disabled = false
+	target_left.emit()
 	check_timer.stop()

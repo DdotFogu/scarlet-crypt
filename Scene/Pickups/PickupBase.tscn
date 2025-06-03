@@ -1,0 +1,87 @@
+[gd_scene load_steps=16 format=3 uid="uid://cjue1k0e7aj3x"]
+
+[ext_resource type="PackedScene" uid="uid://kyumaiednicy" path="res://Scene/Nodes and Components/visual_component.tscn" id="1_e7iv7"]
+[ext_resource type="Script" uid="uid://dfnsav1ca8lbp" path="res://Scripts/Class/pickup_base.gd" id="1_sopns"]
+[ext_resource type="Shader" uid="uid://bsy820uhpcc40" path="res://Resource/Shaders/hit_flash.tres" id="2_7jbe7"]
+[ext_resource type="Texture2D" uid="uid://daxvdbvdq7x1v" path="res://Assets/Sprites/Particles/soul_projectile.png" id="3_i0lw1"]
+[ext_resource type="PackedScene" uid="uid://bwamvplbiq5hc" path="res://Scene/Nodes and Components/pathfinding_component.tscn" id="4_0aqan"]
+[ext_resource type="Script" uid="uid://b20bpp0ee1r71" path="res://Scripts/Components/pathfinding_component.gd" id="5_leo8u"]
+[ext_resource type="PackedScene" uid="uid://donp10h72n3be" path="res://Scene/Nodes and Components/target_detection_component.tscn" id="6_sopns"]
+[ext_resource type="PackedScene" uid="uid://7hp0hqjomj1u" path="res://Scene/Nodes and Components/attraction_component.tscn" id="7_leo8u"]
+[ext_resource type="PackedScene" uid="uid://bpnfr7sm8gy46" path="res://Scene/Nodes and Components/pickup_component.tscn" id="8_83nnu"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0aqan"]
+radius = 38.2099
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_leo8u"]
+resource_local_to_scene = true
+shader = ExtResource("2_7jbe7")
+shader_parameter/enabled = false
+shader_parameter/tint = Color(1, 1, 1, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sopns"]
+atlas = ExtResource("3_i0lw1")
+region = Rect2(0, 0, 70, 70)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_83nnu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sopns")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_leo8u"]
+radius = 800.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0pbjf"]
+radius = 39.1152
+
+[node name="PickupBase" type="CharacterBody2D"]
+collision_layer = 16
+motion_mode = 1
+script = ExtResource("1_sopns")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+enable_node_path = NodePath("../Atrraction")
+
+[node name="CollisionComponent" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_0aqan")
+
+[node name="VisualComponent" parent="." node_paths=PackedStringArray("sprite") instance=ExtResource("1_e7iv7")]
+sprite = NodePath("BodySprite")
+
+[node name="BodySprite" type="AnimatedSprite2D" parent="VisualComponent"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_leo8u")
+sprite_frames = SubResource("SpriteFrames_83nnu")
+animation = &"Idle"
+autoplay = "Idle"
+speed_scale = 0.2
+
+[node name="PathfindingComponent" parent="." instance=ExtResource("4_0aqan")]
+script = ExtResource("5_leo8u")
+
+[node name="TargetDetectionComponent" parent="." node_paths=PackedStringArray("pathfinding") instance=ExtResource("6_sopns")]
+pathfinding = NodePath("../PathfindingComponent")
+
+[node name="CollisionComponent" type="CollisionShape2D" parent="TargetDetectionComponent"]
+shape = SubResource("CircleShape2D_leo8u")
+
+[node name="PickupComponent" parent="." node_paths=PackedStringArray("pathfinding") instance=ExtResource("8_83nnu")]
+pathfinding = NodePath("../PathfindingComponent")
+
+[node name="CollisionComponent" type="CollisionShape2D" parent="PickupComponent"]
+shape = SubResource("CircleShape2D_0pbjf")
+
+[node name="AttractionComponent" parent="." node_paths=PackedStringArray("target_detection") instance=ExtResource("7_leo8u")]
+target_detection = NodePath("../TargetDetectionComponent")
+
+[connection signal="target_detected" from="TargetDetectionComponent" to="AttractionComponent" method="change_attraction"]
+[connection signal="target_left" from="TargetDetectionComponent" to="AttractionComponent" method="change_attraction" binds= [false]]
+[connection signal="target_detected" from="PickupComponent" to="PickupComponent" method="pickup_item"]
+
+[editable path="PickupComponent"]
