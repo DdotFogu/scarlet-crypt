@@ -6,11 +6,10 @@ class_name pickup_component
 
 @export var upgrades : Array[BaseBulletStrategy] = []
 
-var body : CharacterBody2D
+@onready var body : CharacterBody2D = owner
 
 func _ready() -> void:
 	super()
-	body = owner
 
 func pickup_item():
 	var target_inv : inventory_component = target.get_node("InventoryComponent")
@@ -25,6 +24,9 @@ func pickup_item():
 	
 	if upgrades.size() > 0:
 		for upgrade in upgrades:
+			if target_inv.upgrades.has(upgrade): break
 			target_inv.upgrades.append(upgrade)
+			
+			if Global.GameInfo: Global.GameInfo.play_item_text(upgrade.upgrade_text, upgrade.flavor_text)
 	
 	body.queue_free()

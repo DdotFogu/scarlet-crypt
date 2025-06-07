@@ -1,8 +1,9 @@
-[gd_scene load_steps=53 format=3 uid="uid://cdaqq7x510ew3"]
+[gd_scene load_steps=52 format=3 uid="uid://cdaqq7x510ew3"]
 
-[ext_resource type="Script" uid="uid://cd4kw3ihc1cno" path="res://Scripts/NpcBase.gd" id="1_m55vn"]
-[ext_resource type="Resource" uid="uid://cs7hul5omp2rg" path="res://Resource/Stat Sheets/Skeleton.tres" id="2_fx4og"]
+[ext_resource type="Script" uid="uid://d1snfb33qn63h" path="res://Scripts/Class/NpcBase.gd" id="1_ag86l"]
+[ext_resource type="Resource" uid="uid://cs7hul5omp2rg" path="res://Resource/Stat Sheets/Skeleton.tres" id="2_ebvdb"]
 [ext_resource type="PackedScene" uid="uid://bbntycpxp1uqr" path="res://Scene/Nodes and Components/hurt_box_component.tscn" id="3_3d3xb"]
+[ext_resource type="Texture2D" uid="uid://c44rdyc70dkku" path="res://Assets/Sprites/World/Lighting/light.png" id="3_ebvdb"]
 [ext_resource type="Texture2D" uid="uid://xsud3h278ocn" path="res://Assets/Sprites/Characters/Enemies/Skeleton/Enemy_Skeleton.png" id="3_tsst0"]
 [ext_resource type="PackedScene" uid="uid://bbkfypa7bbfx8" path="res://Scene/Nodes and Components/health_component.tscn" id="4_sd5d1"]
 [ext_resource type="Script" uid="uid://dskheke6u5w3" path="res://Scripts/Components/health_component.gd" id="5_fqp7w"]
@@ -19,14 +20,12 @@
 [ext_resource type="PackedScene" uid="uid://dvljxq6stytim" path="res://Scene/Nodes and Components/status_component.tscn" id="15_ag86l"]
 [ext_resource type="PackedScene" uid="uid://bukca88vabsyb" path="res://Scene/States/NPC/lunge.tscn" id="15_oweu2"]
 [ext_resource type="PackedScene" uid="uid://kyumaiednicy" path="res://Scene/Nodes and Components/visual_component.tscn" id="16_53yw8"]
-[ext_resource type="Script" uid="uid://ccynk18jsd7gr" path="res://Scripts/Strategy/Status Effects/base_effect_strategy.gd" id="16_olrki"]
 [ext_resource type="Script" uid="uid://7cwtyeutrts4" path="res://Scripts/Class/Hitbox.gd" id="16_tf7fm"]
-[ext_resource type="Resource" uid="uid://ctyc3hi322jv6" path="res://Resource/Strategies/Status Effects/Burning.tres" id="17_jp7b8"]
 [ext_resource type="Shader" uid="uid://bsy820uhpcc40" path="res://Resource/Shaders/hit_flash.tres" id="18_14i53"]
 [ext_resource type="Texture2D" uid="uid://kj5semtgnalt" path="res://Assets/Sprites/Debug/arrow_test.png" id="18_31knu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vkklb"]
-size = Vector2(113, 31)
+size = Vector2(80, 31)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_14i53"]
 resource_local_to_scene = true
@@ -420,6 +419,30 @@ tracks/2/keys = {
 "update": 0,
 "values": [0.2]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("BodySprite:material:shader")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("18_14i53")]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("BodySprite:material:shader_parameter/enabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_tf7fm"]
 resource_name = "walk"
@@ -473,8 +496,9 @@ _data = {
 &"walk": SubResource("Animation_tf7fm")
 }
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_ahut7"]
-radius = 82.0366
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ebvdb"]
+radius = 40.0
+height = 158.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tutg3"]
 radius = 2690.32
@@ -482,18 +506,29 @@ radius = 2690.32
 [sub_resource type="CircleShape2D" id="CircleShape2D_oweu2"]
 radius = 647.25
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_tf7fm"]
-radius = 77.026
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jp7b8"]
+height = 108.0
 
 [node name="Skeleton" type="CharacterBody2D" groups=["Enemy"]]
 collision_layer = 4
-script = ExtResource("1_m55vn")
-stat_sheet = ExtResource("2_fx4og")
+motion_mode = 1
+script = ExtResource("1_ag86l")
+stat_sheet = ExtResource("2_ebvdb")
 
 [node name="VisibleEnabler" type="VisibleOnScreenEnabler2D" parent="."]
 
+[node name="LightComponent" type="PointLight2D" parent="."]
+scale = Vector2(1.25, 1.25)
+color = Color(0.882896, 0.783927, 0.65983, 1)
+energy = 0.6
+blend_mode = 2
+shadow_enabled = true
+shadow_filter_smooth = 50.0
+texture = ExtResource("3_ebvdb")
+texture_scale = 1.35
+
 [node name="CollisionComponent" type="CollisionShape2D" parent="."]
-position = Vector2(6.5, 64.5)
+position = Vector2(-10, 64.5)
 shape = SubResource("RectangleShape2D_vkklb")
 
 [node name="VisualComponent" parent="." node_paths=PackedStringArray("sprite", "sprite_animator") instance=ExtResource("16_53yw8")]
@@ -508,6 +543,7 @@ animation = &"Idle"
 speed_scale = 0.2
 
 [node name="Arrow" type="Sprite2D" parent="VisualComponent"]
+visible = false
 texture_filter = 1
 position = Vector2(0, -133)
 texture = ExtResource("18_31knu")
@@ -524,11 +560,9 @@ script = ExtResource("5_fqp7w")
 visual_component = NodePath("../VisualComponent")
 
 [node name="HurtBoxComponent" parent="." instance=ExtResource("3_3d3xb")]
-collision_layer = 0
-collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBoxComponent"]
-shape = SubResource("CircleShape2D_ahut7")
+shape = SubResource("CapsuleShape2D_ebvdb")
 
 [node name="KnockbackComponent" parent="." instance=ExtResource("6_wimb2")]
 script = ExtResource("7_0hwyk")
@@ -540,7 +574,6 @@ script = ExtResource("9_rlgvh")
 
 [node name="StatusComponent" parent="." instance=ExtResource("15_ag86l")]
 position = Vector2(0, 107)
-inital_status_effects = Array[ExtResource("16_olrki")]([ExtResource("17_jp7b8"), ExtResource("17_jp7b8")])
 
 [node name="TargetDetectionComponent" parent="." node_paths=PackedStringArray("pathfinding") instance=ExtResource("10_ayuwi")]
 pathfinding = NodePath("../PathfindingComponent")
@@ -567,9 +600,9 @@ rebounce = true
 metadata/_custom_type_script = "uid://7cwtyeutrts4"
 
 [node name="CollisionComponent" type="CollisionShape2D" parent="LungeAttack"]
-position = Vector2(164, 0)
+position = Vector2(136, 0)
 rotation = 1.5708
-shape = SubResource("CircleShape2D_tf7fm")
+shape = SubResource("CapsuleShape2D_jp7b8")
 disabled = true
 debug_color = Color(0.992157, 0, 0, 0.419608)
 
@@ -594,9 +627,7 @@ visual_component = NodePath("../../VisualComponent")
 [connection signal="change_states" from="HealthComponent" to="StateMachine" method="manual_state_change" binds= ["stun"]]
 [connection signal="death" from="HealthComponent" to="VisualComponent" method="spawn_death_particle"]
 [connection signal="death" from="HealthComponent" to="InventoryComponent" method="drop_inv"]
-[connection signal="took_damage" from="HealthComponent" to="VisualComponent" method="spawn_hit_particle"]
 [connection signal="hurtbox_hit" from="HurtBoxComponent" to="HealthComponent" method="take_damage"]
-[connection signal="hurtbox_hit" from="HurtBoxComponent" to="KnockbackComponent" method="apply_knockback"]
 [connection signal="target_detected" from="TargetDetectionComponent" to="StateMachine" method="manual_state_change" binds= ["follow"]]
 [connection signal="target_detected" from="LungeDetection" to="StateMachine" method="manual_state_change" binds= ["lunge"]]
 [connection signal="Entered" from="StateMachine/idle" to="VisualComponent" method="play_animation" binds= ["walk"]]

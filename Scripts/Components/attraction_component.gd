@@ -3,6 +3,7 @@ extends Node
 class_name attraction_component
 
 @export var target_detection : target_dectection
+@export var attraction_time : float = 2 
 
 var do_attraction : bool = false
 var body : CharacterBody2D
@@ -23,7 +24,7 @@ func _process(delta: float) -> void:
 	var target = target_detection.target
 	
 	pos_tween = get_tree().create_tween()
-	pos_tween.tween_property(owner, "global_position", target.get_node("CollisionComponent").global_position, 5).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	pos_tween.tween_property(owner, "global_position", target.get_node("CollisionComponent").global_position, attraction_time).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	pos_tween.tween_callback(_on_tween_complete)
 
 func _on_tween_complete():

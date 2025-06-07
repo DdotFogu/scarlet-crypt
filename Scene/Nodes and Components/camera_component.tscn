@@ -3,12 +3,11 @@
 [ext_resource type="Script" uid="uid://boq5clddjwd1a" path="res://Scripts/camera_2d.gd" id="1_vqgyh"]
 [ext_resource type="Script" uid="uid://5dbfn8ru3qax" path="res://Scripts/Class/camera_shake.gd" id="2_g4g2c"]
 
-[node name="CameraComponent" type="Camera2D" node_paths=PackedStringArray("target")]
+[node name="CameraComponent" type="Camera2D"]
 visible = false
 zoom = Vector2(0.2, 0.2)
 position_smoothing_speed = 10.0
 script = ExtResource("1_vqgyh")
-target = NodePath("")
 metadata/_custom_type_script = "uid://boq5clddjwd1a"
 
 [node name="CameraShakeComponent" type="Node" parent="."]

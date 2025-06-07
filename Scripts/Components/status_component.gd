@@ -8,23 +8,14 @@ class_name status_component
 var status_effects : Array[BaseEffectStrategy] = []
 
 func _ready() -> void:
-	for status in inital_status_effects:
-		apply_status(status)
+	apply_status(inital_status_effects)
 
-func apply_status(status : BaseEffectStrategy):
-	if status_effects.has(status): 
-		status.erase_icon()
-		status_effects.erase(status)
-	
-	status_effects.append(status)
-	status.apply_effect(body)
-	add_icon(status)
-
-func add_icon(status : BaseEffectStrategy):
-	var icon_sprite = Sprite2D.new()
-	icon_sprite.texture = status.icon
-	icon_sprite.scale = Vector2(2.5, 2.5)
-	icon_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	add_child(icon_sprite)
-	
-	status.icon_node = icon_sprite
+func apply_status(status_array : Array[BaseEffectStrategy]):
+	for status in status_array:
+		if status_effects.has(status): 
+			status_effects[status_effects.find(status)].remaning_time = status.lifetime
+			return
+		else: PopupManager.spawn_status_popup(status.status_string, body)
+		
+		status_effects.append(status)
+		status_effects[status_effects.find(status)].apply_effect(body)

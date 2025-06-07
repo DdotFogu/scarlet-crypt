@@ -15,7 +15,6 @@ func enter():
 	if health_component.last_attack.stun_time <= 0: Transitioned.emit(self, "idle", true)
 	
 	timer.wait_time = health_component.last_attack.stun_time
-	print(health_component.last_attack.stun_time)
 	timer.start()
 
 func exit():

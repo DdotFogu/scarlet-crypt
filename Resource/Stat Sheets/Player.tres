@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_l1pjh")
-health = 88888
+health = 100
 speed = 200
 speed_cap = 1250
 friction = 0.1

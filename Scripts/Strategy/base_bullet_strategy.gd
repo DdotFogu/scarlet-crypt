@@ -7,10 +7,8 @@ class_name BaseBulletStrategy
 # bullet strategies will inherit from.
 ###########################################
 
-
-@export var texture : Texture2D
 @export var upgrade_text : String = "Speed"
-
+@export var flavor_text : String = "Something something upgrading"
 
 # This is the function that we later call when firing our bullet.
 # Since we pass in the instance of the bullet, we can do anything
@@ -19,6 +17,6 @@ class_name BaseBulletStrategy
 # 1. Editing simple variables (ex. bullet.damage += 5)
 # 2. Calling any functions defined in the node
 # 3. Attaching components or changing properties of any attached component
-func apply_upgrade(item : CharacterBody2D):
+func apply_upgrade(item : Node2D):
 	# This does nothing by default
 	pass

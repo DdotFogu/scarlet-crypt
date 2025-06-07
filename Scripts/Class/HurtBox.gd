@@ -3,6 +3,7 @@ class_name HurtBox
 extends Area2D
 
 signal hurtbox_hit(attack : Attack)
+signal apply_effects(status_effects : Array[BaseEffectStrategy])
 
 @onready var body : CharacterBody2D = owner
 
@@ -11,6 +12,7 @@ func _init() -> void:
 	collision_mask = 8
 
 func _ready() -> void:
+	print(body)
 	area_entered.connect(hitbox_entered)
 
 func hitbox_entered(Myhitbox : Hitbox) -> void:
@@ -34,3 +36,6 @@ func hitbox_entered(Myhitbox : Hitbox) -> void:
 	attack.rebounce = Myhitbox.rebounce
 	
 	hurtbox_hit.emit(attack)
+	
+	var effects = Myhitbox.status_effects
+	apply_effects.emit(effects)

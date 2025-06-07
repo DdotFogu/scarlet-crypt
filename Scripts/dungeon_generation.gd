@@ -3,20 +3,20 @@ extends Node2D
 class_name dungeon_generation
 
 @export_category("Generation Vars")
-@export var main_path_count : int 
-@export var branching_paths_count : int
+@export var main_path_data : path_data
+@export var side_path_data : path_data
 @export var branch_chance : float
 
 @export_category("Other")
+@export var camera_component : Camera2D
 @export var generation_time : float = 0.1
 @export var generation_spacing : float = 4800
 
 @export_category("Room Scenes")
 @export var enemy_room_scenes : Array[PackedScene]
 @export var treasure_rooms : Array[PackedScene]
+@export var boss_rooms : Array[PackedScene]
 @export var starting_room_scenes : Array[PackedScene]
-
-@onready var player: Player = $"../Player"
 
 var room_data_array : Array[room_data]
 
@@ -27,16 +27,17 @@ func _ready() -> void:
 	
 	randomize()
 	
-	var room_path = create_new_path(main_path_count)
-	for room in room_path:
-		if room.scene is enemy_room:
-			for i in range(2, 4):
-				room.scene.queued_enemies.append(preload("res://Scene/Characters/NPC/Enemies/Skeleton.tscn"))
+	var room_path = create_new_path(main_path_data)
 	create_rooms(room_path)
 	
-	await get_tree().create_timer(generation_time * main_path_count).timeout
+	await get_tree().create_timer(generation_time * main_path_data.room_count).timeout
 	await create_branching_paths()
 	generation_completed.emit()
+	
+	var cam_target_point = room_data_array[0].scene.get_node("CameraPoint")
+	Global.player.global_position = cam_target_point.global_position
+	if cam_target_point: camera_component.change_target(cam_target_point)
+	else: camera_component.change_target(Global.player)
 
 func create_rooms(path: Array[room_data]):
 	for room in path:
@@ -55,7 +56,7 @@ func create_rooms(path: Array[room_data]):
 		if room.previous_room:
 			room.previous_room.create_doors([-direction])
 
-func create_new_path(room_count: int = 0, previous_room: base_room = null) -> Array[room_data]:
+func create_new_path(data : path_data, room_count : int = data.room_count, previous_room: base_room = null) -> Array[room_data]:
 	randomize()
 	var room_path: Array[room_data]
 	var previous_room_pos = previous_room.position if previous_room else Vector2.ZERO
@@ -94,8 +95,8 @@ func create_new_path(room_count: int = 0, previous_room: base_room = null) -> Ar
 					break
 
 		var room_instance = enemy_room_scenes.pick_random().instantiate()
-		if i == 0 and room_data_array.is_empty():
-			room_instance = starting_room_scenes.pick_random().instantiate()
+		if i == room_count - 1 and data.create_boss_room:room_instance = boss_rooms.pick_random().instantiate()
+		if i == 0 and room_data_array.is_empty(): room_instance = starting_room_scenes.pick_random().instantiate()
 
 		room_instance.position = new_room_pos
 
@@ -117,25 +118,27 @@ func create_new_path(room_count: int = 0, previous_room: base_room = null) -> Ar
 	return room_path
 
 func create_branching_paths():
-	var rooms_remaining = branching_paths_count
+	var rooms_remaining = side_path_data.room_count
 	var available_rooms = room_data_array.duplicate()
 
 	while rooms_remaining > 0:
 		for room in available_rooms:
-			if rooms_remaining <= 0:
-				break
+			if rooms_remaining <= 0: break
+			if room.scene is boss_room: continue
 			var chance = Global.rng.randf_range(1, 100)
 			if chance <= branch_chance:
 				var branch_count = randi_range(1, rooms_remaining)
 				rooms_remaining -= branch_count
-				if branch_count <= 0:
-					break
-				var room_path = create_new_path(branch_count, room.scene)
+				if branch_count <= 0: break
+				var room_path = create_new_path(side_path_data, branch_count, room.scene)
+				
 				create_rooms(room_path)
 				available_rooms.erase(room)
 
 func change_room(connecting_room: base_room, direction, player_pos):
-	SignalBus.Enetered_Room.emit(connecting_room.data.room_index)
+	var cam_target_point = connecting_room.get_node("CameraPoint")
+	if cam_target_point: await camera_component.change_target(cam_target_point)
+	else: await camera_component.change_target(Global.player)
 	
 	var pos: Vector2
 	for door in connecting_room.creation_points:
@@ -148,4 +151,6 @@ func change_room(connecting_room: base_room, direction, player_pos):
 				pos.y += 100 * door["dir"].y
 				pos.x = player_pos.x
 	if pos != null:
-		player.position = pos
+		Global.player.position = pos
+	
+	SignalBus.Enetered_Room.emit(connecting_room.data.room_index)

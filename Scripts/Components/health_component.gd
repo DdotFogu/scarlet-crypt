@@ -14,7 +14,7 @@ var last_attack : Attack
 @onready var body : CharacterBody2D = owner
 
 func _ready() -> void:
-	health = body.stat_sheet.health
+	health = owner.stat_sheet.health
 
 func take_damage(attack:Attack, hideDamage : bool = false):
 	last_attack = attack

@@ -26,7 +26,7 @@ func do_check():
 	if target == null:
 		return
 	
-	if pathfinding.los_check(target.global_position):
+	if pathfinding.los_check(target.global_position, owner.global_position, 0):
 		overwrite_target_left = true
 		
 		target_detected.emit()

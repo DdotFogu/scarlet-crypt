@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://60c241b2xepb"]
+
+[ext_resource type="Script" uid="uid://ddalry34ty82k" path="res://Scripts/Strategy/status_effect_strategy.gd" id="1_x8ix1"]
+[ext_resource type="Resource" uid="uid://ctyc3hi322jv6" path="res://Resource/Strategies/Status Effects/Burning.tres" id="2_w2uly"]
+
+[resource]
+script = ExtResource("1_x8ix1")
+effect_to_apply = ExtResource("2_w2uly")
+upgrade_text = "Fire Grease"
+flavor_text = "Scythe now inflicts burning"
+metadata/_custom_type_script = "uid://cyefj6blkkxlp"

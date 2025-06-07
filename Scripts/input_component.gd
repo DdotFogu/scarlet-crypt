@@ -20,3 +20,4 @@ func get_input():
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("pi_m2"): event_m2.emit()
+	if event.is_action_pressed("pi_m1"): event_m1.emit()

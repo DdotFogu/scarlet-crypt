@@ -1,0 +1,106 @@
+[gd_scene load_steps=5 format=3 uid="uid://bnpvhm8bcjx5s"]
+
+[ext_resource type="Script" uid="uid://87q5h26luygd" path="res://Scripts/gameinfo_ui.gd" id="1_v2dtb"]
+
+[sub_resource type="Animation" id="Animation_nk35b"]
+resource_name = "Default"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ItemText/Title:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ItemText/Subtitle:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_anbsd"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ItemText/Title:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ItemText/Subtitle:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ayjo4"]
+_data = {
+&"Default": SubResource("Animation_nk35b"),
+&"RESET": SubResource("Animation_anbsd")
+}
+
+[node name="GameInfoUI" type="CanvasLayer"]
+script = ExtResource("1_v2dtb")
+
+[node name="ItemText" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+mouse_filter = 1
+
+[node name="Title" type="RichTextLabel" parent="ItemText"]
+visible = false
+texture_filter = 1
+layout_mode = 0
+offset_top = 390.0
+offset_right = 3840.0
+offset_bottom = 829.0
+scale = Vector2(0.3, 0.3)
+bbcode_enabled = true
+text = "[shake rate=10.0 level=5 connected=1][center][color=Gray][font=\"E:/OneDrive/Documents/Godot Games/scarlet-crypt/Assets/Fonts/Vaticanus-G3yVG.ttf\"][font_size=80]
+Upgrade Name"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Subtitle" type="RichTextLabel" parent="ItemText"]
+visible = false
+texture_filter = 1
+layout_mode = 0
+offset_top = 415.0
+offset_right = 3840.0
+offset_bottom = 854.0
+scale = Vector2(0.3, 0.3)
+bbcode_enabled = true
+text = "[shake rate=10.0 level=5 connected=1][center][color=Gray][font=\"E:/OneDrive/Documents/Godot Games/scarlet-crypt/Assets/Fonts/Vaticanus-G3yVG.ttf\"][font_size=40]
+Upgrade Flavor"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_ayjo4")
+}
+autoplay = "RESET"

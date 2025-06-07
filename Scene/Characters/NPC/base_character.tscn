@@ -1,6 +1,6 @@
 [gd_scene load_steps=48 format=3 uid="uid://ioen5smsigft"]
 
-[ext_resource type="Script" uid="uid://cd4kw3ihc1cno" path="res://Scripts/NpcBase.gd" id="1_uhjcf"]
+[ext_resource type="Script" uid="uid://d1snfb33qn63h" path="res://Scripts/Class/NpcBase.gd" id="1_uhjcf"]
 [ext_resource type="PackedScene" uid="uid://bbntycpxp1uqr" path="res://Scene/Nodes and Components/hurt_box_component.tscn" id="2_5qexb"]
 [ext_resource type="Resource" uid="uid://cs7hul5omp2rg" path="res://Resource/Stat Sheets/Skeleton.tres" id="2_q2p83"]
 [ext_resource type="PackedScene" uid="uid://kyumaiednicy" path="res://Scene/Nodes and Components/visual_component.tscn" id="3_kjbbw"]

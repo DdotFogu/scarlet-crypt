@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bbkfypa7bbfx8" path="res://Scene/Nodes and Components/health_component.tscn" id="6_kupca"]
 [ext_resource type="PackedScene" uid="uid://daof8i3oqkmqk" path="res://Scene/Nodes and Components/state_machine.tscn" id="7_44xw1"]
 [ext_resource type="Script" uid="uid://dskheke6u5w3" path="res://Scripts/Components/health_component.gd" id="7_go2b3"]
-[ext_resource type="PackedScene" uid="uid://cdnjwb3vxdj3d" path="res://Scene/States/Projectile/projectile_hitbox.tscn" id="9_go2b3"]
+[ext_resource type="PackedScene" uid="uid://cdnjwb3vxdj3d" path="res://Scene/Nodes and Components/projectile_hitbox.tscn" id="9_go2b3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xiu7l"]
 size = Vector2(30, 30)

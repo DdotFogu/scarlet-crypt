@@ -24,7 +24,7 @@ func zoom(zoom_float : float = 0.2):
 
 func teleport():
 	output_text("Teleported Player To " + str(get_tree().current_scene.get_global_mouse_position()))
-	get_tree().current_scene.get_node("Player").global_position = get_tree().current_scene.get_global_mouse_position()
+	Global.player.global_position = get_tree().current_scene.get_global_mouse_position()
 
 func view_collision(enabled : bool = true):
 	get_tree().set_debug_collisions_hint(enabled)
@@ -42,7 +42,7 @@ func spawn(spawn_name : String, amount : int = 1):
 	var spawn_dict : Dictionary = {
 	"npc" : preload("res://Scene/Characters/NPC/base_character.tscn"),
 	"skeleton" : preload("res://Scene/Characters/NPC/Enemies/Skeleton.tscn"), 
-	"minor_soul" : preload("res://Scene/Pickups/MinorSoul.tscn")
+	"minor soul" : preload("res://Scene/Pickups/MinorSoul.tscn")
 	}
 	spawn_name = spawn_name.to_lower()
 	

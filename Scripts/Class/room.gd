@@ -1,3 +1,4 @@
+@icon("res://Assets/IconGodotNode/node/icon_map.png")
 extends Node2D
 class_name base_room
 
@@ -8,10 +9,8 @@ class_name base_room
 var data : room_data
 
 var connected_rooms : Array[base_room]
-var dungeon_generation
 
 func _ready() -> void:
-	dungeon_generation = Global.dungeon_generation
 	if index:
 		index.text = str(data.room_index)
 
@@ -44,7 +43,7 @@ func create_doors(directions : Array):
 						if room_point["dir"] == direction:
 							connecting_room = room
 				
-				if connecting_room: door_area2D.body_entered.connect(func(_body): dungeon_generation.change_room(connecting_room, direction, _body.global_position))
+				if connecting_room: door_area2D.body_entered.connect(func(_body): Global.dungeon_generation.change_room(connecting_room, direction, _body.global_position))
 				break
 			else:
 				pass

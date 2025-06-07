@@ -8,22 +8,27 @@
 
 config_version=5
 
+[animation]
+
+warnings/check_invalid_track_paths=false
+
 [application]
 
 config/name="Soul Crypt"
 run/main_scene="uid://bfuk23mujkloj"
 config/features=PackedStringArray("4.4", "Forward Plus")
-config/icon="res://Assets/Sprites/PlaceHolder/icon.svg"
+boot_splash/show_image=false
+config/icon="uid://cbvr5fvkxu8ke"
 
 [autoload]
 
-Hud="*res://Scripts/AutoLoads/hud.tscn"
 DevConsole="*res://Scripts/AutoLoads/dev_console.tscn"
 Debugger="*res://Scripts/AutoLoads/debugger.tscn"
 SignalBus="*res://Scripts/AutoLoads/signal_bus.gd"
 Global="*res://Scripts/AutoLoads/global.gd"
 SoundManager="*res://addons/sound_manager/module/SoundManager.tscn"
 Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
+TransitionUi="*res://Scene/UI/TransitionUi.tscn"
 
 [dialogic]
 

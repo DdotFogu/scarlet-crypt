@@ -7,15 +7,18 @@ class_name inventory_component
 
 @export var upgrades : Array[BaseBulletStrategy] = []
 
-var body : CharacterBody2D
+@onready var body : CharacterBody2D = owner
 
-func _ready() -> void:
-	body = owner
+func soul_quota(quota : int) -> bool:
+	if minor_souls_count >= quota: return true
+	else: return false
 
-func apply_upgrades(item : CharacterBody2D):
+func apply_upgrades(item : Node2D):
+	if !item: return false
+	
 	for strategy in upgrades:
-			strategy.apply_upgrade(item)
+		strategy.apply_upgrade(item)
 
 func drop_inv():
 	for i in minor_souls_count:
-		soul_manager.spawn_minor_soul(body.global_position, get_tree().current_scene)
+		soul_manager.spawn_minor_soul(body.get_nearby_position(100), get_tree().current_scene)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://oy8jux68hmbe"]
+[gd_scene load_steps=44 format=3 uid="uid://oy8jux68hmbe"]
 
 [ext_resource type="Script" uid="uid://dlm8cojwy0401" path="res://Scripts/player_character.gd" id="1_uubsr"]
 [ext_resource type="Resource" uid="uid://dch0f4net8iak" path="res://Resource/Stat Sheets/Player.tres" id="2_rp6ye"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://bavxkfnpk8dhb" path="res://Assets/Sprites/Characters/Player/Player_sprite_sheet.png" id="4_ns8yf"]
 [ext_resource type="Script" uid="uid://dskheke6u5w3" path="res://Scripts/Components/health_component.gd" id="6_kqenx"]
 [ext_resource type="PackedScene" uid="uid://bbkfypa7bbfx8" path="res://Scene/Nodes and Components/health_component.tscn" id="7_aurit"]
+[ext_resource type="Texture2D" uid="uid://c44rdyc70dkku" path="res://Assets/Sprites/World/Lighting/light.png" id="7_ns8yf"]
 [ext_resource type="Texture2D" uid="uid://cbvr5fvkxu8ke" path="res://Assets/Sprites/Characters/Player/Lantern.png" id="7_rp6ye"]
 [ext_resource type="Script" uid="uid://nxlbgvyixghw" path="res://Scripts/States/state_machine.gd" id="8_mdmmb"]
 [ext_resource type="Script" uid="uid://bpqe0gx4e6mps" path="res://Scripts/States/Player/idle.gd" id="9_aurit"]
@@ -19,6 +20,8 @@
 [ext_resource type="Script" uid="uid://drwdxykreh4fg" path="res://Scripts/States/Player/scythe_attack.gd" id="12_0jo7b"]
 [ext_resource type="PackedScene" uid="uid://3bm0koocg0yx" path="res://Scene/Nodes and Components/inventory_component.tscn" id="12_kqln3"]
 [ext_resource type="Script" uid="uid://cuyuepwwk7yau" path="res://Scripts/weapon_component.gd" id="13_kqln3"]
+[ext_resource type="PackedScene" uid="uid://dvljxq6stytim" path="res://Scene/Nodes and Components/status_component.tscn" id="15_beqhx"]
+[ext_resource type="Script" uid="uid://7cwtyeutrts4" path="res://Scripts/Class/Hitbox.gd" id="15_x67wc"]
 [ext_resource type="Script" uid="uid://d0310rsv5fjno" path="res://Scripts/Class/tile_data.gd" id="19_253ci"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2hs0m"]
@@ -45,15 +48,18 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_x67wc"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rp6ye"]
+size = Vector2(80, 130)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rp6ye"]
 atlas = ExtResource("7_rp6ye")
 region = Rect2(0, 0, 80, 130)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_ns8yf"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_x67wc"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_x67wc")
+"texture": SubResource("AtlasTexture_rp6ye")
 }],
 "loop": true,
 "name": &"default",
@@ -393,6 +399,75 @@ _data = {
 [sub_resource type="CircleShape2D" id="CircleShape2D_mqs5k"]
 radius = 82.0366
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ns8yf"]
+radius = 25.0
+height = 110.0
+
+[sub_resource type="Animation" id="Animation_ns8yf"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape2D:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_x67wc"]
+resource_name = "attack"
+length = 0.7
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"set_rotation_to_mouse"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("%StateMachine")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["attack"],
+"method": &"manual_state_change"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ns8yf"]
+_data = {
+&"RESET": SubResource("Animation_ns8yf"),
+&"attack": SubResource("Animation_x67wc")
+}
+
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 collision_layer = 2
 collision_mask = 5
@@ -417,13 +492,41 @@ sprite_frames = SubResource("SpriteFrames_ab81y")
 animation = &"Idle"
 speed_scale = 0.2
 
-[node name="Lamp" type="AnimatedSprite2D" parent="VisualComponent"]
+[node name="LampLight" type="PointLight2D" parent="VisualComponent"]
+position = Vector2(-80, -150)
+scale = Vector2(1.25, 1.25)
+color = Color(0.407843, 0.686275, 0.898039, 1)
+blend_mode = 2
+shadow_enabled = true
+shadow_filter_smooth = 50.0
+texture = ExtResource("7_ns8yf")
+texture_scale = 2.0
+
+[node name="LampStatic" type="StaticBody2D" parent="VisualComponent"]
+position = Vector2(-80, -215)
+collision_layer = 0
+collision_mask = 0
+
+[node name="PinJoint2D" type="PinJoint2D" parent="VisualComponent"]
+position = Vector2(-80, -215)
+node_a = NodePath("../LampStatic")
+node_b = NodePath("../Lamp")
+softness = 3.0
+
+[node name="Lamp" type="RigidBody2D" parent="VisualComponent"]
 texture_filter = 1
 position = Vector2(-80, -150)
-sprite_frames = SubResource("SpriteFrames_ns8yf")
+collision_layer = 0
+gravity_scale = 10.0
+
+[node name="CollisionComponent" type="CollisionShape2D" parent="VisualComponent/Lamp"]
+shape = SubResource("RectangleShape2D_rp6ye")
 
 [node name="SpawnPosition" type="Marker2D" parent="VisualComponent/Lamp"]
 position = Vector2(0, 25)
+
+[node name="Sprite" type="AnimatedSprite2D" parent="VisualComponent/Lamp"]
+sprite_frames = SubResource("SpriteFrames_x67wc")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="VisualComponent"]
 libraries = {
@@ -436,7 +539,7 @@ speed_scale = 0.2
 script = ExtResource("6_kqenx")
 visual_component = NodePath("../VisualComponent")
 
-[node name="HurtBoxComponent" parent="." groups=["Player"] instance=ExtResource("9_j65nk")]
+[node name="HurtBoxComponent" parent="." instance=ExtResource("9_j65nk")]
 collision_layer = 0
 collision_mask = 8
 
@@ -447,12 +550,39 @@ shape = SubResource("CircleShape2D_mqs5k")
 script = ExtResource("11_0jo7b")
 
 [node name="InventoryComponent" parent="." instance=ExtResource("12_kqln3")]
-minor_souls_count = 0
+minor_souls_count = 898888888
 
-[node name="WeaponComponent" type="Node2D" parent="." node_paths=PackedStringArray("inventory_component", "spawn_marker")]
+[node name="StatusComponent" parent="." instance=ExtResource("15_beqhx")]
+position = Vector2(0, 107)
+
+[node name="WeaponComponent" type="Node2D" parent="." node_paths=PackedStringArray("inventory_component", "scyth_hitbox", "scythe_anim_player", "spawn_marker")]
 script = ExtResource("13_kqln3")
 inventory_component = NodePath("../InventoryComponent")
+scyth_hitbox = NodePath("../ScytheHitbox")
+scythe_anim_player = NodePath("../ScytheHitbox/AnimationPlayer")
 spawn_marker = NodePath("../VisualComponent/Lamp/SpawnPosition")
+
+[node name="ScytheHitbox" type="Area2D" parent="." node_paths=PackedStringArray("killer")]
+rotation = -1.06369
+script = ExtResource("15_x67wc")
+killer = NodePath("..")
+damage = 25
+knockback_force = 1300
+stun_time = 0.7
+rebounce = true
+metadata/_custom_type_script = "uid://7cwtyeutrts4"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ScytheHitbox"]
+position = Vector2(137, 0)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_ns8yf")
+disabled = true
+debug_color = Color(1, 0, 0, 0.419608)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ScytheHitbox"]
+libraries = {
+&"": SubResource("AnimationLibrary_ns8yf")
+}
 
 [node name="TileDataComponent" type="TileMapLayer" parent="."]
 script = ExtResource("19_253ci")
@@ -477,11 +607,14 @@ metadata/_custom_type_script = "uid://sgpccnrpg5s1"
 
 [node name="attack" type="Node" parent="StateMachine"]
 script = ExtResource("12_0jo7b")
-launch_force = 60.0
+launch_force = 2000.0
+friction = 50.0
 metadata/_custom_type_script = "uid://uhkfqp2cc5p4"
 
+[connection signal="event_m1" from="InputComponent" to="WeaponComponent" method="swing_sycth"]
 [connection signal="event_m2" from="InputComponent" to="WeaponComponent" method="fire_projectile" binds= ["soul"]]
 [connection signal="change_states" from="HealthComponent" to="StateMachine" method="manual_state_change" binds= ["stun"]]
 [connection signal="took_damage" from="HealthComponent" to="VisualComponent" method="spawn_hit_particle"]
+[connection signal="apply_effects" from="HurtBoxComponent" to="StatusComponent" method="apply_status"]
 [connection signal="hurtbox_hit" from="HurtBoxComponent" to="HealthComponent" method="take_damage"]
 [connection signal="hurtbox_hit" from="HurtBoxComponent" to="KnockbackComponent" method="apply_knockback"]

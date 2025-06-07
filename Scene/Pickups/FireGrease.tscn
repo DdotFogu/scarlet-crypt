@@ -1,0 +1,74 @@
+[gd_scene load_steps=15 format=3 uid="uid://dhtfna2bme0sh"]
+
+[ext_resource type="Script" uid="uid://dfnsav1ca8lbp" path="res://Scripts/Class/pickup_base.gd" id="1_teba2"]
+[ext_resource type="PackedScene" uid="uid://kyumaiednicy" path="res://Scene/Nodes and Components/visual_component.tscn" id="2_jm2e8"]
+[ext_resource type="Shader" uid="uid://bsy820uhpcc40" path="res://Resource/Shaders/hit_flash.tres" id="3_gcqky"]
+[ext_resource type="Texture2D" uid="uid://dntexb87bvjks" path="res://Assets/Sprites/Effects And Items/PlaceHolder/fire_status.png" id="4_wt8lb"]
+[ext_resource type="PackedScene" uid="uid://bwamvplbiq5hc" path="res://Scene/Nodes and Components/pathfinding_component.tscn" id="5_3d7ys"]
+[ext_resource type="Script" uid="uid://b20bpp0ee1r71" path="res://Scripts/Components/pathfinding_component.gd" id="6_eyjy7"]
+[ext_resource type="PackedScene" uid="uid://bpnfr7sm8gy46" path="res://Scene/Nodes and Components/pickup_component.tscn" id="8_iwg0b"]
+[ext_resource type="Script" uid="uid://cyefj6blkkxlp" path="res://Scripts/Strategy/base_bullet_strategy.gd" id="9_4217w"]
+[ext_resource type="Resource" uid="uid://60c241b2xepb" path="res://Resource/Strategies/Fire Grease.tres" id="10_teba2"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0aqan"]
+radius = 38.2099
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_leo8u"]
+resource_local_to_scene = true
+shader = ExtResource("3_gcqky")
+shader_parameter/enabled = false
+shader_parameter/tint = Color(1, 1, 1, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4217w"]
+atlas = ExtResource("4_wt8lb")
+region = Rect2(0, 0, 17, 17)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_83nnu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4217w")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0pbjf"]
+radius = 80.0
+
+[node name="PickupBase" type="CharacterBody2D"]
+collision_layer = 16
+motion_mode = 1
+script = ExtResource("1_teba2")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+enable_node_path = NodePath("../Atrraction")
+
+[node name="CollisionComponent" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_0aqan")
+
+[node name="VisualComponent" parent="." instance=ExtResource("2_jm2e8")]
+
+[node name="BodySprite" type="AnimatedSprite2D" parent="VisualComponent"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_leo8u")
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_83nnu")
+animation = &"Idle"
+autoplay = "Idle"
+speed_scale = 0.2
+
+[node name="PathfindingComponent" parent="." instance=ExtResource("5_3d7ys")]
+script = ExtResource("6_eyjy7")
+
+[node name="PickupComponent" parent="." node_paths=PackedStringArray("pathfinding") instance=ExtResource("8_iwg0b")]
+upgrades = Array[ExtResource("9_4217w")]([ExtResource("10_teba2")])
+pathfinding = NodePath("../PathfindingComponent")
+
+[node name="CollisionComponent" type="CollisionShape2D" parent="PickupComponent"]
+shape = SubResource("CircleShape2D_0pbjf")
+
+[connection signal="target_detected" from="PickupComponent" to="PickupComponent" method="pickup_item"]
+
+[editable path="PickupComponent"]

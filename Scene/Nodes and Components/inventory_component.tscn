@@ -4,5 +4,4 @@
 
 [node name="InventoryComponent" type="Node"]
 script = ExtResource("1_bvcca")
-minor_souls_count = 3
 metadata/_custom_type_script = "uid://dl04sydy5uj2y"

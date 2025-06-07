@@ -14,10 +14,10 @@ scale = Vector2(0.41, 0.41)
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 layout_mode = 0
-offset_left = -221.951
-offset_top = -92.6829
-offset_right = 254.049
-offset_bottom = 92.3171
+offset_left = -1682.93
+offset_top = -93.0
+offset_right = 1707.07
+offset_bottom = 92.0
 bbcode_enabled = true
 text = "[outline_size=100][center][color=red][font=\"E:/OneDrive/Documents/Godot Games/scarlet-crypt/Assets/Fonts/Vaticanus-G3yVG.ttf\"][font_size=200]"
 scroll_active = false
