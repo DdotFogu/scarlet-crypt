@@ -1,7 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://cn4av3i5j4sac"]
+[gd_scene load_steps=3 format=3 uid="uid://mhfywxr85o5u"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hegvs"]
-size = Vector2(20, 300)
+size = Vector2(28, 350)
 
 [sub_resource type="LabelSettings" id="LabelSettings_hegvs"]
 

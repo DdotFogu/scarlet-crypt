@@ -38,7 +38,6 @@ func spawn_death_particle():
 	for particles in new_particles:
 		particles.direction = -body.velocity.normalized()
 
-
 func _physics_process(delta: float) -> void:
 	if !sprite: return
 	

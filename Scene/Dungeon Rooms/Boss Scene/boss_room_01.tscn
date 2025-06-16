@@ -1,13 +1,13 @@
-[gd_scene load_steps=93 format=4 uid="uid://7gv5u0por8kb"]
+[gd_scene load_steps=93 format=4 uid="uid://chfjj3gtyc3eg"]
 
-[ext_resource type="Script" uid="uid://xwac137g5j5d" path="res://Scripts/Class/room.gd" id="1_qbdpn"]
-[ext_resource type="Texture2D" uid="uid://bm87saos3j01b" path="res://Assets/Sprites/World/Dungeons/room tilemap.png" id="3_6ptoh"]
-[ext_resource type="Texture2D" uid="uid://u5thrdyxw3gg" path="res://Assets/Sprites/World/Dungeons/Dungeon_room.png" id="3_o6usu"]
-[ext_resource type="Theme" uid="uid://ic2dblbhbuv7" path="res://Resource/Themes/dev_theme.tres" id="5_6ptoh"]
-[ext_resource type="PackedScene" uid="uid://bvetq2aspd8fx" path="res://Scene/Cosmetics/Props/torch.tscn" id="5_rx0fo"]
-[ext_resource type="Script" uid="uid://b052utc2rlun0" path="res://Scripts/camera_target_component.gd" id="6_7lcfy"]
+[ext_resource type="Script" uid="uid://cn8nh3n8p6w8x" path="res://Scripts/boss_room.gd" id="1_8ae5t"]
+[ext_resource type="Script" uid="uid://b052utc2rlun0" path="res://Scripts/camera_target_component.gd" id="2_kpdc5"]
+[ext_resource type="Theme" uid="uid://ic2dblbhbuv7" path="res://Resource/Themes/dev_theme.tres" id="2_x2jo3"]
+[ext_resource type="Texture2D" uid="uid://bm87saos3j01b" path="res://Assets/Sprites/World/Dungeons/room tilemap.png" id="3_cgsmq"]
+[ext_resource type="Texture2D" uid="uid://u5thrdyxw3gg" path="res://Assets/Sprites/World/Dungeons/Dungeon_room.png" id="4_ebdx6"]
+[ext_resource type="PackedScene" uid="uid://bvetq2aspd8fx" path="res://Scene/Cosmetics/Props/torch.tscn" id="5_8xq7x"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_o6usu"]
+[sub_resource type="LabelSettings" id="LabelSettings_kpdc5"]
 font_size = 1818
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_vjv3p"]
@@ -70,8 +70,8 @@ polygon = PackedVector2Array(-80, -80, -39, -80, -39, 80, -80, 80)
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_i0pa4"]
 polygon = PackedVector2Array(-80, -80, -39, -80, -41, -39, -80, -39)
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7lcfy"]
-texture = ExtResource("3_6ptoh")
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_72xqh"]
+texture = ExtResource("3_cgsmq")
 texture_region_size = Vector2i(160, 160)
 0:0/0 = 0
 1:0/0 = 0
@@ -144,16 +144,16 @@ texture_region_size = Vector2i(160, 160)
 0:1/0 = 0
 0:2/0 = 0
 
-[sub_resource type="TileSet" id="TileSet_1hsdr"]
+[sub_resource type="TileSet" id="TileSet_ay84p"]
 tile_size = Vector2i(160, 160)
 occlusion_layer_0/light_mask = 1
 physics_layer_0/collision_layer = 1
 physics_layer_0/collision_mask = 6
-sources/2 = SubResource("TileSetAtlasSource_7lcfy")
+sources/2 = SubResource("TileSetAtlasSource_72xqh")
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_x68xm"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0qjun"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_55ymn"]
 texture = SubResource("CompressedTexture2D_x68xm")
 texture_region_size = Vector2i(160, 160)
 
@@ -172,8 +172,8 @@ polygon = PackedVector2Array(39.5307, -80, 80, -80, 80, 80, 40.9948, 80)
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_dr7i3"]
 polygon = PackedVector2Array(40.9948, -80, 80, -80, 80, 80, 39.5307, 80)
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rx0fo"]
-texture = ExtResource("3_o6usu")
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ddq71"]
+texture = ExtResource("4_ebdx6")
 texture_region_size = Vector2i(160, 160)
 3:4/0 = 0
 3:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(38.9743, -80, 80, -80, 80, 80, 40, 80)
@@ -540,8 +540,8 @@ polygon = PackedVector2Array(-80, -80, -39, -80, -39, 80, -80, 80)
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_3dolv"]
 polygon = PackedVector2Array(-80, -80, -39, -80, -41, -39, -80, -39)
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fxx16"]
-texture = ExtResource("3_6ptoh")
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5c0ma"]
+texture = ExtResource("3_cgsmq")
 texture_region_size = Vector2i(160, 160)
 0:0/0 = 0
 1:0/0 = 0
@@ -642,21 +642,21 @@ texture_region_size = Vector2i(160, 160)
 1:9/0 = 0
 1:8/0 = 0
 
-[sub_resource type="TileSet" id="TileSet_fxx16"]
+[sub_resource type="TileSet" id="TileSet_4glty"]
 tile_size = Vector2i(160, 160)
 occlusion_layer_0/light_mask = 1
 physics_layer_0/collision_layer = 1
 physics_layer_0/collision_mask = 6
-sources/0 = SubResource("TileSetAtlasSource_0qjun")
-sources/1 = SubResource("TileSetAtlasSource_rx0fo")
-sources/2 = SubResource("TileSetAtlasSource_fxx16")
+sources/0 = SubResource("TileSetAtlasSource_55ymn")
+sources/1 = SubResource("TileSetAtlasSource_ddq71")
+sources/2 = SubResource("TileSetAtlasSource_5c0ma")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_bo4vj"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cjrwh"]
 size = Vector2(331, 20)
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_8heaj"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lsnsc"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_q0fij"]
 texture = SubResource("CompressedTexture2D_8heaj")
 texture_region_size = Vector2i(160, 160)
 
@@ -675,8 +675,8 @@ polygon = PackedVector2Array(39.5307, -80, 80, -80, 80, 80, 40.9948, 80)
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_7pdwh"]
 polygon = PackedVector2Array(40.9948, -80, 80, -80, 80, 80, 39.5307, 80)
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_f1fx3"]
-texture = ExtResource("3_o6usu")
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dee24"]
+texture = ExtResource("4_ebdx6")
 texture_region_size = Vector2i(160, 160)
 3:4/0 = 0
 3:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(38.9743, -80, 80, -80, 80, 80, 40, 80)
@@ -1043,8 +1043,8 @@ polygon = PackedVector2Array(-80, -80, -39, -80, -39, 80, -80, 80)
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_pwrc8"]
 polygon = PackedVector2Array(-80, -80, -39, -80, -41, -39, -80, -39)
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_x68xm"]
-texture = ExtResource("3_6ptoh")
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qpodt"]
+texture = ExtResource("3_cgsmq")
 texture_region_size = Vector2i(160, 160)
 0:0/0 = 0
 1:0/0 = 0
@@ -1157,23 +1157,23 @@ texture_region_size = Vector2i(160, 160)
 4:1/0 = 0
 9:0/0 = 0
 
-[sub_resource type="TileSet" id="TileSet_f1fx3"]
+[sub_resource type="TileSet" id="TileSet_qye7f"]
 tile_size = Vector2i(160, 160)
 occlusion_layer_0/light_mask = 1
 physics_layer_0/collision_layer = 1
 physics_layer_0/collision_mask = 6
-sources/0 = SubResource("TileSetAtlasSource_lsnsc")
-sources/1 = SubResource("TileSetAtlasSource_f1fx3")
-sources/2 = SubResource("TileSetAtlasSource_x68xm")
+sources/0 = SubResource("TileSetAtlasSource_q0fij")
+sources/1 = SubResource("TileSetAtlasSource_dee24")
+sources/2 = SubResource("TileSetAtlasSource_qpodt")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_x68xm"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1u26f"]
 size = Vector2(28, 350)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_0qjun"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uqnrr"]
 size = Vector2(2240, 1930.5)
 
-[node name="starting_room_01" type="Node2D" node_paths=PackedStringArray("wall_tilemap", "index")]
-script = ExtResource("1_qbdpn")
+[node name="boss_room_01" type="Node2D" node_paths=PackedStringArray("wall_tilemap", "index")]
+script = ExtResource("1_8ae5t")
 creation_points = Array[Dictionary]([{
 "dir": Vector2i(-1, 0),
 "door": NodePath("doors/Door2"),
@@ -1200,8 +1200,8 @@ offset_left = 924.0
 offset_top = 317.0
 offset_right = 1833.0
 offset_bottom = 2136.0
-theme = ExtResource("5_6ptoh")
-label_settings = SubResource("LabelSettings_o6usu")
+theme = ExtResource("2_x2jo3")
+label_settings = SubResource("LabelSettings_kpdc5")
 
 [node name="tilemaps" type="Node2D" parent="."]
 
@@ -1210,24 +1210,24 @@ visible = false
 y_sort_enabled = true
 texture_filter = 1
 tile_map_data = PackedByteArray("AAACAAMAAgAHAAIAAAACAAoAAgAHAAIAAAADAAIAAgAHAAIAAAADAAMAAgAHAAIAAAADAAQAAgAHAAIAAAADAAkAAgAHAAIAAAADAAoAAgAHAAIAAAADAAsAAgAHAAIAAAAEAAIAAgAHAAIAAAAEAAMAAgAHAAIAAAAEAAQAAgAHAAIAAAAEAAUAAgAHAAIAAAAEAAYAAgAHAAIAAAAEAAcAAgAHAAIAAAAEAAgAAgAHAAIAAAAEAAkAAgAHAAIAAAAEAAoAAgAHAAIAAAAEAAsAAgAHAAIAAAAFAAMAAgAHAAIAAAAFAAQAAgAHAAIAAAAFAAUAAgAHAAIAAAAFAAYAAgAHAAIAAAAFAAcAAgAHAAIAAAAFAAgAAgAHAAIAAAAFAAkAAgAHAAIAAAAFAAoAAgAHAAIAAAAGAAQAAgAHAAIAAAAGAAUAAgAHAAIAAAAGAAYAAgAHAAIAAAAGAAcAAgAHAAIAAAAGAAgAAgAHAAIAAAAGAAkAAgAHAAIAAAAHAAQAAgAHAAIAAAAHAAUAAgAHAAIAAAAHAAgAAgAHAAIAAAAHAAkAAgAHAAIAAAAIAAQAAgAHAAIAAAAIAAUAAgAHAAIAAAAIAAgAAgAHAAIAAAAIAAkAAgAHAAIAAAAJAAQAAgAHAAIAAAAJAAUAAgAHAAIAAAAJAAYAAgAHAAIAAAAJAAcAAgAHAAIAAAAJAAgAAgAHAAIAAAAJAAkAAgAHAAIAAAAKAAMAAgAHAAIAAAAKAAQAAgAHAAIAAAAKAAUAAgAHAAIAAAAKAAYAAgAHAAIAAAAKAAcAAgAHAAIAAAAKAAgAAgAHAAIAAAAKAAkAAgAHAAIAAAAKAAoAAgAHAAIAAAALAAIAAgAHAAIAAAALAAMAAgAHAAIAAAALAAQAAgAHAAIAAAALAAUAAgAHAAIAAAALAAYAAgAHAAIAAAALAAcAAgAHAAIAAAALAAgAAgAHAAIAAAALAAkAAgAHAAIAAAALAAoAAgAHAAIAAAALAAsAAgAHAAIAAAAMAAIAAgAHAAIAAAAMAAMAAgAHAAIAAAAMAAQAAgAHAAIAAAAMAAkAAgAHAAIAAAAMAAoAAgAHAAIAAAAMAAsAAgAHAAIAAAANAAMAAgAHAAIAAAANAAoAAgAHAAIAAAAHAAYAAgAHAAIAAAAHAAcAAgAHAAIAAAAIAAcAAgAHAAIAAAAIAAYAAgAHAAIAAAA=")
-tile_set = SubResource("TileSet_1hsdr")
+tile_set = SubResource("TileSet_ay84p")
 
 [node name="Ground" type="TileMapLayer" parent="tilemaps"]
 texture_filter = 1
 tile_map_data = PackedByteArray("AAABAAMAAgAAAAIAAAABAAQAAgAAAAMAAAABAAUAAgAAAAQAAAABAAYAAgAAAAUAAAABAAcAAgAAAAUAAAABAAkAAgAAAAUAAAABAAoAAgAAAAYAAAACAAAAAgAHAAIAAAACAAEAAgAAAAIAAAACAAIAAgAAAAUAAAACAAMAAgABAAkAAAACAAQAAgAHAAIAAAACAAUAAgAHAAIAAAACAAYAAgAHAAIAAAACAAcAAgAHAAIAAAACAAgAAgAHAAIAAAACAAkAAgAHAAIAAAACAAsAAgAAAAMAAAACAAwAAgAAAAYAAAADAAAAAgAHAAIAAAADAAEAAgADAAIAAAADAAIAAgAHAAIAAAADAAMAAgAHAAIAAAADAAQAAgAHAAIAAAADAAUAAgAHAAIAAAADAAYAAgAHAAIAAAADAAcAAgAHAAIAAAADAAgAAgAHAAIAAAADAAkAAgAHAAIAAAADAAoAAgAHAAIAAAADAAsAAgAHAAIAAAADAAwAAgABAAYAAAAEAAAAAgAHAAIAAAAEAAEAAgABAAIAAAAEAAIAAgAHAAIAAAAEAAMAAgAHAAIAAAAEAAQAAgAHAAIAAAAEAAUAAgAHAAIAAAAEAAYAAgAHAAIAAAAEAAcAAgAHAAIAAAAEAAgAAgAHAAIAAAAEAAkAAgAHAAIAAAAEAAoAAgAHAAIAAAAEAAsAAgAHAAIAAAAEAAwAAgADAAYAAAAFAAAAAgAHAAIAAAAFAAEAAgABAAIAAAAFAAIAAgAHAAIAAAAFAAMAAgAHAAIAAAAFAAQAAgAHAAIAAAAFAAUAAgAHAAIAAAAFAAYAAgAHAAIAAAAFAAcAAgAHAAIAAAAFAAgAAgAHAAIAAAAFAAkAAgAHAAIAAAAFAAoAAgAHAAIAAAAFAAsAAgAHAAIAAAAFAAwAAgACAAYAAAAGAAAAAgAHAAIAAAAGAAEAAgABAAIAAAAGAAIAAgAHAAIAAAAGAAMAAgAHAAIAAAAGAAQAAgAHAAIAAAAGAAUAAgAHAAIAAAAGAAYAAgAHAAIAAAAGAAcAAgAHAAIAAAAGAAgAAgAHAAIAAAAGAAkAAgAHAAIAAAAGAAoAAgAHAAIAAAAGAAsAAgAHAAIAAAAGAAwAAgACAAYAAAAHAAAAAgAHAAIAAAAHAAEAAgADAAIAAAAHAAIAAgAHAAIAAAAHAAMAAgAHAAIAAAAHAAQAAgAHAAIAAAAHAAUAAgAHAAIAAAAHAAgAAgAHAAIAAAAHAAkAAgAHAAIAAAAHAAoAAgAHAAIAAAAHAAsAAgAHAAIAAAAHAAwAAgABAAYAAAAIAAAAAgAHAAIAAAAIAAEAAgADAAIAAAAIAAIAAgAHAAIAAAAIAAMAAgAHAAIAAAAIAAQAAgAHAAIAAAAIAAUAAgAHAAIAAAAIAAgAAgAHAAIAAAAIAAkAAgAHAAIAAAAIAAoAAgAHAAIAAAAIAAsAAgAHAAIAAAAIAAwAAgACAAYAAAAJAAAAAgAHAAIAAAAJAAEAAgABAAIAAAAJAAIAAgAHAAIAAAAJAAMAAgAHAAIAAAAJAAQAAgAHAAIAAAAJAAUAAgAHAAIAAAAJAAYAAgAHAAIAAAAJAAcAAgAHAAIAAAAJAAgAAgAHAAIAAAAJAAkAAgAHAAIAAAAJAAoAAgAHAAIAAAAJAAsAAgAHAAIAAAAJAAwAAgADAAYAAAAKAAAAAgAHAAIAAAAKAAEAAgADAAIAAAAKAAIAAgAHAAIAAAAKAAMAAgAHAAIAAAAKAAQAAgAHAAIAAAAKAAUAAgAHAAIAAAAKAAYAAgAHAAIAAAAKAAcAAgAHAAIAAAAKAAgAAgAHAAIAAAAKAAkAAgAHAAIAAAAKAAoAAgAHAAIAAAAKAAsAAgAHAAIAAAAKAAwAAgADAAYAAAALAAAAAgAHAAIAAAALAAEAAgABAAIAAAALAAIAAgAHAAIAAAALAAMAAgAHAAIAAAALAAQAAgAHAAIAAAALAAUAAgAHAAIAAAALAAYAAgAHAAIAAAALAAcAAgAHAAIAAAALAAgAAgAHAAIAAAALAAkAAgAHAAIAAAALAAoAAgAHAAIAAAALAAsAAgAHAAIAAAALAAwAAgACAAYAAAAMAAAAAgAHAAIAAAAMAAEAAgADAAIAAAAMAAIAAgAHAAIAAAAMAAMAAgAHAAIAAAAMAAQAAgAHAAIAAAAMAAUAAgAHAAIAAAAMAAYAAgAHAAIAAAAMAAcAAgAHAAIAAAAMAAgAAgAHAAIAAAAMAAkAAgAHAAIAAAAMAAoAAgAHAAIAAAAMAAsAAgAHAAIAAAAMAAwAAgABAAYAAAANAAAAAgAHAAIAAAANAAEAAgAEAAIAAAANAAIAAgAEAAQAAAANAAMAAgAAAAkAAAANAAQAAgAHAAIAAAANAAUAAgAHAAIAAAANAAYAAgAHAAIAAAANAAcAAgAHAAIAAAANAAgAAgAHAAIAAAANAAkAAgAHAAIAAAANAAoAAgAAAAgAAAANAAsAAgAEAAMAAAANAAwAAgAEAAYAAAAOAAQAAgAEAAUAAAAOAAUAAgAEAAQAAAAOAAYAAgAEAAUAAAAHAAYAAgAHAAIAAAAHAAcAAgAHAAIAAAAIAAcAAgAHAAIAAAAIAAYAAgAHAAIAAAAOAAoAAgAEAAYAAAAOAAkAAgAEAAMAAAAOAAgAAgAEAAQAAAAOAAcAAgAEAAUAAAAOAAMAAgAEAAIAAAAOAAsAAgACAAMAAAAOAAIAAgACAAMAAAABAAIAAgAHAAIAAAABAAsAAgAHAAIAAAACAAoAAgABAAgAAAABAAgAAgAAAAQAAAA=")
-tile_set = SubResource("TileSet_fxx16")
+tile_set = SubResource("TileSet_4glty")
 
 [node name="Props" type="TileMapLayer" parent="tilemaps"]
 y_sort_enabled = true
 texture_filter = 1
 tile_map_data = PackedByteArray("AAAGAAAAAgAAAAAAAAAJAAAAAgAAAAAAAAA=")
-tile_set = SubResource("TileSet_fxx16")
+tile_set = SubResource("TileSet_4glty")
 
 [node name="Walls" type="TileMapLayer" parent="tilemaps" groups=["Wall"]]
 y_sort_enabled = true
 texture_filter = 1
 tile_map_data = PackedByteArray("AAAAAAsAAgAFAAMAAAABAAsAAgAGAAMAAAABAAwAAgAFAAIAAAABAA0AAgAGAAQAAAACAA0AAgAHAAQAAAADAA0AAgAHAAQAAAAEAA0AAgAHAAQAAAAFAA0AAgAHAAQAAAAGAA0AAgAHAAQAAAAHAA0AAgAHAAQAAAAIAA0AAgAHAAQAAAAJAA0AAgAHAAQAAAAKAA0AAgAHAAQAAAALAA0AAgAHAAQAAAAMAA0AAgAHAAQAAAANAA0AAgAHAAQAAAAOAAsAAgAIAAMAAAAOAAwAAgAJAAIAAAAOAA0AAgAIAAQAAAAPAAsAAgAJAAMAAAAAAAIAAgAFAAEAAAAAAAMAAgAFAAIAAAAAAAQAAgAFAAIAAAAAAAUAAgAFAAIAAAAAAAYAAgAFAAIAAAAAAAcAAgAFAAIAAAAAAAgAAgAFAAIAAAAAAAoAAgAFAAIAAAABAAAAAgAFAAEAAAABAAEAAgAFAAIAAAABAAIAAgAGAAEAAAACAAAAAgACAAAAAAADAAAAAgACAAAAAAAEAAAAAgACAAAAAAAFAAAAAgACAAAAAAAGAAAAAgACAAAAAAAHAAAAAgACAAAAAAAIAAAAAgACAAAAAAAJAAAAAgACAAAAAAAKAAAAAgACAAAAAAALAAAAAgACAAAAAAAMAAAAAgACAAAAAAANAAAAAgACAAAAAAAOAAAAAgAEAAAAAAAOAAEAAgAJAAIAAAAOAAIAAgAIAAEAAAAPAAIAAgAJAAEAAAAPAAMAAgAJAAIAAAAPAAQAAgAJAAIAAAAPAAUAAgAJAAIAAAAPAAYAAgAJAAIAAAAPAAcAAgAJAAIAAAAPAAgAAgAJAAIAAAAPAAkAAgAJAAIAAAAPAAoAAgAJAAIAAAAAAAkAAgAFAAIAAAA=")
-tile_set = SubResource("TileSet_fxx16")
+tile_set = SubResource("TileSet_4glty")
 
 [node name="doors" type="Node2D" parent="."]
 
@@ -1241,14 +1241,14 @@ collision_mask = 2
 
 [node name="Area2D" type="CollisionShape2D" parent="doors/Door1/DoorCollision"]
 position = Vector2(155.5, 0)
-shape = SubResource("RectangleShape2D_bo4vj")
+shape = SubResource("RectangleShape2D_cjrwh")
 
 [node name="tilemap" type="TileMapLayer" parent="doors/Door1"]
 z_index = 1
 y_sort_enabled = true
 texture_filter = 1
 tile_map_data = PackedByteArray("AAAHAAAAAgAAAAQAAAAIAAAAAgAEAAQAAAAHAAEAAgABAAkAAAAIAAEAAgAAAAkAAAAGAAAAAgAGAAEAAAAJAAAAAgAIAAEAAAAGAP//AgAFAAIAAAAJAP//AgAJAAIAAAAIAP//AgAEAAMAAAAHAP//AgAAAAUAAAAHAP7/AgAFAAgAAAAIAP7/AgAGAAgAAAAJAP7/AgAFAAAAAAAGAP7/AgAAAAAAAAA=")
-tile_set = SubResource("TileSet_f1fx3")
+tile_set = SubResource("TileSet_qye7f")
 
 [node name="Door2" type="Node2D" parent="doors"]
 visible = false
@@ -1260,14 +1260,14 @@ collision_mask = 2
 
 [node name="Area2D" type="CollisionShape2D" parent="doors/Door2/DoorCollision"]
 position = Vector2(-24, 163)
-shape = SubResource("RectangleShape2D_x68xm")
+shape = SubResource("RectangleShape2D_1u26f")
 
 [node name="tilemap" type="TileMapLayer" parent="doors/Door2"]
 z_index = 1
 y_sort_enabled = true
 texture_filter = 1
 tile_map_data = PackedByteArray("AAAAAAgAAgAGAAMAAAAAAAUAAgAGAAEAAAD//wUAAgACAAAAAAD//wgAAgADAAAAAAD//wYAAgACAAIAAAAAAAYAAgADAAIAAAD//wcAAgACAAYAAAAAAAcAAgADAAYAAAABAAcAAgABAAgAAAABAAYAAgABAAkAAAD+/wgAAgABAAEAAAD+/wUAAgABAAAAAAD+/wYAAgADAAgAAAD+/wcAAgADAAkAAAA=")
-tile_set = SubResource("TileSet_f1fx3")
+tile_set = SubResource("TileSet_qye7f")
 
 [node name="Door3" type="Node2D" parent="doors"]
 visible = false
@@ -1279,14 +1279,14 @@ collision_mask = 2
 
 [node name="Area2D" type="CollisionShape2D" parent="doors/Door3/DoorCollision"]
 position = Vector2(-24, 163)
-shape = SubResource("RectangleShape2D_x68xm")
+shape = SubResource("RectangleShape2D_1u26f")
 
 [node name="tilemap" type="TileMapLayer" parent="doors/Door3"]
 z_index = 1
 y_sort_enabled = true
 texture_filter = 1
 tile_map_data = PackedByteArray("AAAPAAgAAgAIAAMAAAAPAAUAAgAIAAEAAAAPAAYAAgACAAIAAAAQAAYAAgADAAIAAAAPAAcAAgACAAYAAAAQAAcAAgADAAYAAAAOAAYAAgAAAAkAAAAOAAcAAgAAAAgAAAAQAAUAAgACAAAAAAAQAAgAAgADAAAAAAARAAYAAgAEAAgAAAARAAcAAgAEAAkAAAARAAUAAgAEAAAAAAARAAgAAgAEAAEAAAA=")
-tile_set = SubResource("TileSet_f1fx3")
+tile_set = SubResource("TileSet_qye7f")
 
 [node name="Door4" type="Node2D" parent="doors"]
 visible = false
@@ -1298,7 +1298,7 @@ collision_mask = 2
 
 [node name="Area2D" type="CollisionShape2D" parent="doors/Door4/DoorCollision"]
 position = Vector2(155.5, 0)
-shape = SubResource("RectangleShape2D_bo4vj")
+shape = SubResource("RectangleShape2D_cjrwh")
 
 [node name="tilemap" type="TileMapLayer" parent="doors/Door4/DoorCollision"]
 z_index = 1
@@ -1306,29 +1306,29 @@ y_sort_enabled = true
 texture_filter = 1
 position = Vector2(-1120, -2410)
 tile_map_data = PackedByteArray("AAAHAAwAAgABAAgAAAAIAAwAAgAAAAgAAAAHAA0AAgAAAAQAAAAHAA4AAgAAAAUAAAAIAA0AAgAEAAMAAAAIAA4AAgAEAAQAAAAGAA0AAgAGAAMAAAAJAA0AAgAIAAMAAAAJAA4AAgAIAAAAAAAGAA4AAgAGAAAAAAAHAA8AAgAFAAkAAAAIAA8AAgAGAAkAAAAGAA8AAgAAAAEAAAA=")
-tile_set = SubResource("TileSet_f1fx3")
+tile_set = SubResource("TileSet_qye7f")
 
-[node name="Torch" parent="." instance=ExtResource("5_rx0fo")]
+[node name="Torch" parent="." instance=ExtResource("5_8xq7x")]
 position = Vector2(544, 447)
 
-[node name="Torch2" parent="." instance=ExtResource("5_rx0fo")]
+[node name="Torch2" parent="." instance=ExtResource("5_8xq7x")]
 position = Vector2(1958, 453)
 
-[node name="Torch3" parent="." instance=ExtResource("5_rx0fo")]
+[node name="Torch3" parent="." instance=ExtResource("5_8xq7x")]
 position = Vector2(553, 1705)
 
-[node name="Torch4" parent="." instance=ExtResource("5_rx0fo")]
+[node name="Torch4" parent="." instance=ExtResource("5_8xq7x")]
 position = Vector2(1967, 1711)
 
 [node name="CameraTargetComponent" type="Area2D" parent="."]
 position = Vector2(1280, 1161)
 collision_layer = 0
 collision_mask = 2
-script = ExtResource("6_7lcfy")
+script = ExtResource("2_kpdc5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CameraTargetComponent"]
 position = Vector2(0, -36.75)
-shape = SubResource("RectangleShape2D_0qjun")
+shape = SubResource("RectangleShape2D_uqnrr")
 debug_color = Color(0, 0.6, 0.701961, 0)
 
 [node name="CameraPoint" type="Marker2D" parent="CameraTargetComponent"]

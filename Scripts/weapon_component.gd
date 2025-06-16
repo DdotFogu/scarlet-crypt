@@ -14,6 +14,9 @@ class_name player_weapon_component
 
 @onready var body : CharacterBody2D = owner
 
+func _process(delta: float) -> void:
+	pass
+
 func fire_projectile(projectile : String):
 	if !inventory_component.soul_quota(1): return
 	inventory_component.minor_souls_count -= 1
@@ -21,7 +24,8 @@ func fire_projectile(projectile : String):
 	var instance_projectile = Global.projectile_attacks[projectile].instantiate()
 	instance_projectile.global_position = spawn_marker.global_position
 	var velocity_component = instance_projectile.get_node("VelocityComponent")
-	if velocity_component: velocity_component.set_direction(body.global_position.direction_to(get_global_mouse_position()))
+	var direction = body.global_position.direction_to(get_global_mouse_position())
+	if velocity_component: velocity_component.set_direction(direction)
 	
 	inventory_component.apply_upgrades(instance_projectile)
 	

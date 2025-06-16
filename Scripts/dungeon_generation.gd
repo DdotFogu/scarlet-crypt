@@ -33,11 +33,6 @@ func _ready() -> void:
 	await get_tree().create_timer(generation_time * main_path_data.room_count).timeout
 	await create_branching_paths()
 	generation_completed.emit()
-	
-	var cam_target_point = room_data_array[0].scene.get_node("CameraPoint")
-	Global.player.global_position = cam_target_point.global_position
-	if cam_target_point: camera_component.change_target(cam_target_point)
-	else: camera_component.change_target(Global.player)
 
 func create_rooms(path: Array[room_data]):
 	for room in path:
@@ -62,60 +57,86 @@ func create_new_path(data : path_data, room_count : int = data.room_count, previ
 	var previous_room_pos = previous_room.position if previous_room else Vector2.ZERO
 
 	for i in range(room_count):
-		var direction : Vector2
-		var new_room_pos : Vector2
-		var attempts = 0
-
+		var direction_data : Array = [Vector2(0,0), Vector2(0,0)]
 		if i != 0 or previous_room != null:
-			while true:
-				direction = Vector2(randi_range(-1, 1), randi_range(-1, 1))
-				if direction.x != 0 and direction.y != 0:
-					continue
-
-				var has_direction := false
-				for door in previous_room.creation_points:
-					if door["dir"] == Vector2i(-direction):
-						has_direction = true
-				if not has_direction:
-					continue
-
-				new_room_pos = previous_room_pos + direction * generation_spacing
-				var new_room_rect = Rect2(new_room_pos, Vector2(320, 320))
-				var overlap = false
-				for existing in room_data_array:
-					var tile_rect = existing.scene.wall_tilemap.get_used_rect().size
-					var room_rect = Rect2(existing.scene.position, tile_rect)
-					if new_room_rect.intersects(room_rect):
-						overlap = true
-						break
-				if not overlap:
-					break
-				attempts += 1
-				if attempts > 50:
-					break
-
+			direction_data = find_direction_without_overlap(previous_room)
+		if direction_data: print(direction_data)
+		
 		var room_instance = enemy_room_scenes.pick_random().instantiate()
 		if i == room_count - 1 and data.create_boss_room:room_instance = boss_rooms.pick_random().instantiate()
 		if i == 0 and room_data_array.is_empty(): room_instance = starting_room_scenes.pick_random().instantiate()
-
-		room_instance.position = new_room_pos
-
+		
+		room_instance.position = direction_data[1]
+		
 		var new_data := room_data.new()
 		new_data.scene = room_instance
 		new_data.room_index = room_data_array.size()
-		new_data.scene_position = new_room_pos
-		new_data.dir = Vector2i(direction)
+		new_data.scene_position = direction_data[1]
+		new_data.dir = Vector2i(direction_data[0])
 		new_data.previous_room = previous_room
-
+		
 		room_instance.data = new_data
-
+		
 		room_path.append(new_data)
 		room_data_array.append(new_data)
-
-		previous_room_pos = new_room_pos
+		
+		previous_room_pos = direction_data[1]
 		previous_room = room_instance
-
+	
+	if data.create_exit_room:
+		var direction_data = find_direction_without_overlap(previous_room)
+		var room_instance = preload("res://Scene/Dungeon Rooms/exit_room_01.tscn").instantiate()
+		
+		room_instance.position = direction_data[1]
+		
+		var new_data := room_data.new()
+		new_data.scene = room_instance
+		new_data.room_index = room_data_array.size()
+		new_data.scene_position = direction_data[1]
+		new_data.dir = Vector2i(direction_data[0])
+		new_data.previous_room = previous_room
+		
+		room_instance.data = new_data
+		
+		room_path.append(new_data)
+		room_data_array.append(new_data)
+	
 	return room_path
+
+func find_direction_without_overlap(root_room : Node2D):
+	var direction : Vector2
+	var new_pos : Vector2
+	var attempts = 0
+	
+	while true:
+		direction = Vector2(randi_range(-1, 1), randi_range(-1, 1))
+		if direction.x != 0 and direction.y != 0:
+			continue
+		
+		var has_direction := false
+		for door in root_room.creation_points:
+			if door["dir"] == Vector2i(-direction):
+				has_direction = true
+		if not has_direction:
+			continue
+		
+		var root_room_pos = root_room.global_position if root_room else Vector2.ZERO
+		new_pos = root_room_pos + direction * generation_spacing
+		var new_room_rect = Rect2(new_pos, Vector2(320, 320))
+		var overlap = false
+		for existing in room_data_array:
+			var tile_rect = existing.scene.wall_tilemap.get_used_rect().size
+			var room_rect = Rect2(existing.scene.position, tile_rect)
+			if new_room_rect.intersects(room_rect):
+				overlap = true
+				break
+		if not overlap:
+			break
+		attempts += 1
+		if attempts > 50:
+			break
+	
+	return [direction, new_pos]
 
 func create_branching_paths():
 	var rooms_remaining = side_path_data.room_count
@@ -123,8 +144,9 @@ func create_branching_paths():
 
 	while rooms_remaining > 0:
 		for room in available_rooms:
+			if room.scene is boss_room or room.scene is exit_room : continue
 			if rooms_remaining <= 0: break
-			if room.scene is boss_room: continue
+			
 			var chance = Global.rng.randf_range(1, 100)
 			if chance <= branch_chance:
 				var branch_count = randi_range(1, rooms_remaining)
@@ -136,10 +158,6 @@ func create_branching_paths():
 				available_rooms.erase(room)
 
 func change_room(connecting_room: base_room, direction, player_pos):
-	var cam_target_point = connecting_room.get_node("CameraPoint")
-	if cam_target_point: await camera_component.change_target(cam_target_point)
-	else: await camera_component.change_target(Global.player)
-	
 	var pos: Vector2
 	for door in connecting_room.creation_points:
 		if door["dir"] == -direction:

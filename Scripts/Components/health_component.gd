@@ -27,7 +27,7 @@ func take_damage(attack:Attack, hideDamage : bool = false):
 	if attack.damage > 0:
 		if attack.stun_time > 0: change_states.emit()
 		
-		if visual_component: visual_component.play_animation("hurt")
+		if visual_component and !hideDamage: visual_component.play_animation("hurt")
 		
 		took_damage.emit()
 	

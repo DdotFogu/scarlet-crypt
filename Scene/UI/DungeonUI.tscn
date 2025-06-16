@@ -1,19 +1,207 @@
-[gd_scene load_steps=4 format=3 uid="uid://csmf7tvsfbxjx"]
+[gd_scene load_steps=12 format=3 uid="uid://csmf7tvsfbxjx"]
+
+[ext_resource type="Texture2D" uid="uid://c4gt7v2ywdvt1" path="res://Assets/Sprites/Particles/smoke.png" id="1_ljcmf"]
+[ext_resource type="Texture2D" uid="uid://0ulxtuoxl243" path="res://Assets/Sprites/UI/DungeonTitle.png" id="1_m4aw0"]
+[ext_resource type="Shader" uid="uid://mwghjsfia0s5" path="res://Resource/Shaders/Pixelate.gdshader" id="5_x52j5"]
+[ext_resource type="Texture2D" uid="uid://c44rdyc70dkku" path="res://Assets/Sprites/World/Lighting/light.png" id="6_ccgp0"]
+
+[sub_resource type="Curve" id="Curve_we5a7"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.0564972, 1), 0.0, 0.0, 0, 0, Vector2(0.107345, 0.988764), 0.0, 0.0, 0, 0, Vector2(0.225989, 0), 0.0, 0.0, 0, 0, Vector2(0.514124, 0), 0.0, 0.0, 0, 0]
+point_count = 5
+
+[sub_resource type="Gradient" id="Gradient_vv8jm"]
+offsets = PackedFloat32Array(0, 0.509934, 1)
+colors = PackedColorArray(0.431373, 0.737255, 0.745098, 1, 0.270588, 0.647059, 0.792157, 1, 0.196078, 0.427451, 0.756863, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1bcck"]
+shader = ExtResource("5_x52j5")
+shader_parameter/amount = 10
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_ilnkj"]
+polygon = PackedVector2Array(446, 218, 407, 218, 407, 212, 446, 212, 446, 215, 449, 215, 449, 218, 452, 218, 452, 221, 692, 221, 692, 218, 695, 218, 695, 215, 698, 215, 698, 212, 737, 212, 737, 215, 737, 217, 698, 218, 698, 221, 695, 221, 695, 224, 692, 224, 692, 227, 452, 227, 452, 224, 449, 224, 449, 221, 446, 221)
 
 [sub_resource type="Animation" id="Animation_nk35b"]
 resource_name = "Default"
-length = 3.0
+length = 5.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Title:modulate")
+tracks/0/path = NodePath("UI:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1, 2.03333, 3),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(1, 1.2, 5, 5.5),
+"transitions": PackedFloat32Array(1, 1, 0.329877, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("UI:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1, 1.2),
+"transitions": PackedFloat32Array(0.594604, 1),
+"update": 0,
+"values": [Vector2(0, -48), Vector2(0, 32)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("UI/Fire:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1, 1.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("UI/Fire2:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(1, 1.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("UI/Fire3:emitting")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(1, 1.9),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("UI/Fire4:emitting")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(1, 1.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("UI/Title:visible_ratio")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(1, 2, 2.5, 5, 5.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, 1.0, 1.0, 0.0]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("UI/Fire/Light:enabled")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(1.00467, 1.3, 5.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("UI/Fire2/Light2:enabled")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(1.00467, 1.70466, 5.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("UI/Fire3/Light3:enabled")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(1.00467, 1.90466, 5.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("UI/Fire4/Light4:enabled")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(1.00467, 1.50467, 5.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("UI/Fire/Light:color")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(5, 5.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.654902, 0.858824, 0.886275, 1), Color(0.654902, 0.858824, 0.886275, 0)]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("UI/Fire2/Light2:color")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(5, 5.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.654902, 0.858824, 0.886275, 1), Color(0.654902, 0.858824, 0.886275, 0)]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("UI/Fire3/Light3:color")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(5, 5.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.654902, 0.858824, 0.886275, 1), Color(0.654902, 0.858824, 0.886275, 0)]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("UI/Fire4/Light4:color")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(5, 5.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.654902, 0.858824, 0.886275, 1), Color(0.654902, 0.858824, 0.886275, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_anbsd"]
@@ -21,14 +209,182 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Title:modulate")
+tracks/0/path = NodePath("UI:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(1, 1, 1, 1)]
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("UI:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -48)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("UI/Fire:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("UI/Fire2:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("UI/Fire3:emitting")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("UI/Fire4:emitting")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("UI/Title:visible_ratio")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("UI/Fire/Light:enabled")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("UI/Fire2/Light2:enabled")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("UI/Fire3/Light3:enabled")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("UI/Fire4/Light4:enabled")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("UI/Fire/Light:color")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.654902, 0.858824, 0.886275, 1)]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("UI/Fire2/Light2:color")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.654902, 0.858824, 0.886275, 1)]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("UI/Fire3/Light3:color")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.654902, 0.858824, 0.886275, 1)]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("UI/Fire4/Light4:color")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.654902, 0.858824, 0.886275, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ayjo4"]
@@ -38,20 +394,180 @@ _data = {
 }
 
 [node name="DungeonUI" type="CanvasLayer"]
+layer = 0
 
-[node name="Title" type="RichTextLabel" parent="."]
+[node name="UI" type="Control" parent="."]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 3
+anchors_preset = 0
+offset_top = -48.0
+offset_right = 1152.0
+offset_bottom = 600.0
+mouse_filter = 1
+
+[node name="Fire" type="CPUParticles2D" parent="UI"]
+z_index = -1
+position = Vector2(417, 195)
+scale = Vector2(0.39, 0.39)
+emitting = false
+amount = 200
+texture = ExtResource("1_ljcmf")
+lifetime = 2.0
+speed_scale = 0.6
+local_coords = true
+emission_shape = 3
+emission_rect_extents = Vector2(13, 0)
+gravity = Vector2(0, -980)
+angle_min = -720.0
+angle_max = 720.0
+scale_amount_min = 0.3
+scale_amount_max = 0.3
+scale_amount_curve = SubResource("Curve_we5a7")
+color_initial_ramp = SubResource("Gradient_vv8jm")
+
+[node name="Light" type="PointLight2D" parent="UI/Fire"]
+z_index = -1
 texture_filter = 1
-offset_top = 82.0
+material = SubResource("ShaderMaterial_1bcck")
+enabled = false
+color = Color(0.654902, 0.858824, 0.886275, 1)
+energy = 2.0
+shadow_enabled = true
+shadow_item_cull_mask = 2
+texture = ExtResource("6_ccgp0")
+texture_scale = 0.5
+
+[node name="Fire2" type="CPUParticles2D" parent="UI"]
+z_index = -1
+position = Vector2(470, 205)
+scale = Vector2(0.39, 0.39)
+emitting = false
+amount = 200
+texture = ExtResource("1_ljcmf")
+lifetime = 2.0
+speed_scale = 0.6
+local_coords = true
+emission_shape = 3
+emission_rect_extents = Vector2(13, 0)
+gravity = Vector2(0, -980)
+angle_min = -720.0
+angle_max = 720.0
+scale_amount_min = 0.3
+scale_amount_max = 0.3
+scale_amount_curve = SubResource("Curve_we5a7")
+color_initial_ramp = SubResource("Gradient_vv8jm")
+
+[node name="Light2" type="PointLight2D" parent="UI/Fire2"]
+z_index = -1
+texture_filter = 1
+material = SubResource("ShaderMaterial_1bcck")
+enabled = false
+color = Color(0.654902, 0.858824, 0.886275, 1)
+energy = 2.0
+shadow_enabled = true
+shadow_item_cull_mask = 2
+texture = ExtResource("6_ccgp0")
+
+[node name="Fire3" type="CPUParticles2D" parent="UI"]
+z_index = -1
+position = Vector2(675, 205)
+scale = Vector2(0.39, 0.39)
+emitting = false
+amount = 200
+texture = ExtResource("1_ljcmf")
+lifetime = 2.0
+speed_scale = 0.6
+local_coords = true
+emission_shape = 3
+emission_rect_extents = Vector2(13, 0)
+gravity = Vector2(0, -980)
+angle_min = -720.0
+angle_max = 720.0
+scale_amount_min = 0.3
+scale_amount_max = 0.3
+scale_amount_curve = SubResource("Curve_we5a7")
+color_initial_ramp = SubResource("Gradient_vv8jm")
+
+[node name="Light3" type="PointLight2D" parent="UI/Fire3"]
+z_index = -1
+texture_filter = 1
+material = SubResource("ShaderMaterial_1bcck")
+enabled = false
+color = Color(0.654902, 0.858824, 0.886275, 1)
+energy = 2.0
+shadow_enabled = true
+shadow_item_cull_mask = 2
+texture = ExtResource("6_ccgp0")
+
+[node name="Fire4" type="CPUParticles2D" parent="UI"]
+z_index = -1
+position = Vector2(727, 196)
+scale = Vector2(0.39, 0.39)
+emitting = false
+amount = 200
+texture = ExtResource("1_ljcmf")
+lifetime = 2.0
+speed_scale = 0.6
+local_coords = true
+emission_shape = 3
+emission_rect_extents = Vector2(13, 0)
+gravity = Vector2(0, -980)
+angle_min = -720.0
+angle_max = 720.0
+scale_amount_min = 0.3
+scale_amount_max = 0.3
+scale_amount_curve = SubResource("Curve_we5a7")
+color_initial_ramp = SubResource("Gradient_vv8jm")
+
+[node name="Light4" type="PointLight2D" parent="UI/Fire4"]
+z_index = -1
+texture_filter = 1
+material = SubResource("ShaderMaterial_1bcck")
+enabled = false
+color = Color(0.654902, 0.858824, 0.886275, 1)
+energy = 2.0
+shadow_enabled = true
+shadow_item_cull_mask = 2
+texture = ExtResource("6_ccgp0")
+texture_scale = 0.5
+
+[node name="DungeonTitle" type="TextureRect" parent="UI"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -190.0
+offset_top = -136.0
+offset_right = 1050.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("1_m4aw0")
+
+[node name="Title" type="RichTextLabel" parent="UI"]
+texture_filter = 1
+layout_mode = 0
+offset_top = 117.0
 offset_right = 3840.0
-offset_bottom = 521.0
+offset_bottom = 556.0
 scale = Vector2(0.3, 0.3)
 bbcode_enabled = true
-text = "[shake rate=10.0 level=5 connected=1][center][color=Gray][font=\"E:/OneDrive/Documents/Godot Games/scarlet-crypt/Assets/Fonts/Vaticanus-G3yVG.ttf\"][font_size=80]
+text = "[shake rate=10.0 level=5 connected=1][center][color=Gray][font=\"E:/OneDrive/Documents/Godot Games/scarlet-crypt/Assets/Fonts/Vaticanus-G3yVG.ttf\"][font_size=64]
 
-< Catacombs I-I >
------.-----"
+Catacombs I-I"
+fit_content = true
 horizontal_alignment = 1
 vertical_alignment = 1
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="UI"]
+occluder = SubResource("OccluderPolygon2D_ilnkj")
+occluder_light_mask = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

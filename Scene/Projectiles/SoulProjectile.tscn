@@ -38,6 +38,7 @@ sprite_animator = NodePath("AnimationPlayer")
 death_particle = Array[String](["soul debris"])
 
 [node name="BodySprite" type="Sprite2D" parent="VisualComponent"]
+z_index = 1
 texture_filter = 1
 material = SubResource("ShaderMaterial_kupca")
 texture = ExtResource("5_ll74y")

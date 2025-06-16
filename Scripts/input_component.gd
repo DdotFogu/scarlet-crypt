@@ -2,12 +2,16 @@
 extends Node
 class_name input_component
 
+var active : bool = true
+
 #Mouse Events
 signal event_m1
 signal event_m2
 
 func get_input():
 	var input = Vector2.ZERO
+	if !active : return input
+	
 	if Input.is_action_pressed('pi_right'):
 		input.x += 1
 	if Input.is_action_pressed('pi_left'):

@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://oy8jux68hmbe"]
+[gd_scene load_steps=57 format=3 uid="uid://oy8jux68hmbe"]
 
 [ext_resource type="Script" uid="uid://dlm8cojwy0401" path="res://Scripts/player_character.gd" id="1_uubsr"]
 [ext_resource type="Resource" uid="uid://dch0f4net8iak" path="res://Resource/Stat Sheets/Player.tres" id="2_rp6ye"]
@@ -8,16 +8,20 @@
 [ext_resource type="Texture2D" uid="uid://bavxkfnpk8dhb" path="res://Assets/Sprites/Characters/Player/Player_sprite_sheet.png" id="4_ns8yf"]
 [ext_resource type="Script" uid="uid://dskheke6u5w3" path="res://Scripts/Components/health_component.gd" id="6_kqenx"]
 [ext_resource type="PackedScene" uid="uid://bbkfypa7bbfx8" path="res://Scene/Nodes and Components/health_component.tscn" id="7_aurit"]
-[ext_resource type="Texture2D" uid="uid://c44rdyc70dkku" path="res://Assets/Sprites/World/Lighting/light.png" id="7_ns8yf"]
 [ext_resource type="Texture2D" uid="uid://cbvr5fvkxu8ke" path="res://Assets/Sprites/Characters/Player/Lantern.png" id="7_rp6ye"]
 [ext_resource type="Script" uid="uid://nxlbgvyixghw" path="res://Scripts/States/state_machine.gd" id="8_mdmmb"]
 [ext_resource type="Script" uid="uid://bpqe0gx4e6mps" path="res://Scripts/States/Player/idle.gd" id="9_aurit"]
 [ext_resource type="PackedScene" uid="uid://bbntycpxp1uqr" path="res://Scene/Nodes and Components/hurt_box_component.tscn" id="9_j65nk"]
+[ext_resource type="Texture2D" uid="uid://c4gt7v2ywdvt1" path="res://Assets/Sprites/Particles/smoke.png" id="9_kqenx"]
+[ext_resource type="Shader" uid="uid://mwghjsfia0s5" path="res://Resource/Shaders/Pixelate.gdshader" id="10_aurit"]
 [ext_resource type="PackedScene" uid="uid://bj80p7xwrulxi" path="res://Scene/Nodes and Components/knockback_component.tscn" id="10_d6swi"]
+[ext_resource type="Texture2D" uid="uid://ki5kbrnlckrq" path="res://Assets/Sprites/Characters/Player/chain.png" id="10_dq7si"]
 [ext_resource type="Script" uid="uid://b3gdube56na0l" path="res://Scripts/States/Player/move.gd" id="10_j65nk"]
 [ext_resource type="Script" uid="uid://cdmu4p88xh10i" path="res://Scripts/Components/knockback_component.gd" id="11_0jo7b"]
 [ext_resource type="Script" uid="uid://sgpccnrpg5s1" path="res://Scripts/States/Enemy/stun.gd" id="11_d6swi"]
+[ext_resource type="Texture2D" uid="uid://c44rdyc70dkku" path="res://Assets/Sprites/World/Lighting/light.png" id="11_j65nk"]
 [ext_resource type="Script" uid="uid://drwdxykreh4fg" path="res://Scripts/States/Player/scythe_attack.gd" id="12_0jo7b"]
+[ext_resource type="Script" uid="uid://cvvsfeuru3cyr" path="res://Scripts/light.gd" id="12_d6swi"]
 [ext_resource type="PackedScene" uid="uid://3bm0koocg0yx" path="res://Scene/Nodes and Components/inventory_component.tscn" id="12_kqln3"]
 [ext_resource type="Script" uid="uid://cuyuepwwk7yau" path="res://Scripts/weapon_component.gd" id="13_kqln3"]
 [ext_resource type="PackedScene" uid="uid://dvljxq6stytim" path="res://Scene/Nodes and Components/status_component.tscn" id="15_beqhx"]
@@ -45,24 +49,6 @@ animations = [{
 }],
 "loop": true,
 "name": &"Idle",
-"speed": 5.0
-}]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_rp6ye"]
-size = Vector2(80, 130)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_rp6ye"]
-atlas = ExtResource("7_rp6ye")
-region = Rect2(0, 0, 80, 130)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_x67wc"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_rp6ye")
-}],
-"loop": true,
-"name": &"default",
 "speed": 5.0
 }]
 
@@ -396,6 +382,90 @@ _data = {
 &"walk": SubResource("Animation_tf7fm")
 }
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_dq7si"]
+radius = 26.1725
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_x67wc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_dq7si")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dq7si"]
+size = Vector2(30, 61)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rp6ye"]
+size = Vector2(80, 130)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mdmmb"]
+atlas = ExtResource("7_rp6ye")
+region = Rect2(0, 0, 80, 130)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_aurit"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mdmmb")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Curve" id="Curve_mdmmb"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.0564972, 1), 0.0, 0.0, 0, 0, Vector2(0.107345, 0.988764), 0.0, 0.0, 0, 0, Vector2(0.225989, 0), 0.0, 0.0, 0, 0, Vector2(0.514124, 0), 0.0, 0.0, 0, 0]
+point_count = 5
+
+[sub_resource type="Gradient" id="Gradient_aurit"]
+offsets = PackedFloat32Array(0, 0.509934, 1)
+colors = PackedColorArray(0.431373, 0.737255, 0.745098, 1, 0.270588, 0.647059, 0.792157, 1, 0.196078, 0.427451, 0.756863, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0jo7b"]
+shader = ExtResource("10_aurit")
+shader_parameter/amount = 10
+
+[sub_resource type="Animation" id="Animation_aurit"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ChainAnchor:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-80, -325)]
+}
+
+[sub_resource type="Animation" id="Animation_mdmmb"]
+resource_name = "default"
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ChainAnchor:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-80, -325), Vector2(-80, -306)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_j65nk"]
+_data = {
+&"RESET": SubResource("Animation_aurit"),
+&"default": SubResource("Animation_mdmmb")
+}
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_mqs5k"]
 radius = 82.0366
 
@@ -486,47 +556,12 @@ sprite = NodePath("BodySprite")
 sprite_animator = NodePath("AnimationPlayer")
 
 [node name="BodySprite" type="AnimatedSprite2D" parent="VisualComponent"]
+z_index = 1
 texture_filter = 1
 material = SubResource("ShaderMaterial_2f0nu")
 sprite_frames = SubResource("SpriteFrames_ab81y")
 animation = &"Idle"
 speed_scale = 0.2
-
-[node name="LampLight" type="PointLight2D" parent="VisualComponent"]
-position = Vector2(-80, -150)
-scale = Vector2(1.25, 1.25)
-color = Color(0.407843, 0.686275, 0.898039, 1)
-blend_mode = 2
-shadow_enabled = true
-shadow_filter_smooth = 50.0
-texture = ExtResource("7_ns8yf")
-texture_scale = 2.0
-
-[node name="LampStatic" type="StaticBody2D" parent="VisualComponent"]
-position = Vector2(-80, -215)
-collision_layer = 0
-collision_mask = 0
-
-[node name="PinJoint2D" type="PinJoint2D" parent="VisualComponent"]
-position = Vector2(-80, -215)
-node_a = NodePath("../LampStatic")
-node_b = NodePath("../Lamp")
-softness = 3.0
-
-[node name="Lamp" type="RigidBody2D" parent="VisualComponent"]
-texture_filter = 1
-position = Vector2(-80, -150)
-collision_layer = 0
-gravity_scale = 10.0
-
-[node name="CollisionComponent" type="CollisionShape2D" parent="VisualComponent/Lamp"]
-shape = SubResource("RectangleShape2D_rp6ye")
-
-[node name="SpawnPosition" type="Marker2D" parent="VisualComponent/Lamp"]
-position = Vector2(0, 25)
-
-[node name="Sprite" type="AnimatedSprite2D" parent="VisualComponent/Lamp"]
-sprite_frames = SubResource("SpriteFrames_x67wc")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="VisualComponent"]
 libraries = {
@@ -534,6 +569,112 @@ libraries = {
 }
 autoplay = "RESET"
 speed_scale = 0.2
+
+[node name="chain n lamp" type="Node2D" parent="VisualComponent"]
+
+[node name="ChainAnchor" type="StaticBody2D" parent="VisualComponent/chain n lamp"]
+position = Vector2(-80, -325)
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VisualComponent/chain n lamp/ChainAnchor"]
+shape = SubResource("CircleShape2D_dq7si")
+
+[node name="PinJoint2D" type="PinJoint2D" parent="VisualComponent/chain n lamp"]
+position = Vector2(-80, -325)
+node_a = NodePath("../ChainAnchor")
+node_b = NodePath("../Chain")
+motor_enabled = true
+motor_target_velocity = 0.531976
+
+[node name="Chain" type="RigidBody2D" parent="VisualComponent/chain n lamp"]
+texture_filter = 1
+position = Vector2(-80, -295)
+collision_layer = 0
+collision_mask = 0
+
+[node name="Sprite" type="AnimatedSprite2D" parent="VisualComponent/chain n lamp/Chain"]
+z_index = 1
+sprite_frames = SubResource("SpriteFrames_x67wc")
+
+[node name="CollisionComponent" type="CollisionShape2D" parent="VisualComponent/chain n lamp/Chain"]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_dq7si")
+
+[node name="PinJoint2D3" type="PinJoint2D" parent="VisualComponent/chain n lamp"]
+position = Vector2(-80, -265)
+node_a = NodePath("../Chain")
+node_b = NodePath("../Chain2")
+
+[node name="Chain2" type="RigidBody2D" parent="VisualComponent/chain n lamp"]
+texture_filter = 1
+position = Vector2(-80, -245)
+collision_layer = 0
+collision_mask = 0
+
+[node name="Sprite" type="AnimatedSprite2D" parent="VisualComponent/chain n lamp/Chain2"]
+z_index = 1
+sprite_frames = SubResource("SpriteFrames_x67wc")
+
+[node name="CollisionComponent" type="CollisionShape2D" parent="VisualComponent/chain n lamp/Chain2"]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_dq7si")
+
+[node name="PinJoint2D2" type="PinJoint2D" parent="VisualComponent/chain n lamp"]
+position = Vector2(-80, -215)
+node_a = NodePath("../Chain2")
+node_b = NodePath("../Lamp")
+
+[node name="Lamp" type="RigidBody2D" parent="VisualComponent/chain n lamp"]
+texture_filter = 1
+position = Vector2(-80, -150)
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionComponent" type="CollisionShape2D" parent="VisualComponent/chain n lamp/Lamp"]
+shape = SubResource("RectangleShape2D_rp6ye")
+
+[node name="SpawnPosition" type="Marker2D" parent="VisualComponent/chain n lamp/Lamp"]
+position = Vector2(0, 25)
+
+[node name="Sprite" type="AnimatedSprite2D" parent="VisualComponent/chain n lamp/Lamp"]
+z_index = 1
+sprite_frames = SubResource("SpriteFrames_aurit")
+
+[node name="Fire" type="CPUParticles2D" parent="VisualComponent/chain n lamp/Lamp"]
+position = Vector2(0, 35)
+amount = 200
+texture = ExtResource("9_kqenx")
+lifetime = 2.0
+speed_scale = 0.6
+local_coords = true
+emission_shape = 3
+emission_rect_extents = Vector2(13, 0)
+gravity = Vector2(0, -980)
+angle_min = -720.0
+angle_max = 720.0
+scale_amount_min = 0.3
+scale_amount_max = 0.3
+scale_amount_curve = SubResource("Curve_mdmmb")
+color_initial_ramp = SubResource("Gradient_aurit")
+
+[node name="Light" type="PointLight2D" parent="VisualComponent/chain n lamp/Lamp"]
+z_index = -1
+texture_filter = 1
+material = SubResource("ShaderMaterial_0jo7b")
+color = Color(0.654902, 0.858824, 0.886275, 1)
+energy = 2.0
+shadow_enabled = true
+texture = ExtResource("11_j65nk")
+texture_scale = 2.0
+script = ExtResource("12_d6swi")
+time_scale = 0.3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="VisualComponent/chain n lamp"]
+libraries = {
+&"": SubResource("AnimationLibrary_j65nk")
+}
+autoplay = "default"
 
 [node name="HealthComponent" parent="." node_paths=PackedStringArray("visual_component") instance=ExtResource("7_aurit")]
 script = ExtResource("6_kqenx")
@@ -560,7 +701,7 @@ script = ExtResource("13_kqln3")
 inventory_component = NodePath("../InventoryComponent")
 scyth_hitbox = NodePath("../ScytheHitbox")
 scythe_anim_player = NodePath("../ScytheHitbox/AnimationPlayer")
-spawn_marker = NodePath("../VisualComponent/Lamp/SpawnPosition")
+spawn_marker = NodePath("../VisualComponent/chain n lamp/Lamp/SpawnPosition")
 
 [node name="ScytheHitbox" type="Area2D" parent="." node_paths=PackedStringArray("killer")]
 rotation = -1.06369

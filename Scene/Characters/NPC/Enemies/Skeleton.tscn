@@ -1,11 +1,13 @@
-[gd_scene load_steps=52 format=3 uid="uid://cdaqq7x510ew3"]
+[gd_scene load_steps=55 format=3 uid="uid://cdaqq7x510ew3"]
 
 [ext_resource type="Script" uid="uid://d1snfb33qn63h" path="res://Scripts/Class/NpcBase.gd" id="1_ag86l"]
 [ext_resource type="Resource" uid="uid://cs7hul5omp2rg" path="res://Resource/Stat Sheets/Skeleton.tres" id="2_ebvdb"]
 [ext_resource type="PackedScene" uid="uid://bbntycpxp1uqr" path="res://Scene/Nodes and Components/hurt_box_component.tscn" id="3_3d3xb"]
-[ext_resource type="Texture2D" uid="uid://c44rdyc70dkku" path="res://Assets/Sprites/World/Lighting/light.png" id="3_ebvdb"]
+[ext_resource type="Shader" uid="uid://mwghjsfia0s5" path="res://Resource/Shaders/Pixelate.gdshader" id="3_jp7b8"]
 [ext_resource type="Texture2D" uid="uid://xsud3h278ocn" path="res://Assets/Sprites/Characters/Enemies/Skeleton/Enemy_Skeleton.png" id="3_tsst0"]
 [ext_resource type="PackedScene" uid="uid://bbkfypa7bbfx8" path="res://Scene/Nodes and Components/health_component.tscn" id="4_sd5d1"]
+[ext_resource type="Texture2D" uid="uid://c44rdyc70dkku" path="res://Assets/Sprites/World/Lighting/light.png" id="4_ux3lb"]
+[ext_resource type="Script" uid="uid://cvvsfeuru3cyr" path="res://Scripts/light.gd" id="5_0b6od"]
 [ext_resource type="Script" uid="uid://dskheke6u5w3" path="res://Scripts/Components/health_component.gd" id="5_fqp7w"]
 [ext_resource type="PackedScene" uid="uid://bj80p7xwrulxi" path="res://Scene/Nodes and Components/knockback_component.tscn" id="6_wimb2"]
 [ext_resource type="Script" uid="uid://cdmu4p88xh10i" path="res://Scripts/Components/knockback_component.gd" id="7_0hwyk"]
@@ -26,6 +28,10 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vkklb"]
 size = Vector2(80, 31)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_76ykk"]
+shader = ExtResource("3_jp7b8")
+shader_parameter/amount = 10
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_14i53"]
 resource_local_to_scene = true
@@ -517,25 +523,27 @@ stat_sheet = ExtResource("2_ebvdb")
 
 [node name="VisibleEnabler" type="VisibleOnScreenEnabler2D" parent="."]
 
-[node name="LightComponent" type="PointLight2D" parent="."]
-scale = Vector2(1.25, 1.25)
-color = Color(0.882896, 0.783927, 0.65983, 1)
-energy = 0.6
-blend_mode = 2
-shadow_enabled = true
-shadow_filter_smooth = 50.0
-texture = ExtResource("3_ebvdb")
-texture_scale = 1.35
-
 [node name="CollisionComponent" type="CollisionShape2D" parent="."]
 position = Vector2(-10, 64.5)
 shape = SubResource("RectangleShape2D_vkklb")
+
+[node name="LightComponent" type="PointLight2D" parent="."]
+z_index = -1
+texture_filter = 1
+material = SubResource("ShaderMaterial_76ykk")
+energy = 0.5
+shadow_enabled = true
+texture = ExtResource("4_ux3lb")
+texture_scale = 1.5
+script = ExtResource("5_0b6od")
+time_scale = 0.3
 
 [node name="VisualComponent" parent="." node_paths=PackedStringArray("sprite", "sprite_animator") instance=ExtResource("16_53yw8")]
 sprite = NodePath("BodySprite")
 sprite_animator = NodePath("AnimationPlayer")
 
 [node name="BodySprite" type="AnimatedSprite2D" parent="VisualComponent"]
+z_index = 1
 texture_filter = 1
 material = SubResource("ShaderMaterial_14i53")
 sprite_frames = SubResource("SpriteFrames_d48rw")
@@ -627,7 +635,9 @@ visual_component = NodePath("../../VisualComponent")
 [connection signal="change_states" from="HealthComponent" to="StateMachine" method="manual_state_change" binds= ["stun"]]
 [connection signal="death" from="HealthComponent" to="VisualComponent" method="spawn_death_particle"]
 [connection signal="death" from="HealthComponent" to="InventoryComponent" method="drop_inv"]
+[connection signal="apply_effects" from="HurtBoxComponent" to="StatusComponent" method="apply_status"]
 [connection signal="hurtbox_hit" from="HurtBoxComponent" to="HealthComponent" method="take_damage"]
+[connection signal="hurtbox_hit" from="HurtBoxComponent" to="KnockbackComponent" method="apply_knockback"]
 [connection signal="target_detected" from="TargetDetectionComponent" to="StateMachine" method="manual_state_change" binds= ["follow"]]
 [connection signal="target_detected" from="LungeDetection" to="StateMachine" method="manual_state_change" binds= ["lunge"]]
 [connection signal="Entered" from="StateMachine/idle" to="VisualComponent" method="play_animation" binds= ["walk"]]

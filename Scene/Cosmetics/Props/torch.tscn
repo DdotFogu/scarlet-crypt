@@ -1,0 +1,54 @@
+[gd_scene load_steps=9 format=3 uid="uid://bvetq2aspd8fx"]
+
+[ext_resource type="Texture2D" uid="uid://c4gt7v2ywdvt1" path="res://Assets/Sprites/Particles/smoke.png" id="3_sjbu3"]
+[ext_resource type="Shader" uid="uid://mwghjsfia0s5" path="res://Resource/Shaders/Pixelate.gdshader" id="4_2ccvi"]
+[ext_resource type="Texture2D" uid="uid://n6o2of1y13s2" path="res://Assets/Sprites/World/Props/soul_torch.png" id="4_sjbu3"]
+[ext_resource type="Texture2D" uid="uid://c44rdyc70dkku" path="res://Assets/Sprites/World/Lighting/light.png" id="4_u6j4f"]
+[ext_resource type="Script" uid="uid://cvvsfeuru3cyr" path="res://Scripts/light.gd" id="5_sjbu3"]
+
+[sub_resource type="Curve" id="Curve_rx0fo"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.0564972, 1), 0.0, 0.0, 0, 0, Vector2(0.107345, 0.988764), 0.0, 0.0, 0, 0, Vector2(0.225989, 0), 0.0, 0.0, 0, 0, Vector2(0.514124, 0), 0.0, 0.0, 0, 0]
+point_count = 5
+
+[sub_resource type="Gradient" id="Gradient_fxx16"]
+colors = PackedColorArray(1, 0.807843, 0, 1, 1, 0, 0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_52ync"]
+shader = ExtResource("4_2ccvi")
+shader_parameter/amount = 10
+
+[node name="Torch" type="Node2D"]
+texture_filter = 1
+
+[node name="Fire" type="CPUParticles2D" parent="."]
+position = Vector2(0, -55)
+amount = 200
+texture = ExtResource("3_sjbu3")
+lifetime = 2.0
+speed_scale = 0.6
+local_coords = true
+emission_shape = 3
+emission_rect_extents = Vector2(20.64, 0)
+gravity = Vector2(0, -980)
+angle_min = -720.0
+angle_max = 720.0
+scale_amount_min = 0.3
+scale_amount_max = 0.3
+scale_amount_curve = SubResource("Curve_rx0fo")
+color_initial_ramp = SubResource("Gradient_fxx16")
+
+[node name="Torch" type="Sprite2D" parent="."]
+z_index = 1
+texture = ExtResource("4_sjbu3")
+
+[node name="Light" type="PointLight2D" parent="."]
+z_index = -1
+texture_filter = 1
+material = SubResource("ShaderMaterial_52ync")
+color = Color(0.956863, 0.980392, 0.513726, 1)
+energy = 2.0
+shadow_enabled = true
+texture = ExtResource("4_u6j4f")
+texture_scale = 2.0
+script = ExtResource("5_sjbu3")
+time_scale = 0.3

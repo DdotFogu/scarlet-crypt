@@ -5,5 +5,4 @@ class_name dialouge_component
 @export var DialogueTimeline : DialogicTimeline
 
 func start_timeline() -> void:
-	print("ddot")
 	Dialogic.start_timeline(DialogueTimeline)
