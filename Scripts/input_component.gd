@@ -2,7 +2,7 @@
 extends Node
 class_name input_component
 
-var active : bool = true
+@export var active : bool = true
 
 #Mouse Events
 signal event_m1
@@ -23,5 +23,6 @@ func get_input():
 	return input
 
 func _input(event: InputEvent) -> void:
+	if !active : return
 	if event.is_action_pressed("pi_m2"): event_m2.emit()
 	if event.is_action_pressed("pi_m1"): event_m1.emit()

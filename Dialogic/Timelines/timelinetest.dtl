@@ -1,3 +1,5 @@
-join npctest center
-[style]
-This is a test using the dialogic manager
+join fatcat center
+[style name="Main_style"]
+fatcat: Welcome to the pre alpha build of the hubworld.
+fatcat: Im camilla, the one who conjured the existance of everything and everything that is soon to be.
+fatcat: Right now there isn't much to explore, so please wait until the universe has ripen.

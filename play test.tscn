@@ -5,11 +5,11 @@
 [ext_resource type="PackedScene" uid="uid://bnpvhm8bcjx5s" path="res://Scene/UI/GameinfoUI.tscn" id="1_gm7jk"]
 [ext_resource type="PackedScene" uid="uid://dgle0ok7s1iu3" path="res://Scene/Nodes and Components/dungeon_generation.tscn" id="1_ywduj"]
 [ext_resource type="PackedScene" uid="uid://oy8jux68hmbe" path="res://Scene/Characters/Player.tscn" id="2_5y5i1"]
-[ext_resource type="PackedScene" uid="uid://1b5o7a0rg07r" path="res://Scene/Dungeon Rooms/Enemy Scene/dungeon_room_02.tscn" id="2_otr38"]
-[ext_resource type="PackedScene" uid="uid://7gv5u0por8kb" path="res://Scene/Dungeon Rooms/Starting Scene/starting_room_01.tscn" id="4_oij7a"]
+[ext_resource type="PackedScene" uid="uid://1b5o7a0rg07r" path="res://Scene/Worlds/Enemy Scene/dungeon_room_02.tscn" id="2_otr38"]
+[ext_resource type="PackedScene" uid="uid://7gv5u0por8kb" path="res://Scene/Worlds/Starting Scene/starting_room_01.tscn" id="4_oij7a"]
 [ext_resource type="Script" uid="uid://drc16wd21q2y8" path="res://Scripts/dungeon_path_data.gd" id="5_8jj2s"]
 [ext_resource type="PackedScene" uid="uid://dmhphtnd1s4rl" path="res://Scene/Nodes and Components/camera_component.tscn" id="6_otr38"]
-[ext_resource type="PackedScene" uid="uid://chfjj3gtyc3eg" path="res://Scene/Dungeon Rooms/Boss Scene/boss_room_01.tscn" id="7_8jj2s"]
+[ext_resource type="PackedScene" uid="uid://chfjj3gtyc3eg" path="res://Scene/Worlds/Boss Scene/boss_room_01.tscn" id="7_8jj2s"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_sht8r"]
 shader = ExtResource("1_7bkda")
@@ -64,6 +64,7 @@ starting_room_scenes = Array[PackedScene]([ExtResource("4_oij7a")])
 
 [node name="CameraComponent" parent="." instance=ExtResource("6_otr38")]
 visible = true
+position = Vector2(1245, 1103)
 sens = 0.3
 
 [node name="Ysort" type="Node2D" parent="."]
@@ -72,7 +73,7 @@ y_sort_enabled = true
 
 [node name="Player" parent="Ysort" instance=ExtResource("2_5y5i1")]
 y_sort_enabled = true
-position = Vector2(1479, 894)
+position = Vector2(1245, 1103)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_26gwp")

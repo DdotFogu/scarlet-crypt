@@ -1,0 +1,37 @@
+[gd_scene load_steps=8 format=3 uid="uid://bg1agf5xkkhf6"]
+
+[ext_resource type="Script" uid="uid://d1snfb33qn63h" path="res://Scripts/Class/NpcBase.gd" id="1_4s4lf"]
+[ext_resource type="PackedScene" uid="uid://kyumaiednicy" path="res://Scene/Nodes and Components/visual_component.tscn" id="3_4de5u"]
+[ext_resource type="Texture2D" uid="uid://c3desi1sv5hcn" path="res://Assets/Sprites/Characters/Camilla.png" id="4_coj7t"]
+[ext_resource type="Script" uid="uid://d2ghvpalpl7kh" path="res://Scripts/Components/dialouge_component.gd" id="5_61pib"]
+[ext_resource type="PackedScene" uid="uid://cfscy6ndg5f04" path="res://Scene/Nodes and Components/interact_component.tscn" id="7_apuh0"]
+[ext_resource type="Resource" uid="uid://1ym6afo6075e" path="res://Dialogic/Timelines/timelinetest.dtl" id="16_yuxxe"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vkklb"]
+size = Vector2(90, 15)
+
+[node name="BaseCharacter" type="CharacterBody2D" groups=["Enemy"]]
+collision_layer = 0
+collision_mask = 2
+motion_mode = 1
+script = ExtResource("1_4s4lf")
+
+[node name="VisibleOnScreenEnabler" type="VisibleOnScreenEnabler2D" parent="."]
+
+[node name="BodyCollision" type="CollisionShape2D" parent="."]
+position = Vector2(0, 92)
+shape = SubResource("RectangleShape2D_vkklb")
+
+[node name="VisualComponent" parent="." instance=ExtResource("3_4de5u")]
+
+[node name="Sprite" type="Sprite2D" parent="VisualComponent"]
+texture_filter = 1
+texture = ExtResource("4_coj7t")
+
+[node name="DialougeComponent" type="Node2D" parent="."]
+script = ExtResource("5_61pib")
+DialogueTimeline = ExtResource("16_yuxxe")
+
+[node name="InteractComponent" parent="." instance=ExtResource("7_apuh0")]
+
+[connection signal="interacted" from="InteractComponent" to="DialougeComponent" method="start_timeline"]

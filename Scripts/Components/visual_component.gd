@@ -42,6 +42,6 @@ func _physics_process(delta: float) -> void:
 	if !sprite: return
 	
 	if body.velocity.x > 0:
-		sprite.flip_h = false
+		scale.x = 1
 	elif body.velocity.x < 0:
-		sprite.flip_h = true
+		scale.x = -1

@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dfxy5gpi2a5ej"
+path="res://.godot/imported/sewer_tileset.aseprite-871864a3832e0e964e9ab397cf8acf48.res"
+
+[deps]
+
+source_file="res://Assets/Sprites/Saves/sewer_tileset.aseprite"
+dest_files=["res://.godot/imported/sewer_tileset.aseprite-871864a3832e0e964e9ab397cf8acf48.res"]
+
+[params]
+

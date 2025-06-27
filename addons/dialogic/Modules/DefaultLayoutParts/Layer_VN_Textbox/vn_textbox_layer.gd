@@ -174,10 +174,11 @@ func _apply_box_animations_settings() -> void:
 func _apply_name_label_settings() -> void:
 	var name_label: DialogicNode_NameLabel = %DialogicNode_NameLabel
 
-	if name_label_use_global_font_size:
-		name_label.add_theme_font_size_override(&"font_size", get_global_setting(&'font_size', name_label_custom_font_size) as int)
-	else:
-		name_label.add_theme_font_size_override(&"font_size", name_label_custom_font_size)
+	if name_label:
+		if name_label_use_global_font_size:
+			name_label.add_theme_font_size_override(&"font_size", get_global_setting(&'font_size', name_label_custom_font_size) as int)
+		else:
+			name_label.add_theme_font_size_override(&"font_size", name_label_custom_font_size)
 
 	if name_label_use_global_font and get_global_setting(&'font', false):
 		name_label.add_theme_font_override(&'font', load(get_global_setting(&'font', '') as String) as Font)

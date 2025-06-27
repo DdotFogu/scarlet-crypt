@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://5dbfn8ru3qax" path="res://Scripts/Class/camera_shake.gd" id="2_g4g2c"]
 
 [node name="CameraComponent" type="Camera2D"]
+process_mode = 3
 visible = false
 zoom = Vector2(0.2, 0.2)
 position_smoothing_speed = 10.0

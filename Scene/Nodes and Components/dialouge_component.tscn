@@ -1,6 +1,16 @@
-[gd_scene load_steps=2 format=3 uid="uid://c4ddeativ4v3y"]
+[gd_scene load_steps=3 format=3 uid="uid://c4ddeativ4v3y"]
 
 [ext_resource type="Script" uid="uid://d2ghvpalpl7kh" path="res://Scripts/Components/dialouge_component.gd" id="1_v4qjv"]
 
-[node name="DialougeComponent" type="Node"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_v4qjv"]
+radius = 427.057
+
+[node name="DialougeComponent" type="Node2D"]
 script = ExtResource("1_v4qjv")
+
+[node name="Target_Detection" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Target_Detection"]
+shape = SubResource("CircleShape2D_v4qjv")

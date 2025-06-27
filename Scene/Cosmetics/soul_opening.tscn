@@ -1,0 +1,158 @@
+[gd_scene load_steps=11 format=3 uid="uid://dud42ro3k3vy6"]
+
+[ext_resource type="Script" uid="uid://oed8q3rqyyfc" path="res://Scripts/soul_opening.gd" id="1_jyxxh"]
+[ext_resource type="Texture2D" uid="uid://c4gt7v2ywdvt1" path="res://Assets/Sprites/Particles/smoke.png" id="1_sv7yn"]
+[ext_resource type="Shader" uid="uid://mwghjsfia0s5" path="res://Resource/Shaders/Pixelate.gdshader" id="3_jyxxh"]
+[ext_resource type="Texture2D" uid="uid://coatdke7hxrka" path="res://Assets/Sprites/Particles/light.png" id="4_88akx"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3hgop"]
+radius = 13.1529
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5m3ib"]
+shader = ExtResource("3_jyxxh")
+shader_parameter/amount = 10
+
+[sub_resource type="Animation" id="Animation_giavj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 20)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_5m3ib"]
+resource_name = "new_animation"
+length = 5.0
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1.5, 1.5),
+"update": 0,
+"values": [Vector2(0, 20), Vector2(0, -20)]
+}
+
+[sub_resource type="Animation" id="Animation_3hgop"]
+resource_name = "fade_in"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_p5y0h"]
+_data = {
+&"RESET": SubResource("Animation_giavj"),
+&"default": SubResource("Animation_5m3ib"),
+&"fade_in": SubResource("Animation_3hgop")
+}
+
+[node name="Soul_essence" type="CharacterBody2D"]
+texture_filter = 1
+collision_layer = 4
+collision_mask = 0
+motion_mode = 1
+script = ExtResource("1_jyxxh")
+metadata/_custom_type_script = "uid://d1snfb33qn63h"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_3hgop")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+z_index = 1
+texture_filter = 1
+position = Vector2(0, 20)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_sv7yn")
+
+[node name="Light" type="PointLight2D" parent="Sprite2D"]
+modulate = Color(100, 100, 100, 1)
+z_index = 1
+texture_filter = 1
+material = SubResource("ShaderMaterial_5m3ib")
+scale = Vector2(2, 2)
+color = Color(1.10588, 2.76078, 4.41961, 0.313726)
+energy = 5.05
+range_z_max = 1
+shadow_enabled = true
+texture = ExtResource("4_88akx")
+texture_scale = 0.2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_p5y0h")
+}
+autoplay = "fade_in"
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="screen_exited"]

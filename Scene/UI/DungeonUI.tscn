@@ -400,14 +400,15 @@ layer = 0
 modulate = Color(1, 1, 1, 0)
 layout_mode = 3
 anchors_preset = 0
-offset_top = -48.0
-offset_right = 1152.0
-offset_bottom = 600.0
+offset_right = 640.0
+offset_bottom = 480.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 mouse_filter = 1
 
 [node name="Fire" type="CPUParticles2D" parent="UI"]
 z_index = -1
-position = Vector2(417, 195)
+position = Vector2(161, 112)
 scale = Vector2(0.39, 0.39)
 emitting = false
 amount = 200
@@ -439,7 +440,7 @@ texture_scale = 0.5
 
 [node name="Fire2" type="CPUParticles2D" parent="UI"]
 z_index = -1
-position = Vector2(470, 205)
+position = Vector2(214, 122)
 scale = Vector2(0.39, 0.39)
 emitting = false
 amount = 200
@@ -470,7 +471,7 @@ texture = ExtResource("6_ccgp0")
 
 [node name="Fire3" type="CPUParticles2D" parent="UI"]
 z_index = -1
-position = Vector2(675, 205)
+position = Vector2(419, 122)
 scale = Vector2(0.39, 0.39)
 emitting = false
 amount = 200
@@ -501,7 +502,7 @@ texture = ExtResource("6_ccgp0")
 
 [node name="Fire4" type="CPUParticles2D" parent="UI"]
 z_index = -1
-position = Vector2(727, 196)
+position = Vector2(471, 113)
 scale = Vector2(0.39, 0.39)
 emitting = false
 amount = 200
@@ -551,9 +552,10 @@ texture = ExtResource("1_m4aw0")
 [node name="Title" type="RichTextLabel" parent="UI"]
 texture_filter = 1
 layout_mode = 0
-offset_top = 117.0
-offset_right = 3840.0
-offset_bottom = 556.0
+offset_left = -258.0
+offset_top = 34.0
+offset_right = 3582.0
+offset_bottom = 473.0
 scale = Vector2(0.3, 0.3)
 bbcode_enabled = true
 text = "[shake rate=10.0 level=5 connected=1][center][color=Gray][font=\"E:/OneDrive/Documents/Godot Games/scarlet-crypt/Assets/Fonts/Vaticanus-G3yVG.ttf\"][font_size=64]
@@ -566,6 +568,7 @@ visible_characters = 0
 visible_ratio = 0.0
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="UI"]
+position = Vector2(-256, -84)
 occluder = SubResource("OccluderPolygon2D_ilnkj")
 occluder_light_mask = 2
 

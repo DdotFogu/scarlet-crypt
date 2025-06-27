@@ -1,0 +1,9 @@
+[style name="No_Bg_style"]
+Name the vessel(temp dialouge)
+[wait time="1.0"]
+[text_input var="Player_Name"]
+[wait time="2.0"]
+The soul of this vessel is diminishing(temp dialouge)
+[wait time="1.0"]
+but that doesn't meet we can't refill this body with new life(temp dialouge)
+[signal arg="start_attraction"]

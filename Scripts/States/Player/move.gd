@@ -5,7 +5,6 @@ class_name move
 @onready var input_component : input_component = owner.get_node("InputComponent")
 
 func physics_update(delta):
-	print(input_component.get_input())
 	body.velocity = body.velocity.lerp(input_component.get_input().normalized() * body.stat_sheet.speed * 5, body.stat_sheet.acceleration)
 	body.move_and_slide()
 

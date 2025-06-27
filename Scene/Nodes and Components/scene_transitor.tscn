@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://cfeytl22hr2rr"]
+
+[ext_resource type="Script" uid="uid://ufdvcr1purvf" path="res://Scripts/scene_transitor.gd" id="1_j8wqb"]
+[ext_resource type="Script" uid="uid://coul17o7vh882" path="res://Scripts/Components/interact_component.gd" id="2_ogjgq"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jy72w"]
+radius = 144.031
+
+[node name="SceneTransitor" type="Node2D"]
+script = ExtResource("1_j8wqb")
+
+[node name="interact_component" type="Node2D" parent="."]
+script = ExtResource("2_ogjgq")
+metadata/_custom_type_script = "uid://coul17o7vh882"
+
+[node name="Target_Detection" type="Area2D" parent="interact_component"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="interact_component/Target_Detection"]
+shape = SubResource("CircleShape2D_jy72w")
+
+[connection signal="interacted" from="interact_component" to="." method="change_scene"]

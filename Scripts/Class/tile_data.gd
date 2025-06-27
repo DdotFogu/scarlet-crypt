@@ -73,4 +73,5 @@ func los_check(position_from: Vector2, position_to: Vector2) -> bool:
 	los_raycast.target_position = position_to - position_from
 	los_raycast.force_shapecast_update()
 	
-	return los_raycast.get_collider(0) == null
+	if los_raycast.get_collider(0) != null: return los_raycast.get_collider(0) == null
+	else: return false

@@ -5,5 +5,5 @@ void vertex() {
 }
 
 void fragment() {
-	ALBEDO 
+	ALBEDO
 }

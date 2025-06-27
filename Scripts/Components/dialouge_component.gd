@@ -1,5 +1,5 @@
 @icon("res://Assets/IconGodotNode/node/icon_dialog.png")
-extends Node
+extends Node2D
 class_name dialouge_component
 
 @export var DialogueTimeline : DialogicTimeline

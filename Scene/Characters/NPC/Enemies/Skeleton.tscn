@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=3 uid="uid://cdaqq7x510ew3"]
+[gd_scene load_steps=56 format=3 uid="uid://cdaqq7x510ew3"]
 
 [ext_resource type="Script" uid="uid://d1snfb33qn63h" path="res://Scripts/Class/NpcBase.gd" id="1_ag86l"]
 [ext_resource type="Resource" uid="uid://cs7hul5omp2rg" path="res://Resource/Stat Sheets/Skeleton.tres" id="2_ebvdb"]
@@ -6,12 +6,12 @@
 [ext_resource type="Shader" uid="uid://mwghjsfia0s5" path="res://Resource/Shaders/Pixelate.gdshader" id="3_jp7b8"]
 [ext_resource type="Texture2D" uid="uid://xsud3h278ocn" path="res://Assets/Sprites/Characters/Enemies/Skeleton/Enemy_Skeleton.png" id="3_tsst0"]
 [ext_resource type="PackedScene" uid="uid://bbkfypa7bbfx8" path="res://Scene/Nodes and Components/health_component.tscn" id="4_sd5d1"]
-[ext_resource type="Texture2D" uid="uid://c44rdyc70dkku" path="res://Assets/Sprites/World/Lighting/light.png" id="4_ux3lb"]
 [ext_resource type="Script" uid="uid://cvvsfeuru3cyr" path="res://Scripts/light.gd" id="5_0b6od"]
 [ext_resource type="Script" uid="uid://dskheke6u5w3" path="res://Scripts/Components/health_component.gd" id="5_fqp7w"]
 [ext_resource type="PackedScene" uid="uid://bj80p7xwrulxi" path="res://Scene/Nodes and Components/knockback_component.tscn" id="6_wimb2"]
 [ext_resource type="Script" uid="uid://cdmu4p88xh10i" path="res://Scripts/Components/knockback_component.gd" id="7_0hwyk"]
 [ext_resource type="PackedScene" uid="uid://bwamvplbiq5hc" path="res://Scene/Nodes and Components/pathfinding_component.tscn" id="8_4lte1"]
+[ext_resource type="Texture2D" uid="uid://coatdke7hxrka" path="res://Assets/Sprites/Particles/light.png" id="8_ux3lb"]
 [ext_resource type="Script" uid="uid://b20bpp0ee1r71" path="res://Scripts/Components/pathfinding_component.gd" id="9_rlgvh"]
 [ext_resource type="PackedScene" uid="uid://donp10h72n3be" path="res://Scene/Nodes and Components/target_detection_component.tscn" id="10_ayuwi"]
 [ext_resource type="PackedScene" uid="uid://daof8i3oqkmqk" path="res://Scene/Nodes and Components/state_machine.tscn" id="11_brs3j"]
@@ -25,11 +25,12 @@
 [ext_resource type="Script" uid="uid://7cwtyeutrts4" path="res://Scripts/Class/Hitbox.gd" id="16_tf7fm"]
 [ext_resource type="Shader" uid="uid://bsy820uhpcc40" path="res://Resource/Shaders/hit_flash.tres" id="18_14i53"]
 [ext_resource type="Texture2D" uid="uid://kj5semtgnalt" path="res://Assets/Sprites/Debug/arrow_test.png" id="18_31knu"]
+[ext_resource type="Texture2D" uid="uid://uwvll262ys5k" path="res://Assets/Sprites/Particles/shadow.png" id="26_ux3lb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vkklb"]
 size = Vector2(80, 31)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_76ykk"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0b6od"]
 shader = ExtResource("3_jp7b8")
 shader_parameter/amount = 10
 
@@ -527,16 +528,18 @@ stat_sheet = ExtResource("2_ebvdb")
 position = Vector2(-10, 64.5)
 shape = SubResource("RectangleShape2D_vkklb")
 
-[node name="LightComponent" type="PointLight2D" parent="."]
-z_index = -1
+[node name="Light" type="PointLight2D" parent="."]
 texture_filter = 1
-material = SubResource("ShaderMaterial_76ykk")
-energy = 0.5
+material = SubResource("ShaderMaterial_0b6od")
+position = Vector2(0, 30)
+color = Color(0.298039, 0.505882, 0.8, 1)
+range_z_max = 1
 shadow_enabled = true
-texture = ExtResource("4_ux3lb")
-texture_scale = 1.5
+texture = ExtResource("8_ux3lb")
+texture_scale = 2.62
 script = ExtResource("5_0b6od")
-time_scale = 0.3
+scale_factor = 0.1
+time_scale = 2.0
 
 [node name="VisualComponent" parent="." node_paths=PackedStringArray("sprite", "sprite_animator") instance=ExtResource("16_53yw8")]
 sprite = NodePath("BodySprite")
@@ -546,14 +549,14 @@ sprite_animator = NodePath("AnimationPlayer")
 z_index = 1
 texture_filter = 1
 material = SubResource("ShaderMaterial_14i53")
+position = Vector2(10, 0)
 sprite_frames = SubResource("SpriteFrames_d48rw")
 animation = &"Idle"
 speed_scale = 0.2
 
 [node name="Arrow" type="Sprite2D" parent="VisualComponent"]
-visible = false
 texture_filter = 1
-position = Vector2(0, -133)
+position = Vector2(11, -128)
 texture = ExtResource("18_31knu")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="VisualComponent"]
@@ -631,6 +634,12 @@ launch_force = 2300.0
 reset_delay = 2.0
 detector = NodePath("../../LungeDetection")
 visual_component = NodePath("../../VisualComponent")
+
+[node name="ShadowComponent" type="Sprite2D" parent="."]
+modulate = Color(0.0901961, 0.0901961, 0.0901961, 0.784314)
+texture_filter = 1
+position = Vector2(0, 75)
+texture = ExtResource("26_ux3lb")
 
 [connection signal="change_states" from="HealthComponent" to="StateMachine" method="manual_state_change" binds= ["stun"]]
 [connection signal="death" from="HealthComponent" to="VisualComponent" method="spawn_death_particle"]

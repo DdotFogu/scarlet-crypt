@@ -7,7 +7,7 @@ uniform vec4 modulate_color : source_color = vec4(0.0);
 
 float distance_to_light(vec2 coords){
 	float dist = 1000.0;
-	
+
 	for (int i = 0; i < number_of_lights; i++){
 		float new_dist = distance(coords, lights[i]);
 		if (new_dist < dist) {
@@ -15,12 +15,12 @@ float distance_to_light(vec2 coords){
 		}
 	}
 	return dist;
-} 
+}
 
 void fragment() {
 	COLOR = texture(screen_texture, SCREEN_UV);
 	float dist = distance_to_light(FRAGCOORD.xy);
-	
+
 	if (dist > 1.0){
 		COLOR = COLOR * modulate_color;
 	}

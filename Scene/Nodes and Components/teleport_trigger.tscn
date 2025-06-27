@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://c5v0b77tgvpsd"]
+
+[ext_resource type="Script" uid="uid://clxp4b74pw4ki" path="res://Scripts/Teleport_Trigger.gd" id="1_l63qq"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_u1pfo"]
+radius = 385.876
+
+[node name="TeleportTrigger" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_l63qq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_u1pfo")
+
+[node name="Teleport_Position" type="Marker2D" parent="."]
+position = Vector2(0, -925)
+
+[connection signal="body_entered" from="." to="." method="teleport"]

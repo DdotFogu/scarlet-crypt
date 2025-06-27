@@ -85,7 +85,7 @@ func create_new_path(data : path_data, room_count : int = data.room_count, previ
 	
 	if data.create_exit_room:
 		var direction_data = find_direction_without_overlap(previous_room)
-		var room_instance = preload("res://Scene/Dungeon Rooms/exit_room_01.tscn").instantiate()
+		var room_instance = preload("res://Scene/Worlds/exit_room_01.tscn").instantiate()
 		
 		room_instance.position = direction_data[1]
 		

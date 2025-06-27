@@ -1,6 +1,6 @@
 @icon("res://Assets/IconGodotNode/node/icon_gear.png")
 extends Node
-class_name CameraShake
+class_name shake_component
 
 @export var shake_fade : float = 5.0
 
@@ -8,7 +8,7 @@ var rng = RandomNumberGenerator.new()
 
 var shake_stregth : float = 0.0
 
-func apply_shake(random_strength : float):
+func apply_shake(random_strength : float = 20):
 	shake_stregth = random_strength
 
 func _process(delta: float) -> void:
